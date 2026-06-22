@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snack Overflow — Diet Manager · Hi-Fi Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FCFBF8; --card:#FFFFFF; --ink:#181712; --ink-soft:#5C564A;
+    --persimmon:#E2552B; --herb:#4E9D5B; --herb-d:#2F6B3E;
+    --protein:#C7452B; --carbs:#E0A23D; --fat:#5E8C6A;
+    --rule:#181712; --hair:#E2DCCF; --hair2:#EFEADD; --soft-bg:#F4F1E9;
+    --r:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{font-family:'Hanken Grotesk',sans-serif;color:var(--ink);background:var(--paper);
+    background-image:radial-gradient(var(--hair2) 1px,transparent 1px);background-size:22px 22px;line-height:1.5;min-height:100vh}
+  .mono{font-family:'Space Mono',monospace}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  h1,h2,h3{font-family:'Fraunces',serif;letter-spacing:-.02em}
+  button{font-family:inherit}
+  a{color:inherit}
+
+nav{position:sticky;top:0;z-index:50;background:rgba(252,251,248,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
+  .nav-in{display:flex;align-items:center;gap:24px;max-width:1180px;margin:0 auto;padding:14px 28px}
+  .logo{font-family:'Fraunces',serif;font-weight:900;font-size:21px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;cursor:pointer;background:none;border:none}
+  .logo b{color:var(--persimmon)}
+  .mark{width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font-family:'Space Mono',monospace;font-weight:700;font-size:15px;background:var(--persimmon);color:#fff}
+  .tabs{display:flex;gap:3px}
+  .tabs button{font-size:14px;font-weight:600;color:var(--ink-soft);background:none;border:none;cursor:pointer;padding:7px 13px;border-radius:8px}
+  .tabs button.on{background:var(--ink);color:var(--paper)}
+  .tabs button:hover:not(.on){background:#fff;color:var(--ink)}
+  .noacct{margin-left:auto;font-size:12px;font-weight:700;color:var(--herb);border:1.5px solid var(--herb);padding:5px 11px;border-radius:30px}
+
+.screen{display:none;animation:fade .35s ease}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .eyebrow{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--persimmon);font-weight:700}
+  .sectit{font-size:clamp(28px,4vw,42px);font-weight:600;line-height:1.04;margin:8px 0 6px;font-variation-settings:'opsz' 120,'SOFT' 30,'WONK' 1}
+  .sectit em{font-style:italic;color:var(--persimmon)}
+  .sub{font-size:16px;color:var(--ink-soft);max-width:52ch}
+  .pagehead{padding:28px 0 22px}
+
+.btn{font-size:15px;font-weight:700;background:var(--ink);color:var(--paper);border:none;padding:13px 22px;border-radius:11px;cursor:pointer;display:inline-flex;align-items:center;gap:9px;transition:.15s;box-shadow:4px 4px 0 var(--ink)}
+  .btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+  .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+  .btn.persim{background:var(--persimmon);box-shadow:4px 4px 0 #8f3015}
+  .btn.persim:hover{box-shadow:5px 5px 0 #8f3015}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink);box-shadow:none}
+  .btn.ghost:hover{background:var(--soft-bg);transform:none}
+  .btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;transform:none}
+
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;padding:46px 0 30px}
+  @media(max-width:860px){.hero{grid-template-columns:1fr}}
+  .hero h1{font-size:clamp(40px,6vw,68px);font-weight:600;line-height:.98;font-variation-settings:'opsz' 144,'SOFT' 40,'WONK' 1}
+  .hero h1 em{font-style:italic;color:var(--persimmon)}
+  .hero p{font-size:18px;color:var(--ink-soft);margin:18px 0 26px;max-width:44ch}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-card{background:var(--card);border:2px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--ink);padding:24px;transform:rotate(1.2deg)}
+  .hero-card .lab{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  .hero-card .kcal{font-family:'Fraunces',serif;font-weight:900;font-size:56px;line-height:1;margin:4px 0 2px}
+  .hero-card .kcal small{font-family:'Space Mono',monospace;font-size:13px;color:var(--ink-soft);font-weight:700}
+  .hero-rule{height:9px;background:var(--ink);margin:12px 0}
+  .hmac{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:12px;margin:7px 0}
+  .hmac b{font-weight:700}
+  .tasks{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:8px 0 60px}
+  @media(max-width:860px){.tasks{grid-template-columns:1fr 1fr}}
+  .task{background:#fff;border:1.5px solid var(--hair);border-radius:var(--r);padding:18px;cursor:pointer;transition:.15s;text-align:left}
+  .task:hover{border-color:var(--ink);box-shadow:4px 4px 0 var(--ink);transform:translate(-1px,-1px)}
+  .task .n{font-family:'Space Mono',monospace;font-size:12px;color:var(--persimmon);font-weight:700}
+  .task .ic{font-size:26px;margin:8px 0 6px}
+  .task h3{font-size:17px;font-weight:600;margin-bottom:4px}
+  .task p{font-size:13px;color:var(--ink-soft);line-height:1.4}
+
+.panel{background:var(--card);border:1.5px solid var(--ink);border-radius:var(--r);box-shadow:6px 6px 0 var(--ink)}
+  .panel-h{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-bottom:1.5px solid var(--hair)}
+  .panel-h h2{font-size:19px;font-weight:600}
+  .panel-h .step{font-family:'Space Mono',monospace;font-size:12px;color:var(--ink-soft)}
+  .panel-b{padding:20px}
+
+.dash{display:grid;grid-template-columns:1.15fr .95fr;gap:24px;padding-bottom:60px;align-items:start}
+  @media(max-width:880px){.dash{grid-template-columns:1fr}}
+  .field{margin-bottom:18px}
+  .field>label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:700;margin-bottom:9px}
+  .field>label .val{font-family:'Space Mono',monospace;font-size:14px;color:var(--persimmon)}
+  .hint{font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-soft);font-weight:400}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--hair);padding:8px 13px;border-radius:9px;cursor:pointer;transition:.12s}
+  .seg button:hover{border-color:var(--ink)}
+  .seg button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .seg.sex button.active{background:var(--persimmon);border-color:var(--persimmon)}
+  .numrow{display:flex;align-items:center;gap:10px}
+  .stepper{display:flex;align-items:center;border:1.5px solid var(--hair);border-radius:9px;overflow:hidden}
+  .stepper button{width:34px;height:38px;border:none;background:#fff;font-size:18px;cursor:pointer;color:var(--ink)}
+  .stepper button:hover{background:var(--paper)}
+  .stepper input{width:54px;height:38px;border:none;text-align:center;font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:var(--ink);background:#fff}
+  .unit{font-family:'Space Mono',monospace;font-size:13px;color:var(--ink-soft)}
+  input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:var(--hair);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:2.5px solid var(--ink);cursor:pointer;box-shadow:0 2px 0 var(--ink)}
+  .nf{background:#fff;border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;position:sticky;top:80px}
+  .nf-top{padding:16px 20px 12px}
+  .nf-title{font-family:'Fraunces',serif;font-weight:900;font-size:26px;line-height:1}
+  .nf-meta{font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-soft);margin-top:3px}
+  .rule-xl{height:11px;background:var(--ink)}.rule-l{height:5px;background:var(--ink)}
+  .nf-cal{display:flex;align-items:flex-end;justify-content:space-between;padding:10px 20px 12px}
+  .nf-cal .lab{font-size:13px;font-weight:800}
+  .nf-cal .big{font-family:'Fraunces',serif;font-weight:900;font-size:56px;line-height:.85;font-variation-settings:'opsz' 140}
+  .nf-cal .big small{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;vertical-align:super;color:var(--ink-soft)}
+  .nf-rows{padding:4px 20px 14px}
+  .nf-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--hair)}
+  .nf-row .name{display:flex;align-items:center;gap:9px;font-weight:700;font-size:14px}
+  .dot{width:11px;height:11px;border-radius:3px}
+  .nf-row .g{font-family:'Space Mono',monospace;font-weight:700;font-size:15px}
+  .nf-row .pct{font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-soft);width:42px;text-align:right}
+  .bar{height:7px;border-radius:4px;background:var(--hair);overflow:hidden;margin-top:7px}
+  .bar i{display:block;height:100%;border-radius:4px;transition:width .35s cubic-bezier(.2,.8,.2,1)}
+  .nf-foot{padding:13px 20px;background:var(--ink);color:var(--paper);display:flex;align-items:center;gap:11px}
+  .nf-foot .chk{width:22px;height:22px;border-radius:50%;background:var(--herb);display:grid;place-items:center;color:#fff;font-size:12px;flex:none}
+  .nf-foot p{font-size:12.5px;line-height:1.35}
+  .nf-foot button{margin-left:auto;flex:none;background:var(--persimmon);color:#fff;border:none;font-size:12.5px;font-weight:700;padding:8px 13px;border-radius:9px;cursor:pointer}
+
+.searchlayout{display:grid;grid-template-columns:248px 1fr;gap:24px;padding-bottom:60px;align-items:start}
+  @media(max-width:860px){.searchlayout{grid-template-columns:1fr}}
+  .facets{position:sticky;top:80px}
+  .facet{margin-bottom:22px}
+  .facet h4{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:11px}
+  .chips{display:flex;gap:7px;flex-wrap:wrap}
+  .chip{font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--hair);padding:7px 12px;border-radius:30px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;gap:6px}
+  .chip:hover{border-color:var(--ink)}
+  .chip.on{background:var(--persimmon);color:#fff;border-color:var(--persimmon)}
+  .chip.on .x{display:inline}
+  .chip .x{display:none;font-weight:700}
+  .searchbar{display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid var(--ink);border-radius:12px;padding:12px 16px;margin-bottom:14px}
+  .searchbar input{flex:1;border:none;outline:none;font-family:inherit;font-size:15px;background:none;color:var(--ink)}
+  .searchbar .ico{font-size:18px}
+  .resbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+  .activechips{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  .activechips .lbl{font-family:'Space Mono',monospace;font-size:11px;color:var(--ink-soft)}
+  .count{font-family:'Space Mono',monospace;font-size:13px;color:var(--ink-soft)}
+  .count b{color:var(--ink)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:760px){.cards{grid-template-columns:1fr 1fr}}
+  .rcard{background:#fff;border:1.5px solid var(--hair);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:.15s;text-align:left}
+  .rcard:hover{border-color:var(--ink);box-shadow:5px 5px 0 var(--ink);transform:translate(-1px,-1px)}
+  .rcard .img{height:108px;display:grid;place-items:center;font-size:46px;background:var(--soft-bg);border-bottom:1.5px solid var(--hair)}
+  .rcard .cb{padding:13px 14px}
+  .rcard h3{font-size:16px;font-weight:600;line-height:1.1;margin-bottom:7px}
+  .rcard .kc{font-family:'Space Mono',monospace;font-size:12px;color:var(--persimmon);font-weight:700}
+  .rcard .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+  .tg{font-size:10.5px;font-weight:700;font-family:'Space Mono',monospace;color:var(--ink-soft);background:var(--soft-bg);padding:3px 7px;border-radius:5px;text-transform:uppercase;letter-spacing:.03em}
+  .empty{text-align:center;padding:56px 20px;border:1.5px dashed var(--hair);border-radius:var(--r);background:#fff}
+  .empty .ic{font-size:40px}
+  .empty h3{font-size:20px;margin:10px 0 6px}
+  .empty p{color:var(--ink-soft);font-size:14px;margin-bottom:16px}
+
+.rd-head{display:flex;gap:20px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+  .rd-img{width:104px;height:104px;border-radius:16px;background:var(--soft-bg);border:1.5px solid var(--ink);display:grid;place-items:center;font-size:50px;flex:none}
+  .rd-head h1{font-size:34px;font-weight:600}
+  .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .pill{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;padding:6px 11px;border-radius:30px;border:1.5px solid var(--ink)}
+  .pill.kc{background:var(--persimmon);color:#fff;border-color:var(--persimmon)}
+  .rd-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;padding:22px 0 60px;align-items:start}
+  @media(max-width:860px){.rd-grid{grid-template-columns:1fr}}
+  .ing{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--hair)}
+  .ing .em{width:24px;height:24px;border-radius:7px;background:var(--soft-bg);display:grid;place-items:center;font-size:13px;flex:none}
+  .ing .nm{flex:1;font-weight:600;font-size:14.5px}
+  .ing .nm small{display:block;font-weight:400;color:var(--ink-soft);font-size:12px}
+  .ing .kc{font-family:'Space Mono',monospace;font-size:13px;color:var(--ink-soft);font-weight:700}
+  .swapbtn{font-size:12px;font-weight:700;background:#fff;border:1.5px solid var(--ink);color:var(--ink);padding:6px 11px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:.12s}
+  .swapbtn:hover{background:var(--ink);color:#fff}
+  .swapped{background:var(--herb);color:#fff;border-color:var(--herb)}
+  .totalbar{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding:16px;background:var(--ink);color:var(--paper);border-radius:12px}
+  .totalbar .t1{font-family:'Space Mono',monospace;font-size:12px;color:#cfc8b8}
+  .totalbar .t2{font-family:'Fraunces',serif;font-weight:900;font-size:30px}
+  .totalbar .delta{font-family:'Space Mono',monospace;font-size:12px;font-weight:700}
+  .steps{counter-reset:s}
+  .step-i{display:flex;gap:13px;padding:12px 0;border-bottom:1px solid var(--hair)}
+  .step-i .num{counter-increment:s;width:28px;height:28px;border-radius:50%;background:var(--persimmon);color:#fff;font-family:'Space Mono',monospace;font-weight:700;font-size:13px;display:grid;place-items:center;flex:none}
+  .step-i .num::before{content:counter(s)}
+  .step-i p{font-size:14px;padding-top:2px}
+
+.pantry{display:grid;grid-template-columns:1fr 360px;gap:24px;padding-bottom:60px;align-items:start}
+  @media(max-width:880px){.pantry{grid-template-columns:1fr}}
+  .shelf{margin-bottom:18px}
+  .shelf h4{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px}
+  .items{display:flex;gap:8px;flex-wrap:wrap}
+  .item{font-size:13.5px;font-weight:600;background:#fff;border:1.5px solid var(--hair);padding:8px 13px;border-radius:30px;cursor:grab;display:inline-flex;align-items:center;gap:7px;transition:.12s;user-select:none}
+  .item:hover{border-color:var(--ink);transform:translateY(-1px)}
+  .item.added{opacity:.4;pointer-events:none}
+  .item.out{opacity:.45;cursor:not-allowed;text-decoration:line-through;background:var(--soft-bg)}
+  .item .plus{font-weight:700;color:var(--persimmon)}
+  .basket{position:sticky;top:80px;border:2px dashed var(--ink);border-radius:var(--r);background:#fff;padding:18px;min-height:340px;display:flex;flex-direction:column;transition:.15s}
+  .basket.drag{background:#FFF3EE;border-color:var(--persimmon)}
+  .basket h3{font-size:19px;font-weight:600;display:flex;align-items:center;justify-content:space-between}
+  .basket h3 .ct{font-family:'Space Mono',monospace;font-size:13px;color:var(--persimmon)}
+  .basket .ph{flex:1;display:grid;place-items:center;text-align:center;color:var(--ink-soft);font-size:13.5px;padding:20px}
+  .basket .ph .ic{font-size:34px;display:block;margin-bottom:8px}
+  .basketitems{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;align-content:flex-start;flex:1}
+  .bchip{font-size:13px;font-weight:600;background:var(--soft-bg);border:1.5px solid var(--ink);padding:7px 11px;border-radius:30px;display:inline-flex;align-items:center;gap:8px}
+  .bchip button{background:none;border:none;cursor:pointer;font-weight:700;color:var(--ink-soft);font-size:14px}
+  .bchip button:hover{color:var(--persimmon)}
+
+.matchhead{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .matchhead .badge2{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;background:var(--herb);color:#fff;padding:6px 12px;border-radius:30px}
+  .bigmatch{background:#fff;border:2px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--ink);overflow:hidden;display:grid;grid-template-columns:200px 1fr}
+  @media(max-width:700px){.bigmatch{grid-template-columns:1fr}}
+  .bigmatch .mimg{background:var(--soft-bg);display:grid;place-items:center;font-size:80px;border-right:1.5px solid var(--ink)}
+  .bigmatch .mbody{padding:24px}
+  .bigmatch h2{font-size:28px;font-weight:600}
+  .mmeter{margin:14px 0}
+  .mmeter .lab{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px}
+  .mmeter .track{height:10px;background:var(--hair);border-radius:6px;overflow:hidden}
+  .mmeter .track i{display:block;height:100%;background:var(--herb);border-radius:6px}
+  .haves{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+  .have{font-size:12px;font-family:'Space Mono',monospace;font-weight:700;padding:5px 9px;border-radius:6px;display:inline-flex;gap:5px;align-items:center}
+  .have.y{background:#E7F3EA;color:var(--herb-d)}
+  .have.n{background:#FBEAE4;color:var(--persimmon)}
+
+.loadwrap{text-align:center;padding:70px 20px;display:none}
+  .loadwrap.on{display:block}
+  .spinner{width:46px;height:46px;border:4px solid var(--hair);border-top-color:var(--persimmon);border-radius:50%;margin:0 auto 18px;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loadwrap p{font-family:'Space Mono',monospace;font-size:14px;color:var(--ink-soft)}
+  #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ink);color:var(--paper);padding:14px 22px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:200;transition:transform .35s cubic-bezier(.2,.9,.2,1)}
+  #toast.show{transform:translateX(-50%) translateY(0)}
+  #toast .ic{width:22px;height:22px;border-radius:50%;background:var(--herb);display:grid;place-items:center;font-size:12px}
+
+.overlay{position:fixed;inset:0;background:rgba(24,23,18,.55);backdrop-filter:blur(2px);z-index:150;display:none;align-items:center;justify-content:center;padding:20px;animation:fade .2s}
+  .overlay.on{display:flex}
+  .modal{background:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:10px 10px 0 var(--ink);max-width:440px;width:100%;overflow:hidden}
+  .modal-h{padding:18px 22px;border-bottom:1.5px solid var(--hair);display:flex;align-items:center;justify-content:space-between}
+  .modal-h h3{font-size:20px;font-weight:600}
+  .modal-h button{background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-soft)}
+  .modal-b{padding:14px 22px 22px}
+  .modal-b .lede{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+  .alt{display:flex;align-items:center;gap:12px;padding:13px;border:1.5px solid var(--hair);border-radius:11px;cursor:pointer;margin-bottom:9px;transition:.12s}
+  .alt:hover{border-color:var(--ink);background:var(--paper)}
+  .alt .em{width:28px;height:28px;border-radius:8px;background:var(--soft-bg);display:grid;place-items:center;font-size:15px;flex:none}
+  .alt .nm{flex:1;font-weight:600;font-size:14.5px}
+  .alt .nm small{display:block;font-weight:400;color:var(--ink-soft);font-size:12px}
+  .alt .d{font-family:'Space Mono',monospace;font-size:13px;font-weight:700}
+  .alt .d.down{color:var(--herb)}.alt .d.up{color:var(--persimmon)}
+
+  footer{border-top:1px solid var(--hair);padding:22px 0;font-family:'Space Mono',monospace;font-size:12px;color:var(--ink-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <button class="logo" onclick="go('landing')"><span class="mark">{}</span>Snack<b>Overflow</b></button>
+    <div class="tabs">
+      <button data-tab="dashboard" onclick="go('dashboard')">Daily Targets</button>
+      <button data-tab="search" onclick="go('search')">Search</button>
+      <button data-tab="recipe" onclick="go('recipe')">Recipe</button>
+      <button data-tab="pantry" onclick="go('pantry')">Pantry</button>
+    </div>
+    <span class="noacct">✓ No account needed</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<section class="screen on" id="s-landing">
+    <div class="hero">
+      <div>
+        <span class="eyebrow">Plan meals around your numbers</span>
+        <h1>Cook to your <em>targets</em>, not someone else's diet.</h1>
+        <p>Set your daily calories and macros, find recipes that fit, swap ingredients on the fly, and turn whatever's in your fridge into dinner.</p>
+        <div class="hero-cta">
+          <button class="btn persim" onclick="go('dashboard')">Set my targets →</button>
+          <button class="btn ghost" onclick="go('pantry')">I'll cook from my fridge</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="lab">Your daily target</div>
+        <div class="kcal">2,010<small>kcal</small></div>
+        <div class="hero-rule"></div>
+        <div class="hmac"><span>Protein</span><b>117 g</b></div>
+        <div class="hmac"><span>Carbs</span><b>226 g</b></div>
+        <div class="hmac"><span>Fat</span><b>56 g</b></div>
+      </div>
+    </div>
+    <div class="tasks">
+      <button class="task" onclick="go('dashboard')"><div class="ic">🎯</div><h3>Set targets</h3><p>Calorie &amp; macro calculator from your stats and goal.</p></button>
+      <button class="task" onclick="go('search')"><div class="ic">🔎</div><h3>Find recipes</h3><p>Filter by diet, meal, time and calories with chips.</p></button>
+      <button class="task" onclick="go('recipe')"><div class="ic">🔄</div><h3>Swap ingredients</h3><p>Trade items and watch calories recalculate live.</p></button>
+      <button class="task" onclick="go('pantry')"><div class="ic">🧺</div><h3>Cook from pantry</h3><p>Drag in what you have, get recipes you can make now.</p></button>
+    </div>
+  </section>
+
+<section class="screen" id="s-dashboard">
+    <div class="pagehead">
+      <span class="eyebrow">Daily Targets</span>
+      <h1 class="sectit">Dial in your <em>numbers</em>.</h1>
+      <p class="sub">Change anything and your calorie + macro targets recalculate instantly — no submit button.</p>
+    </div>
+    <div class="dash">
+      <div class="panel">
+        <div class="panel-h"><h2>Your stats</h2><span class="step">live · auto-saves</span></div>
+        <div class="panel-b">
+          <div class="field">
+            <label>Biological sex <span class="hint">affects BMR</span></label>
+            <div class="seg sex"><button class="active" data-sex="female" onclick="pick(this,'sex')">Female</button><button data-sex="male" onclick="pick(this,'sex')">Male</button></div>
+          </div>
+          <div class="field">
+            <label>Age <span class="hint">allowed 0–120</span></label>
+            <div class="numrow"><div class="stepper"><button onclick="bump('age',-1)">–</button><input id="age" type="number" value="22" min="0" max="120" oninput="calc()"><button onclick="bump('age',1)">+</button></div><span class="unit">years</span></div>
+          </div>
+          <div class="field"><label>Weight <span class="val" id="wv">65 kg</span></label><input type="range" id="weight" min="35" max="160" value="65" oninput="calc()"></div>
+          <div class="field"><label>Height <span class="val" id="hv">168 cm</span></label><input type="range" id="height" min="130" max="215" value="168" oninput="calc()"></div>
+          <div class="field"><label>Activity level</label>
+            <div class="seg" id="activity"><button data-f="1.2" onclick="pick(this,'act')">Sedentary</button><button data-f="1.375" onclick="pick(this,'act')">Light</button><button data-f="1.55" class="active" onclick="pick(this,'act')">Moderate</button><button data-f="1.725" onclick="pick(this,'act')">Very active</button><button data-f="1.9" onclick="pick(this,'act')">Athlete</button></div>
+          </div>
+          <div class="field" style="margin-bottom:0"><label>Goal</label>
+            <div class="seg" id="goal"><button data-d="-500" onclick="pick(this,'goal')">Lose fat</button><button data-d="-300" onclick="pick(this,'goal')">Lose weight</button><button data-d="0" class="active" onclick="pick(this,'goal')">Maintain</button><button data-d="250" onclick="pick(this,'goal')">Build muscle</button><button data-d="500" onclick="pick(this,'goal')">Bulk</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="nf">
+        <div class="nf-top"><div class="nf-title">Nutrition Targets</div><div class="nf-meta">per day · recalculated just now</div></div>
+        <div class="rule-xl"></div>
+        <div class="nf-cal"><span class="lab">Calories</span><span class="big" id="kcal">2010<small>kcal</small></span></div>
+        <div class="rule-l"></div>
+        <div class="nf-rows">
+          <div class="nf-row"><span class="name"><span class="dot" style="background:var(--protein)"></span>Protein</span><span class="g" id="pg">117 g</span><span class="pct" id="pp">23%</span></div>
+          <div class="bar"><i id="pbar" style="background:var(--protein);width:23%"></i></div>
+          <div class="nf-row" style="margin-top:6px"><span class="name"><span class="dot" style="background:var(--carbs)"></span>Carbs</span><span class="g" id="cg">226 g</span><span class="pct" id="cp">45%</span></div>
+          <div class="bar"><i id="cbar" style="background:var(--carbs);width:45%"></i></div>
+          <div class="nf-row" style="margin-top:6px"><span class="name"><span class="dot" style="background:var(--fat)"></span>Fat</span><span class="g" id="fg">56 g</span><span class="pct" id="fp">25%</span></div>
+          <div class="bar"><i id="fbar" style="background:var(--fat);width:25%"></i></div>
+        </div>
+        <div class="nf-foot"><span class="chk">✓</span><p>Balanced for your goal.</p><button onclick="go('search')">Find recipes →</button></div>
+      </div>
+    </div>
+  </section>
+
+<section class="screen" id="s-search">
+    <div class="pagehead">
+      <span class="eyebrow">Find Recipes</span>
+      <h1 class="sectit">Search recipes that <em>fit your targets</em>.</h1>
+    </div>
+    <div class="searchlayout">
+      <aside class="facets">
+        <div class="facet"><h4>Diet</h4><div class="chips" data-facet="diet">
+          <button class="chip" onclick="toggleChip(this)" data-v="vegan">Vegan <span class="x">×</span></button>
+          <button class="chip" onclick="toggleChip(this)" data-v="vegetarian">Vegetarian <span class="x">×</span></button>
+          <button class="chip" onclick="toggleChip(this)" data-v="high-protein">High-protein <span class="x">×</span></button>
+          <button class="chip" onclick="toggleChip(this)" data-v="gluten-free">Gluten-free <span class="x">×</span></button>
+        </div></div>
+        <div class="facet"><h4>Meal</h4><div class="chips" data-facet="meal">
+          <button class="chip" onclick="toggleChip(this)" data-v="breakfast">Breakfast <span class="x">×</span></button>
+          <button class="chip" onclick="toggleChip(this)" data-v="lunch">Lunch <span class="x">×</span></button>
+          <button class="chip" onclick="toggleChip(this)" data-v="dinner">Dinner <span class="x">×</span></button>
+        </div></div>
+        <div class="facet"><h4>Time</h4><div class="chips" data-facet="time">
+          <button class="chip" onclick="toggleChip(this)" data-v="under15">Under 15 min <span class="x">×</span></button>
+          <button class="chip" onclick="toggleChip(this)" data-v="under30">Under 30 min <span class="x">×</span></button>
+        </div></div>
+        <div class="facet"><h4>Max calories <span class="val mono" id="calmax" style="color:var(--persimmon)">700</span></h4>
+          <input type="range" id="calslider" min="200" max="900" value="700" step="50" oninput="renderCards()"></div>
+      </aside>
+      <div>
+        <div class="searchbar"><span class="ico">🔎</span><input id="searchq" placeholder="Search e.g. pasta, bowl, tofu…" oninput="renderCards()"></div>
+        <div class="resbar">
+          <div class="activechips" id="activechips"><span class="lbl">No filters — showing all</span></div>
+          <span class="count"><b id="rescount">6</b> recipes</span>
+        </div>
+        <div class="cards" id="cards"></div>
+        <div class="empty" id="emptystate" style="display:none">
+          <div class="ic">🍽️</div><h3>No recipes match those filters</h3>
+          <p>Try removing a filter or raising the calorie limit.</p>
+          <button class="btn ghost" onclick="clearFilters()">Clear all filters</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="screen" id="s-recipe">
+    <div class="pagehead">
+      <button class="btn ghost" style="font-size:13px;padding:8px 14px" onclick="go('search')">← Back to results</button>
+    </div>
+    <div class="rd-head">
+      <div class="rd-img">🍝</div>
+      <div>
+        <span class="eyebrow">Adapt a Recipe</span>
+        <h1>Creamy Tuscan Pasta</h1>
+        <div class="pills">
+          <span class="pill kc" id="rdkcal">640 kcal</span>
+          <span class="pill">⏱ 25 min</span>
+          <span class="pill">Dinner</span>
+          <span class="pill">Vegetarian</span>
+        </div>
+      </div>
+    </div>
+    <div class="rd-grid">
+      <div class="panel">
+        <div class="panel-h"><h2>Ingredients</h2><span class="step">tap to swap</span></div>
+        <div class="panel-b" id="inglist"></div>
+        <div style="padding:0 20px 20px">
+          <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2" id="rdtotal">640 kcal</div></div><div class="delta" id="rddelta" style="color:#cfc8b8">≈ 32% of your 2,010 target</div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><h2>Directions</h2><span class="step">4 steps</span></div>
+        <div class="panel-b steps">
+          <div class="step-i"><div class="num"></div><p>Cook pasta until al dente; reserve a cup of pasta water.</p></div>
+          <div class="step-i"><div class="num"></div><p>Sauté garlic and sun-dried tomatoes, then add spinach until wilted.</p></div>
+          <div class="step-i"><div class="num"></div><p>Stir in the cream base and parmesan to form the sauce.</p></div>
+          <div class="step-i"><div class="num"></div><p>Toss pasta in the sauce, loosen with pasta water, and serve.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="screen" id="s-pantry">
+    <div class="pagehead">
+      <span class="eyebrow">Cook From Your Pantry</span>
+      <h1 class="sectit">What's in your <em>fridge</em>?</h1>
+      <p class="sub">Drag ingredients into your basket (or tap +). We'll find recipes you can make right now.</p>
+    </div>
+    <div class="pantry">
+      <div>
+        <div class="searchbar" style="margin-bottom:18px"><span class="ico">🔎</span><input id="pantryq" placeholder="Search your kitchen e.g. tofu…" oninput="filterPantry()"></div>
+        <div id="shelves"></div>
+      </div>
+      <div class="basket" id="basket" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropItem(event)">
+        <h3>Your basket <span class="ct" id="bcount">0 items</span></h3>
+        <div class="basketitems" id="basketitems"></div>
+        <div class="ph" id="basketph"><div><span class="ic">🧺</span>Drag ingredients here<br>or tap + on any item</div></div>
+        <button class="btn persim" id="genbtn" style="width:100%;justify-content:center" disabled onclick="generate()">Generate recipes</button>
+      </div>
+    </div>
+  </section>
+
+<section class="screen" id="s-result">
+    <div class="loadwrap" id="loadwrap"><div class="spinner"></div><p id="loadmsg">Matching recipes to your basket…</p></div>
+    <div id="resultbody" style="display:none">
+      <div class="pagehead">
+        <button class="btn ghost" style="font-size:13px;padding:8px 14px" onclick="go('pantry')">← Edit basket</button>
+      </div>
+      <div class="matchhead">
+        <span class="eyebrow" style="margin:0">Your Matches</span>
+        <span class="badge2" id="matchbadge">Best match · 5/6 ingredients</span>
+      </div>
+      <div class="bigmatch">
+        <div class="mimg">🥗</div>
+        <div class="mbody">
+          <h2>Crispy Tofu Power Bowl</h2>
+          <div class="pills" style="margin-top:8px"><span class="pill kc">520 kcal</span><span class="pill">⏱ 20 min</span><span class="pill">Vegan</span><span class="pill">High-protein</span></div>
+          <div class="mmeter"><div class="lab"><span>You already have</span><span id="matchpct">83%</span></div><div class="track"><i id="matchbar" style="width:83%"></i></div></div>
+          <div class="haves" id="haves"></div>
+          <div style="display:flex;gap:12px;margin-top:6px"><button class="btn persim" onclick="go('recipe')">View recipe</button><button class="btn ghost" onclick="go('pantry')">Try other items</button></div>
+        </div>
+      </div>
+      <h2 style="font-size:22px;margin:32px 0 14px">More you can make</h2>
+      <div class="cards" id="altcards"></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>SNACK OVERFLOW · diet manager</span>
+    <span>Plan meals around your numbers</span>
+  </footer>
+</div>
+
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-h"><h3>Swap <span id="swaptarget">cream</span></h3><button onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <p class="lede">Pick an alternative — the recipe's total calories update instantly.</p>
+      <div id="altlist"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"><span class="ic">✓</span><span id="toastmsg">Done</span></div>
+
+<script>
+
+function go(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s-'+name).classList.add('on');
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===name));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+let state={sex:'female',act:1.55,goal:0};
+function pick(btn,key){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(key==='sex')state.sex=btn.dataset.sex;if(key==='act')state.act=+btn.dataset.f;if(key==='goal')state.goal=+btn.dataset.d;calc();}
+function bump(id,d){const el=document.getElementById(id);el.value=Math.max(0,Math.min(120,(+el.value||0)+d));calc();}
+let userTarget=2010;
+function calc(){
+  const age=Math.max(0,Math.min(120,+document.getElementById('age').value||0));
+  const w=+document.getElementById('weight').value,h=+document.getElementById('height').value;
+  document.getElementById('wv').textContent=w+' kg';document.getElementById('hv').textContent=h+' cm';
+  setFill('weight',35,160);setFill('height',130,215);
+  let bmr=10*w+6.25*h-5*age+(state.sex==='male'?5:-161);
+  let target=Math.max(1000,Math.round((bmr*state.act+state.goal)/10)*10);userTarget=target;
+  let protein=Math.round(w*1.8),fat=Math.round(target*0.25/9);
+  let carbs=Math.max(0,Math.round((target-protein*4-fat*9)/4));
+  let pk=protein*4,ck=carbs*4,fk=fat*9,tot=pk+ck+fk||1;
+  document.getElementById('kcal').innerHTML=target.toLocaleString()+'<small>kcal</small>';
+  setm('pg',protein+' g','pp',Math.round(pk/tot*100)+'%','pbar',pk/tot*100);
+  setm('cg',carbs+' g','cp',Math.round(ck/tot*100)+'%','cbar',ck/tot*100);
+  setm('fg',fat+' g','fp',Math.round(fk/tot*100)+'%','fbar',fk/tot*100);
+  updateRecipeDelta();
+}
+function setm(g,gv,p,pv,bar,bw){document.getElementById(g).textContent=gv;document.getElementById(p).textContent=pv;document.getElementById(bar).style.width=bw+'%';}
+function setFill(id,min,max){const el=document.getElementById(id);const pct=(el.value-min)/(max-min)*100;el.style.background=`linear-gradient(90deg,var(--persimmon) ${pct}%,var(--hair) ${pct}%)`;}
+
+const RECIPES=[
+  {n:'Creamy Tuscan Pasta',e:'🍝',kc:640,diet:['vegetarian'],meal:'dinner',time:25,q:'pasta tuscan creamy'},
+  {n:'Crispy Tofu Power Bowl',e:'🥗',kc:520,diet:['vegan','high-protein','gluten-free'],meal:'lunch',time:20,q:'tofu bowl rice'},
+  {n:'Greek Yogurt Berry Parfait',e:'🍓',kc:280,diet:['vegetarian','high-protein','gluten-free'],meal:'breakfast',time:5,q:'yogurt berry parfait'},
+  {n:'Chickpea Shakshuka',e:'🍳',kc:430,diet:['vegetarian','gluten-free'],meal:'breakfast',time:25,q:'egg chickpea shakshuka'},
+  {n:'Sesame Salmon &amp; Greens',e:'🐟',kc:560,diet:['high-protein','gluten-free'],meal:'dinner',time:30,q:'salmon fish greens'},
+  {n:'15-Min Veggie Stir-Fry',e:'🥦',kc:380,diet:['vegan'],meal:'dinner',time:15,q:'stir fry veggie noodle'},
+];
+let filters={diet:new Set(),meal:new Set(),time:new Set()};
+function toggleChip(btn){const f=btn.closest('.chips').dataset.facet,v=btn.dataset.v;
+  if(filters[f].has(v)){filters[f].delete(v);btn.classList.remove('on');}else{filters[f].add(v);btn.classList.add('on');}renderCards();}
+function clearFilters(){for(const k in filters)filters[k].clear();document.querySelectorAll('#s-search .chip').forEach(c=>c.classList.remove('on'));document.getElementById('searchq').value='';document.getElementById('calslider').value=900;renderCards();}
+function renderCards(){
+  const q=document.getElementById('searchq').value.toLowerCase().trim();
+  const calmax=+document.getElementById('calslider').value;
+  document.getElementById('calmax').textContent=calmax;
+  let list=RECIPES.filter(r=>{
+    if(r.kc>calmax)return false;
+    if(filters.diet.size&&![...filters.diet].every(d=>r.diet.includes(d)))return false;
+    if(filters.meal.size&&!filters.meal.has(r.meal))return false;
+    if(filters.time.size){const ok=(filters.time.has('under15')&&r.time<=15)||(filters.time.has('under30')&&r.time<=30);if(!ok)return false;}
+    if(q&&!(r.n.toLowerCase().includes(q)||r.q.includes(q)))return false;
+    return true;
+  });
+  const wrap=document.getElementById('cards'),empty=document.getElementById('emptystate');
+  document.getElementById('rescount').textContent=list.length;
+
+  const all=[...filters.diet,...filters.meal,...filters.time];
+  const ac=document.getElementById('activechips');
+  if(all.length||q||calmax<900){ac.innerHTML=all.map(v=>`<button class="chip on" onclick="removeActive('${v}')">${v} <span class="x">×</span></button>`).join('')+(calmax<900?`<span class="lbl">≤ ${calmax} kcal</span>`:'');}
+  else ac.innerHTML='<span class="lbl">No filters — showing all</span>';
+  if(!list.length){wrap.style.display='none';empty.style.display='block';return;}
+  wrap.style.display='grid';empty.style.display='none';
+  wrap.innerHTML=list.map(r=>`<button class="rcard" onclick="go('recipe')">
+    <div class="img">${r.e}</div><div class="cb"><h3>${r.n}</h3>
+    <div class="kc">${r.kc} kcal</div>
+    <div class="tags">${r.diet.map(d=>`<span class="tg">${d}</span>`).join('')}<span class="tg">${r.meal}</span><span class="tg">${r.time}m</span></div>
+    </div></button>`).join('');
+}
+function removeActive(v){for(const k in filters)filters[k].delete(v);document.querySelectorAll('#s-search .chip').forEach(c=>{if(c.dataset.v===v)c.classList.remove('on');});renderCards();}
+
+let ingredients=[
+  {id:'pasta',e:'🍝',n:'Pasta',sub:'2 servings',kc:280,swap:false},
+  {id:'cream',e:'🥛',n:'Heavy cream',sub:'½ cup',kc:200,swap:true,kind:'cream'},
+  {id:'parm',e:'🧀',n:'Parmesan',sub:'¼ cup',kc:90,swap:true,kind:'cheese'},
+  {id:'spin',e:'🥬',n:'Spinach',sub:'2 cups',kc:15,swap:false},
+  {id:'tom',e:'🍅',n:'Sun-dried tomatoes',sub:'⅓ cup',kc:35,swap:false},
+  {id:'oil',e:'🫒',n:'Olive oil + garlic',sub:'1 tbsp',kc:120,swap:false},
+];
+const ALTS={
+  cream:[{e:'🥥',n:'Coconut cream',sub:'½ cup',kc:140},{e:'🌰',n:'Cashew cream',sub:'½ cup',kc:120},{e:'🥛',n:'Oat cream',sub:'½ cup',kc:90}],
+  cheese:[{e:'🌱',n:'Nutritional yeast',sub:'2 tbsp',kc:40},{e:'🧀',n:'Vegan parmesan',sub:'¼ cup',kc:70}]
+};
+function renderIng(){
+  document.getElementById('inglist').innerHTML=ingredients.map(i=>`<div class="ing">
+    <div class="em">${i.e}</div>
+    <div class="nm">${i.n}<small>${i.sub}</small></div>
+    <div class="kc">${i.kc} kcal</div>
+    ${i.swap?`<button class="swapbtn ${i.swapped?'swapped':''}" onclick="openSwap('${i.id}')">${i.swapped?'✓ Swapped':'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap'}</button>`:''}
+  </div>`).join('');
+  const total=ingredients.reduce((s,i)=>s+i.kc,0);
+  document.getElementById('rdtotal').textContent=total+' kcal';
+  document.getElementById('rdkcal').textContent=total+' kcal';
+  updateRecipeDelta(total);
+}
+function updateRecipeDelta(total){
+  total=total||ingredients.reduce((s,i)=>s+i.kc,0);
+  const pct=Math.round(total/userTarget*100);
+  const el=document.getElementById('rddelta');if(el)el.textContent=`≈ ${pct}% of your ${userTarget.toLocaleString()} target`;
+}
+let swapId=null;
+function openSwap(id){swapId=id;const ing=ingredients.find(i=>i.id===id);
+  document.getElementById('swaptarget').textContent=ing.n.toLowerCase();
+  document.getElementById('altlist').innerHTML=ALTS[ing.kind].map((a,idx)=>{
+    const d=a.kc-ing.kc;const cls=d<=0?'down':'up';const sign=d>0?'+':'';
+    return `<div class="alt" onclick="doSwap(${idx})"><div class="em">${a.e}</div><div class="nm">${a.n}<small>${a.sub}</small></div><div class="d ${cls}">${sign}${d} kcal</div></div>`;}).join('');
+  document.getElementById('overlay').classList.add('on');
+}
+function doSwap(idx){const ing=ingredients.find(i=>i.id===swapId);const a=ALTS[ing.kind][idx];
+  ing.e=a.e;ing.n=a.n;ing.sub=a.sub;ing.kc=a.kc;ing.swapped=true;
+  closeModal();renderIng();toast(`Swapped to ${a.n}`);}
+function closeModal(){document.getElementById('overlay').classList.remove('on');}
+
+const PANTRY={
+  'Produce':[{n:'Spinach',e:'🥬'},{n:'Tomato',e:'🍅'},{n:'Broccoli',e:'🥦'},{n:'Bell pepper',e:'🫑'},{n:'Avocado',e:'🥑'},{n:'Mushroom',e:'🍄'}],
+  'Proteins':[{n:'Tofu',e:'🧊'},{n:'Eggs',e:'🥚'},{n:'Chicken',e:'🍗'},{n:'Chickpeas',e:'🫘'},{n:'Salmon',e:'🐟',soon:true}],
+  'Grains':[{n:'Rice',e:'🍚'},{n:'Pasta',e:'🍝'},{n:'Quinoa',e:'🌾'},{n:'Bread',e:'🍞'}],
+  'Dairy & alt':[{n:'Greek yogurt',e:'🥛'},{n:'Parmesan',e:'🧀'},{n:'Oat milk',e:'🥥'}],
+};
+let basket=[];
+function renderShelves(){
+  document.getElementById('shelves').innerHTML=Object.entries(PANTRY).map(([cat,items])=>`
+    <div class="shelf" data-cat="${cat}"><h4>${cat}</h4><div class="items">
+    ${items.map(it=>`<div class="item ${it.soon?'out':''} ${basket.includes(it.n)?'added':''}"
+        draggable="${it.soon?'false':'true'}" data-n="${it.n}"
+        ondragstart="dragStart(event)" onclick="${it.soon?'':`addItem('${it.n}')`}">
+        ${it.e} ${it.n}${it.soon?' <span class="hint" style="font-size:10px">soon</span>':' <span class="plus">+</span>'}</div>`).join('')}
+    </div></div>`).join('');
+}
+function filterPantry(){const q=document.getElementById('pantryq').value.toLowerCase().trim();
+  document.querySelectorAll('#shelves .item').forEach(it=>{it.style.display=it.dataset.n.toLowerCase().includes(q)?'':'none';});
+  document.querySelectorAll('#shelves .shelf').forEach(sh=>{const any=[...sh.querySelectorAll('.item')].some(i=>i.style.display!=='none');sh.style.display=any?'':'none';});}
+function addItem(n){if(!basket.includes(n)){basket.push(n);renderBasket();renderShelves();}}
+function removeItem(n){basket=basket.filter(x=>x!==n);renderBasket();renderShelves();}
+function renderBasket(){
+  document.getElementById('bcount').textContent=basket.length+(basket.length===1?' item':' items');
+  document.getElementById('basketph').style.display=basket.length?'none':'grid';
+  document.getElementById('basketitems').innerHTML=basket.map(n=>{
+    let e='';for(const items of Object.values(PANTRY)){const f=items.find(i=>i.n===n);if(f)e=f.e;}
+    return `<span class="bchip">${e} ${n}<button onclick="removeItem('${n}')">×</button></span>`;}).join('');
+  document.getElementById('genbtn').disabled=basket.length===0;
+}
+
+let dragN=null;
+function dragStart(e){dragN=e.target.dataset.n;e.dataTransfer.effectAllowed='copy';}
+function dragOver(e){e.preventDefault();document.getElementById('basket').classList.add('drag');}
+function dragLeave(e){document.getElementById('basket').classList.remove('drag');}
+function dropItem(e){e.preventDefault();document.getElementById('basket').classList.remove('drag');if(dragN)addItem(dragN);dragN=null;}
+function fillResult(){
+  document.getElementById('loadwrap').classList.remove('on');
+  document.getElementById('resultbody').style.display='block';
+  const need=['Tofu','Rice','Broccoli','Bell pepper','Avocado','Sesame'];
+  const have=need.filter(n=>basket.includes(n));
+  const pct=Math.round(Math.max(have.length,Math.min(basket.length,need.length-1))/need.length*100);
+  document.getElementById('matchpct').textContent=pct+'%';
+  document.getElementById('matchbar').style.width=pct+'%';
+  document.getElementById('matchbadge').textContent=`Best match · ${Math.min(basket.length,5)}/6 ingredients`;
+  document.getElementById('haves').innerHTML=need.map(n=>{
+    const yes=basket.includes(n);return `<span class="have ${yes?'y':'n'}">${yes?'✓':'+ buy'} ${n}</span>`;}).join('');
+  document.getElementById('altcards').innerHTML=[
+    {n:'Veggie Fried Rice',e:'🍚',kc:440},{n:'Loaded Avocado Toast',e:'🥑',kc:330},{n:'Garden Omelette',e:'🍳',kc:290}
+  ].map(r=>`<button class="rcard" onclick="go('recipe')"><div class="img">${r.e}</div><div class="cb"><h3>${r.n}</h3><div class="kc">${r.kc} kcal</div></div></button>`).join('');
+}
+function generate(){
+  go('result');
+  document.getElementById('loadwrap').classList.add('on');
+  document.getElementById('resultbody').style.display='none';
+  setTimeout(()=>{fillResult();toast('Found 4 recipes you can make');},1300);
+}
+
+let toastT;
+function toast(msg){const t=document.getElementById('toast');document.getElementById('toastmsg').textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);}
+
+calc();renderCards();renderIng();renderShelves();renderBasket();
+
+(function(){
+  const p=new URLSearchParams(location.search);
+  const s=p.get('screen'); if(s)go(s);
+  if(p.get('modal')==='cream'){openSwap('cream');}
+  if(p.get('seeded')){
+    filters.diet.add('vegetarian');filters.meal.add('dinner');
+    document.querySelectorAll('#s-search .chip').forEach(c=>{if(c.dataset.v==='vegetarian'||c.dataset.v==='dinner')c.classList.add('on');});
+    document.getElementById('calslider').value=700;renderCards();
+    basket=['Tofu','Broccoli','Rice'];renderBasket();renderShelves();
+  }
+  if(s==='result'){if(!basket.length){basket=['Tofu','Broccoli','Rice'];renderBasket();renderShelves();}fillResult();}
+  if(p.get('bare')){const n=document.querySelector('nav');if(n)n.style.display='none';const f=document.querySelector('footer');if(f)f.style.display='none';document.body.style.backgroundImage='none';}
+})();
+</script>
+</body>
+</html>
