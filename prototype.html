@@ -10,8 +10,8 @@
 <style>
   :root{
     --paper:#FCFBF8; --card:#FFFFFF; --ink:#181712; --ink-soft:#5C564A;
-    --persimmon:#E2552B; --herb:#4E9D5B; --herb-d:#2F6B3E;
-    --protein:#C7452B; --carbs:#E0A23D; --fat:#5E8C6A;
+    --persimmon:#388E3C; --herb:#4E9D5B; --herb-d:#2F6B3E;
+    --protein:#1976D2; --carbs:#E0A23D; --fat:#5E8C6A;
     --rule:#181712; --hair:#E2DCCF; --hair2:#EFEADD; --soft-bg:#F4F1E9;
     --r:14px;
   }
@@ -48,8 +48,8 @@ nav{position:sticky;top:0;z-index:50;background:rgba(252,251,248,.88);backdrop-f
 .btn{font-size:15px;font-weight:700;background:var(--ink);color:var(--paper);border:none;padding:13px 22px;border-radius:11px;cursor:pointer;display:inline-flex;align-items:center;gap:9px;transition:.15s;box-shadow:4px 4px 0 var(--ink)}
   .btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
   .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
-  .btn.persim{background:var(--persimmon);box-shadow:4px 4px 0 #8f3015}
-  .btn.persim:hover{box-shadow:5px 5px 0 #8f3015}
+  .btn.persim{background:var(--persimmon);box-shadow:4px 4px 0 var(--ink)}
+  .btn.persim:hover{box-shadow:5px 5px 0 var(--ink)}
   .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink);box-shadow:none}
   .btn.ghost:hover{background:var(--soft-bg);transform:none}
   .btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;transform:none}
@@ -60,7 +60,8 @@ nav{position:sticky;top:0;z-index:50;background:rgba(252,251,248,.88);backdrop-f
   .hero h1 em{font-style:italic;color:var(--persimmon)}
   .hero p{font-size:18px;color:var(--ink-soft);margin:18px 0 26px;max-width:44ch}
   .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-  .hero-card{background:var(--card);border:2px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--ink);padding:24px;transform:rotate(1.2deg)}
+  .hero-card{position:relative;background:var(--card);border:2px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--ink);padding:24px}
+  .demo-badge{position:absolute;top:14px;right:14px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;background:var(--ink);color:var(--paper);padding:6px 10px;border-radius:6px}
   .hero-card .lab{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
   .hero-card .kcal{font-family:'Fraunces',serif;font-weight:900;font-size:56px;line-height:1;margin:4px 0 2px}
   .hero-card .kcal small{font-family:'Space Mono',monospace;font-size:13px;color:var(--ink-soft);font-weight:700}
@@ -277,6 +278,7 @@ nav{position:sticky;top:0;z-index:50;background:rgba(252,251,248,.88);backdrop-f
         </div>
       </div>
       <div class="hero-card">
+        <div class="demo-badge">DEMO</div>
         <div class="lab">Your daily target</div>
         <div class="kcal">2,010<small>kcal</small></div>
         <div class="hero-rule"></div>
