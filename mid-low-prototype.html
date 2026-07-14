@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Snack Overflow — Low-Fidelity Presentation Wireframes</title>
+<title>Snack Overflow — Medium-Fidelity Prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -35,7 +35,6 @@
   .ftitle .task{font-family:'Space Mono',monospace;font-size:12px;color:var(--soft);margin-left:auto}
 
   .device{position:relative;background:#fff;border:2.5px solid var(--ink);border-radius:16px}
-  
   .pad{padding:16px;min-height:480px;display:flex;flex-direction:column}
   .pad>.nav+*{margin-top:auto}
   .pad>:last-child{margin-bottom:auto}
@@ -57,7 +56,6 @@
   .nav .t.on{background:var(--ink);color:#fff}
   .nav .acct{margin-left:auto;font-family:'Space Mono',monospace;font-size:10px;border:1.8px solid var(--soft2);color:var(--soft);padding:4px 9px;border-radius:var(--wp)}
 
-  /* Recipe Header Styles */
   .r-head-container { margin-bottom:14px; }
   .r-back { font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:var(--soft); cursor:pointer; display:inline-block; margin-bottom:10px; }
   .r-head { border:2.5px solid var(--ink); border-radius:var(--w1); background:#fff; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; }
@@ -71,24 +69,27 @@
   .r-head .r-cal-val { font-family:'Fraunces',serif; font-weight:900; font-size:32px; line-height:1; color:var(--ink); }
 
   .cols{display:flex;gap:12px}.col{flex:1}
-  .panel{border:2px solid var(--ink);border-radius:var(--w1);background:#fff;overflow:hidden}
+  .panel{border:2px solid var(--ink);border-radius:var(--w1);background:#fff;overflow:hidden; display:flex; flex-direction:column}
   .panel-h{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:2px solid var(--ink)}
   .panel-h b{font-family:'Fraunces',serif;font-weight:600;font-size:15px}
   .panel-h .s{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft)}
-  .panel-b{padding:12px}
+  .panel-b{padding:12px; flex-grow:1}
 
+  /* Input Redundancy Updates */
   .lab{font-size:12px;font-weight:700;display:flex;justify-content:space-between;margin-bottom:6px}
   .lab .v{font-family:'Space Mono',monospace;color:var(--soft)}
   .field{margin-bottom:12px}
   .seg{display:flex;gap:5px;flex-wrap:wrap}
-  .seg span{font-size:11.5px;font-weight:600;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;padding:5px 9px;background:#fff}
+  .seg span{font-size:11.5px;font-weight:600;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;padding:5px 9px;background:#fff; cursor:pointer; user-select:none}
   .seg span.on{background:var(--ink);color:#fff}
   .stepper{display:inline-flex;align-items:center;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;overflow:hidden}
   .stepper b{padding:0 10px;font-family:'Space Mono',monospace;font-size:14px}
   .stepper i{width:26px;height:28px;display:grid;place-items:center;font-style:normal;border-left:1.8px solid var(--ink);border-right:1.8px solid var(--ink);color:var(--soft)}
-  .slider{height:6px;background:var(--fill2);border-radius:4px;position:relative;margin:10px 2px}
+  .slider-row { display:flex; gap:10px; align-items:center; }
+  .slider{height:6px;background:var(--fill2);border-radius:4px;position:relative;flex:1}
   .slider::before{content:"";position:absolute;left:0;top:0;height:100%;width:55%;background:var(--soft2);border-radius:4px}
   .slider::after{content:"";position:absolute;left:55%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border:2.2px solid var(--ink);border-radius:50%;background:#fff}
+  .num-input { width: 54px; text-align: center; border: 1.8px solid var(--ink); border-radius: 6px; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 11.5px; padding: 4px 0; color:var(--ink); outline:none}
 
   .nf{border:2.5px solid var(--ink);border-radius:var(--w1);overflow:hidden;background:#fff}
   .nf .t{padding:10px 12px 8px}
@@ -110,7 +111,8 @@
   .hero .l{flex:1.1}
   .hero h3{font-family:'Fraunces',serif;font-weight:600;font-size:26px;line-height:1.02;margin:4px 0 8px}
   .hero .ey{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
-  .btnsk{display:inline-block;border:2px solid var(--ink);border-radius:11px 8px 11px 8px/8px 11px 8px 11px;padding:8px 14px;font-size:12.5px;font-weight:700;background:#fff;margin:8px 6px 0 0;cursor:pointer;text-align:center}
+  .btnsk{display:inline-block;border:2px solid var(--ink);border-radius:11px 8px 11px 8px/8px 11px 8px 11px;padding:8px 14px;font-size:12.5px;font-weight:700;background:#fff;margin:8px 6px 0 0;cursor:pointer;text-align:center; transition: all 0.1s}
+  .btnsk:active:not(:disabled) { transform: scale(0.97); }
   .btnsk.fill{background:var(--ink);color:#fff}
   .btnsk:disabled { opacity: 0.3; cursor: not-allowed; border-style: dashed; background: #fff !important; color: var(--soft2) !important; }
   
@@ -136,7 +138,15 @@
   .card .cc{padding:8px}
   .card .cc .k{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft);margin-top:6px}
 
-  /* Task 3 Component Styles */
+  /* HCI Scrollable Container Updates - MASK REMOVED */
+  .scroll-panel {
+    max-height: 145px; /* Tweak height for clean cut-off effect without blurring */
+    overflow-y: auto;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+  }
+  .scroll-panel::-webkit-scrollbar { display: none; }
+
   .ing{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1.5px solid var(--hair);font-size:13px}
   .ing .nm{flex:1;font-weight:600}
   .ing .nm small{display:block;font-weight:400;color:var(--soft);font-size:11px}
@@ -144,12 +154,19 @@
   .swap{font-size:11px;font-weight:700;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;padding:4px 9px;background:#fff;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px}
   .swap.selected-active{background:var(--ink);color:#fff}
   
-  /* Updated Totalbar Styles */
   .totalbar{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:12px 14px;background:#fff;border:2.5px solid var(--ink);border-radius:var(--w1);box-shadow:3px 3px 0 var(--soft2)}
   .totalbar .t1{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px}
   .totalbar .t2{font-family:'Fraunces',serif;font-weight:900;font-size:24px;color:var(--ink)}
   .totalbar .d{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--soft)}
   
+  /* HCI State Animation (Salient Feedback) */
+  @keyframes flashSuccess {
+    0% { background-color: var(--paper); }
+    50% { background-color: #d1ebd8; }
+    100% { background-color: var(--paper); }
+  }
+  .flash-animate { animation: flashSuccess 1.5s ease-out; }
+
   .alt{display:flex;align-items:center;gap:9px;padding:9px;border:1.8px solid var(--ink);border-radius:var(--w2);margin-bottom:7px;font-size:12.5px;cursor:pointer}
   .alt .bullet{width:18px;height:18px;flex:none;border:2px solid var(--soft2);border-radius:50%;background:var(--paper);position:relative;transition:all 0.1s;}
   .alt:hover .bullet{border-color:var(--soft);}
@@ -160,13 +177,16 @@
   .alt .d{font-family:'Space Mono',monospace;font-weight:700}
   .alt.highlighted-choice{border-color:var(--ink);background:var(--fill);box-shadow:0 0 0 1px var(--ink)}
 
+  /* HCI Visual Chunking Updates */
   .shelf{margin-bottom:11px}
-  .shelf h4{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--soft);margin-bottom:6px}
+  .shelf h4{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--ink);margin-bottom:6px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; padding:4px; border-radius:4px;}
+  .shelf h4:hover { background: var(--fill); }
+  .shelf .chevron { transition: transform 0.2s; font-size:14px; }
+  .shelf.collapsed .items { display: none; }
+  .shelf.collapsed .chevron { transform: rotate(-90deg); }
+
   .item{font-size:12px;font-weight:600;border:1.8px solid var(--ink);border-radius:var(--wp);padding:5px 10px;background:#fff;display:inline-flex;gap:6px;align-items:center;margin:0 5px 5px 0;cursor:pointer}
   .item .p{color:var(--soft)}
-  .item.out{border-style:dashed;border-color:var(--soft2);color:var(--soft2);text-decoration:line-through;cursor:not-allowed}
-  
-  /* Active State for Shelf Items */
   .item.on{background:var(--ink);color:#fff}
   .item.on .p{color:var(--soft2)}
 
@@ -186,7 +206,6 @@
   .have{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;border:1.8px solid;border-radius:8px 6px 8px 6px/6px 8px 6px 8px;padding:3px 7px;margin:0 4px 4px 0;display:inline-block}
   .have.y{border-color:#1f7a4d;color:#1f7a4d}.have.n{border-color:var(--soft2);color:var(--soft2)}
 
-  /* Show Full Recipe Anchor text styling */
   .show-full-recipe{text-align:center;font-weight:800;font-size:15px;margin-top:16px;cursor:pointer;display:block;color:var(--ink)}
 
   @media print{
@@ -248,8 +267,23 @@
               <div class="panel-b">
                 <div class="field"><div class="lab">Sex</div><div class="seg"><span class="on">Female</span><span>Male</span></div></div>
                 <div class="field"><div class="lab">Age <span class="v">allowed 0–120</span></div><span class="stepper"><b>–</b><i>22</i><b>+</b></span></div>
-                <div class="field"><div class="lab">Weight <span class="v">65 kg</span></div><div class="slider"></div></div>
-                <div class="field"><div class="lab">Height <span class="v">168 cm</span></div><div class="slider"></div></div>
+                
+                <div class="field">
+                  <div class="lab">Weight <span class="v">kg</span></div>
+                  <div class="slider-row">
+                    <div class="slider"></div>
+                    <input type="number" class="num-input" value="65">
+                  </div>
+                </div>
+                
+                <div class="field">
+                  <div class="lab">Height <span class="v">cm</span></div>
+                  <div class="slider-row">
+                    <div class="slider"></div>
+                    <input type="number" class="num-input" value="168">
+                  </div>
+                </div>
+
                 <div class="field"><div class="lab">Activity</div><div class="seg"><span>Sed</span><span>Light</span><span class="on">Moderate</span><span>Very</span></div></div>
                 <div class="field" style="margin:0"><div class="lab">Goal</div><div class="seg"><span>Lose fat</span><span class="on">Maintain</span><span>Build</span></div></div>
               </div>
@@ -326,11 +360,19 @@
 
       <div class="cols">
         <div class="col">
-          <div class="panel"><div class="panel-h"><b>Ingredients</b></div>
-            <div class="panel-b" style="padding:6px 12px">
-              <div class="ing"><span class="nm">Heavy cream<small>½ cup</small></span><span class="kc">200 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small>¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small>2 cups</small></span><span class="kc">15 kcal</span></div>
+          <div class="panel">
+            <div class="panel-h">
+              <b>Ingredients</b>
+              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
+                <span class="on" data-target="us">US</span>
+                <span data-target="metric">Metric</span>
+              </div>
+            </div>
+            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
+              <div class="ing"><span class="nm">Heavy cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">200 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
+              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
             </div>
           </div>
           <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2">640 kcal</div></div><div class="d">≈ 32% of your 2010 target</div></div>
@@ -374,24 +416,57 @@
 
       <div class="cols">
         <div class="col">
-          <div class="panel"><div class="panel-h"><b>Ingredients</b></div>
-            <div class="panel-b" style="padding:6px 12px">
-              <div class="ing" style="background:var(--paper)"><span class="nm">Heavy cream<small>½ cup</small></span><span class="kc">200 kcal</span><span class="swap selected-active"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small>¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small>2 cups</small></span><span class="kc">15 kcal</span></div>
+          <div class="panel">
+            <div class="panel-h">
+              <b>Ingredients</b>
+              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
+                <span class="on" data-target="us">US</span>
+                <span data-target="metric">Metric</span>
+              </div>
+            </div>
+            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
+              <div class="ing" style="background:var(--paper)"><span class="nm">Heavy cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">200 kcal</span><span class="swap selected-active"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
+              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
             </div>
           </div>
           <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2">640 kcal</div></div><div class="d">≈ 32% of your 2010 target</div></div>
         </div>
         <div class="col" style="flex:.85">
           <div class="panel" style="border-width:2.5px; height:100%; display:flex; flex-direction:column">
-            <div class="panel-h"><b>Swap "heavy cream" with...</b><span class="s">select alternative</span></div>
-            <div class="panel-b" style="flex-grow:1">
-              <div class="alt"><span class="bullet"></span><span class="nm">Coconut cream<small>½ cup</small></span><span class="d" style="color:#1f7a4d">−60 kcal</span></div>
-              <div class="alt"><span class="bullet"></span><span class="nm">Cashew cream<small>½ cup</small></span><span class="d" style="color:#1f7a4d">−80 kcal</span></div>
-              <div class="alt" style="margin:0"><span class="bullet"></span><span class="nm">Oat cream<small>½ cup</small></span><span class="d" style="color:#1f7a4d">−110 kcal</span></div>
+            <div class="panel-h"><b>Swap "Heavy cream"</b><span class="s">select alternative</span></div>
+            <div class="panel-b scroll-panel" style="flex-grow:1; max-height:165px; padding-bottom:16px;">
+              
+              <div class="alt">
+                <span class="bullet"></span>
+                <div class="nm" style="display:flex; flex-direction:column">
+                  <span>Coconut cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
+                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">98% TASTE MATCH</span>
+                </div>
+                <span class="d" style="color:#1f7a4d">▼ 60 kcal</span>
+              </div>
+              
+              <div class="alt">
+                <span class="bullet"></span>
+                <div class="nm" style="display:flex; flex-direction:column">
+                  <span>Cashew cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
+                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">95% TASTE MATCH</span>
+                </div>
+                <span class="d" style="color:#1f7a4d">▼ 80 kcal</span>
+              </div>
+              
+              <div class="alt" style="margin:0">
+                <span class="bullet"></span>
+                <div class="nm" style="display:flex; flex-direction:column">
+                  <span>Oat cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
+                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">85% TASTE MATCH</span>
+                </div>
+                <span class="d" style="color:#1f7a4d">▼ 110 kcal</span>
+              </div>
+
             </div>
-            <div style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper)">
+            <div style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2">
               <button class="btnsk fill" disabled>Confirm Swap</button>
             </div>
           </div>
@@ -427,24 +502,57 @@
 
       <div class="cols">
         <div class="col">
-          <div class="panel"><div class="panel-h"><b>Ingredients</b></div>
-            <div class="panel-b" style="padding:6px 12px">
-              <div class="ing" style="background:var(--paper)"><span class="nm">Heavy cream<small>½ cup</small></span><span class="kc">200 kcal</span><span class="swap selected-active"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small>¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small>2 cups</small></span><span class="kc">15 kcal</span></div>
+          <div class="panel">
+            <div class="panel-h">
+              <b>Ingredients</b>
+              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
+                <span class="on" data-target="us">US</span>
+                <span data-target="metric">Metric</span>
+              </div>
+            </div>
+            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
+              <div class="ing" style="background:var(--paper)"><span class="nm">Heavy cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">200 kcal</span><span class="swap selected-active"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
+              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
             </div>
           </div>
           <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2" style="color:var(--green)">530 kcal</div></div><div class="d">≈ 26% of your 2010 target</div></div>
         </div>
         <div class="col" style="flex:.85">
           <div class="panel" style="border-width:2.5px; height:100%; display:flex; flex-direction:column">
-            <div class="panel-h"><b>Swap "heavy cream" with...</b><span class="s"></span></div>
-            <div class="panel-b" style="flex-grow:1">
-              <div class="alt"><span class="bullet"></span><span class="nm">Coconut cream<small>½ cup</small></span><span class="d" style="color:#1f7a4d">−60 kcal</span></div>
-              <div class="alt"><span class="bullet"></span><span class="nm">Cashew cream<small>½ cup</small></span><span class="d" style="color:#1f7a4d">−80 kcal</span></div>
-              <div class="alt highlighted-choice"><span class="bullet"></span><span class="nm">Oat cream<small>½ cup</small></span><span class="d" style="color:#1f7a4d">−110 kcal</span></div>
+            <div class="panel-h"><b>Swap "Heavy cream"</b><span class="s"></span></div>
+            <div class="panel-b scroll-panel" style="flex-grow:1; max-height:165px; padding-bottom:16px;">
+              
+              <div class="alt">
+                <span class="bullet"></span>
+                <div class="nm" style="display:flex; flex-direction:column">
+                  <span>Coconut cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
+                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">98% TASTE MATCH</span>
+                </div>
+                <span class="d" style="color:#1f7a4d">▼ 60 kcal</span>
+              </div>
+              
+              <div class="alt">
+                <span class="bullet"></span>
+                <div class="nm" style="display:flex; flex-direction:column">
+                  <span>Cashew cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
+                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">95% TASTE MATCH</span>
+                </div>
+                <span class="d" style="color:#1f7a4d">▼ 80 kcal</span>
+              </div>
+              
+              <div class="alt highlighted-choice" style="margin:0">
+                <span class="bullet"></span>
+                <div class="nm" style="display:flex; flex-direction:column">
+                  <span>Oat cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
+                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">85% TASTE MATCH</span>
+                </div>
+                <span class="d" style="color:#1f7a4d">▼ 110 kcal</span>
+              </div>
+
             </div>
-            <div style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper)">
+            <div style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2">
               <button class="btnsk fill">Confirm Swap</button>
             </div>
           </div>
@@ -480,14 +588,22 @@
 
       <div class="cols">
         <div class="col">
-          <div class="panel"><div class="panel-h"><b>Ingredients</b></div>
-            <div class="panel-b" style="padding:6px 12px">
-              <div class="ing"><span class="nm">Oat cream<small>½ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small>¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small>2 cups</small></span><span class="kc">15 kcal</span></div>
+          <div class="panel">
+            <div class="panel-h">
+              <b>Ingredients</b>
+              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
+                <span class="on" data-target="us">US</span>
+                <span data-target="metric">Metric</span>
+              </div>
+            </div>
+            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
+              <div class="ing flash-animate" style="border-radius:4px; padding-left:4px; padding-right:4px;"><span class="nm">Oat cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
+              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
             </div>
           </div>
-          <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2" style="color:var(--green)">530 kcal</div></div><div class="d">≈ 26% of your 2010 target</div></div>
+          <div class="totalbar flash-animate"><div><div class="t1">Recipe total</div><div class="t2" style="color:var(--green)">530 kcal</div></div><div class="d">≈ 26% of your 2010 target</div></div>
         </div>
         <div class="col" style="flex:.85">
           <div class="panel" style="border-width:2.5px; height:100%">
@@ -528,24 +644,57 @@
 
       <div class="cols">
         <div class="col">
-          <div class="panel"><div class="panel-h"><b>Ingredients</b></div>
-            <div class="panel-b" style="padding:6px 12px">
-              <div class="ing" style="background:var(--paper)"><span class="nm">Oat cream<small>½ cup</small></span><span class="kc">90 kcal</span><span class="swap selected-active"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small>¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small>2 cups</small></span><span class="kc">15 kcal</span></div>
+          <div class="panel">
+            <div class="panel-h">
+              <b>Ingredients</b>
+              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
+                <span class="on" data-target="us">US</span>
+                <span data-target="metric">Metric</span>
+              </div>
+            </div>
+            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
+              <div class="ing" style="background:var(--paper)"><span class="nm">Oat cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">90 kcal</span><span class="swap selected-active"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
+              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
             </div>
           </div>
           <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2" style="color:var(--green)">530 kcal</div></div><div class="d">≈ 26% of your 2010 target</div></div>
         </div>
         <div class="col" style="flex:.85">
           <div class="panel" style="border-width:2.5px; height:100%; display:flex; flex-direction:column">
-            <div class="panel-h"><b>Swap "oat cream"</b><span class="s">select alternative</span></div>
-            <div class="panel-b" style="flex-grow:1">
-              <div class="alt"><span class="bullet"></span><span class="nm">Heavy cream<small>½ cup</small></span><span class="d" style="color:var(--red)">+110 kcal</span></div>
-              <div class="alt"><span class="bullet"></span><span class="nm">Coconut cream<small>½ cup</small></span><span class="d" style="color:var(--red)">+50 kcal</span></div>
-              <div class="alt" style="margin:0"><span class="bullet"></span><span class="nm">Cashew cream<small>½ cup</small></span><span class="d" style="color:var(--red)">+30 kcal</span></div>
+            <div class="panel-h"><b>Swap "Oat cream"</b><span class="s">select alternative</span></div>
+            <div class="panel-b scroll-panel" style="flex-grow:1; max-height:165px; padding-bottom:16px;">
+              
+              <div class="alt">
+                <span class="bullet"></span>
+                <div class="nm" style="display:flex; flex-direction:column">
+                  <span>Heavy cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
+                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">100% TASTE MATCH</span>
+                </div>
+                <span class="d" style="color:var(--red)">▲ 110 kcal</span>
+              </div>
+              
+              <div class="alt">
+                <span class="bullet"></span>
+                <div class="nm" style="display:flex; flex-direction:column">
+                  <span>Coconut cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
+                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">98% TASTE MATCH</span>
+                </div>
+                <span class="d" style="color:var(--red)">▲ 50 kcal</span>
+              </div>
+              
+              <div class="alt" style="margin:0">
+                <span class="bullet"></span>
+                <div class="nm" style="display:flex; flex-direction:column">
+                  <span>Cashew cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
+                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">95% TASTE MATCH</span>
+                </div>
+                <span class="d" style="color:var(--red)">▲ 30 kcal</span>
+              </div>
+
             </div>
-            <div style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper)">
+            <div style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2">
               <button class="btnsk fill" disabled>Confirm Swap</button>
             </div>
           </div>
@@ -566,8 +715,21 @@
       <div class="cols">
         <div class="col" style="flex:1.3">
           <div class="searchbar" style="margin-bottom:11px"><span class="mono" style="font-size:11px">🔍 What ingredients do you have?</span></div>
-          <div class="shelf"><h4>Produce</h4><span class="item">Spinach <span class="p">+</span></span><span class="item">Tomato <span class="p">+</span></span><span class="item">Broccoli <span class="p">+</span></span></div>
-          <div class="shelf" style="margin:0"><h4>Proteins</h4><span class="item">Tofu <span class="p">+</span></span><span class="item">Eggs <span class="p">+</span></span><span class="item">Salmon<span class="p">+</span></span></div>
+          
+          <div class="shelf">
+            <h4 onclick="this.parentElement.classList.toggle('collapsed')">Produce <span class="chevron">▾</span></h4>
+            <div class="items">
+              <span class="item">Spinach <span class="p">+</span></span><span class="item">Tomato <span class="p">+</span></span><span class="item">Broccoli <span class="p">+</span></span>
+            </div>
+          </div>
+          
+          <div class="shelf" style="margin:0">
+            <h4 onclick="this.parentElement.classList.toggle('collapsed')">Proteins <span class="chevron">▾</span></h4>
+            <div class="items">
+              <span class="item">Tofu <span class="p">+</span></span><span class="item">Eggs <span class="p">+</span></span><span class="item">Salmon<span class="p">+</span></span>
+            </div>
+          </div>
+          
         </div>
         <div class="col">
           <div class="basket"><div class="bh">Your basket <span class="c">0 items</span></div>
@@ -593,8 +755,21 @@
       <div class="cols">
         <div class="col" style="flex:1.3">
           <div class="searchbar" style="margin-bottom:11px"><span class="mono" style="font-size:11px">🔍 What ingredients do you have?</span></div>
-          <div class="shelf"><h4>Produce</h4><span class="item">Spinach <span class="p">+</span></span><span class="item">Tomato <span class="p">+</span></span><span class="item on">Broccoli <span class="p">✓</span></span></div>
-          <div class="shelf" style="margin:0"><h4>Proteins</h4><span class="item on">Tofu <span class="p">✓</span></span><span class="item">Eggs <span class="p">+</span></span><span class="item">Salmon<span class="p">+</span></span></div>
+          
+          <div class="shelf">
+            <h4 onclick="this.parentElement.classList.toggle('collapsed')">Produce <span class="chevron">▾</span></h4>
+            <div class="items">
+              <span class="item">Spinach <span class="p">+</span></span><span class="item">Tomato <span class="p">+</span></span><span class="item on">Broccoli <span class="p">✓</span></span>
+            </div>
+          </div>
+          
+          <div class="shelf" style="margin:0">
+            <h4 onclick="this.parentElement.classList.toggle('collapsed')">Proteins <span class="chevron">▾</span></h4>
+            <div class="items">
+              <span class="item on">Tofu <span class="p">✓</span></span><span class="item">Eggs <span class="p">+</span></span><span class="item">Salmon<span class="p">+</span></span>
+            </div>
+          </div>
+          
         </div>
         <div class="col">
           <div class="basket"><div class="bh">Your basket <span class="c">2 items</span></div>
@@ -640,5 +815,42 @@
   </div>
 
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Global Smart Scaling Toggle (US / Metric)
+    const toggles = document.querySelectorAll('.global-unit-toggle span');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        const selectedSystem = e.target.getAttribute('data-target'); // 'us' or 'metric'
+        
+        // Update global toggles UI to reflect selection across all frames
+        toggles.forEach(t => {
+          if (t.getAttribute('data-target') === selectedSystem) t.classList.add('on');
+          else t.classList.remove('on');
+        });
+
+        // Mutate the values in the DOM
+        const unitValues = document.querySelectorAll('.unit-val');
+        unitValues.forEach(val => {
+            val.innerText = val.getAttribute('data-' + selectedSystem);
+        });
+      });
+    });
+
+    // 2. Restart Salient Animation on Frame 7 if scrolled into view (Simulation)
+    const flashElements = document.querySelectorAll('.flash-animate');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animation = 'none';
+          entry.target.offsetHeight; /* trigger reflow */
+          entry.target.style.animation = null; 
+        }
+      });
+    });
+    flashElements.forEach(el => observer.observe(el));
+  });
+</script>
 </body>
 </html>
