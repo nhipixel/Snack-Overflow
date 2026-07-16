@@ -20,7 +20,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Hanken Grotesk',sans-serif;color:var(--ink);background:var(--paper);
-    background-image:radial-gradient(#e7e1d3 1px,transparent 1px);background-size:24px 24px;line-height:1.45;padding:0 0 80px}
+    background-image:radial-gradient(#e7e1d3 1px,transparent 1px);background-size:24px 24px;line-height:1.45;padding:0 0 80px; scroll-behavior: smooth;}
   .mono{font-family:'Space Mono',monospace}
   .wrap{max-width:1080px;margin:0 auto;padding:0 26px}
 
@@ -38,10 +38,6 @@
   .pad{padding:16px;min-height:480px;display:flex;flex-direction:column}
   .pad>.nav+*{margin-top:auto}
   .pad>:last-child{margin-bottom:auto}
-
-  .ln{height:8px;background:var(--wave) repeat-x left center;background-size:44px 8px;border-radius:3px}
-  .ln.w80{width:80%}.ln.w65{width:65%}
-  .lnset .ln{margin:6px 0}
 
   .imgph{position:relative;background:#fff;border:2px solid var(--ink);border-radius:var(--w2)}
   .imgph::before,.imgph::after{content:"";position:absolute;inset:5px}
@@ -72,24 +68,42 @@
   .panel{border:2px solid var(--ink);border-radius:var(--w1);background:#fff;overflow:hidden; display:flex; flex-direction:column}
   .panel-h{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:2px solid var(--ink)}
   .panel-h b{font-family:'Fraunces',serif;font-weight:600;font-size:15px}
-  .panel-h .s{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft)}
   .panel-b{padding:12px; flex-grow:1}
 
-  /* Input Redundancy Updates */
-  .lab{font-size:12px;font-weight:700;display:flex;justify-content:space-between;margin-bottom:6px}
+  .lab{font-size:12px;font-weight:700;display:flex;justify-content:space-between;margin-bottom:6px; align-items:flex-end}
   .lab .v{font-family:'Space Mono',monospace;color:var(--soft)}
-  .field{margin-bottom:12px}
+  
+  /* Error Validation Classes */
+  .field{margin-bottom:16px; position:relative;}
+  .err-msg { display:none; color:var(--red); font-family:'Space Mono',monospace; font-size:10px; margin-top:4px; position:absolute; bottom:-14px; left:0;}
+  .has-error { border-color:var(--red) !important; background-color:#fffafa !important;}
+  .has-error input { color:var(--red) !important; }
+  
   .seg{display:flex;gap:5px;flex-wrap:wrap}
-  .seg span{font-size:11.5px;font-weight:600;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;padding:5px 9px;background:#fff; cursor:pointer; user-select:none}
+  .seg span{font-size:11.5px;font-weight:600;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;padding:5px 9px;background:#fff; cursor:pointer; user-select:none; transition:0.1s}
   .seg span.on{background:var(--ink);color:#fff}
-  .stepper{display:inline-flex;align-items:center;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;overflow:hidden}
-  .stepper b{padding:0 10px;font-family:'Space Mono',monospace;font-size:14px}
-  .stepper i{width:26px;height:28px;display:grid;place-items:center;font-style:normal;border-left:1.8px solid var(--ink);border-right:1.8px solid var(--ink);color:var(--soft)}
-  .slider-row { display:flex; gap:10px; align-items:center; }
-  .slider{height:6px;background:var(--fill2);border-radius:4px;position:relative;flex:1}
-  .slider::before{content:"";position:absolute;left:0;top:0;height:100%;width:55%;background:var(--soft2);border-radius:4px}
-  .slider::after{content:"";position:absolute;left:55%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border:2.2px solid var(--ink);border-radius:50%;background:#fff}
-  .num-input { width: 54px; text-align: center; border: 1.8px solid var(--ink); border-radius: 6px; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 11.5px; padding: 4px 0; color:var(--ink); outline:none}
+  
+  .sys-us { display: none !important; }
+  .sys-metric { display: flex !important; }
+  body.mode-us .sys-us { display: flex !important; }
+  body.mode-us .sys-metric { display: none !important; }
+  body.mode-us .lbl-metric { display: none; }
+  body.mode-us .lbl-us { display: inline; }
+  body:not(.mode-us) .lbl-metric { display: inline; }
+  body:not(.mode-us) .lbl-us { display: none; }
+
+  .stepper{display:inline-flex;align-items:center;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;overflow:hidden; background:#fff; transition:0.2s}
+  .stepper input { width:64px; text-align:center; border:none; outline:none; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; color:var(--ink); -moz-appearance: textfield; background:transparent}
+  .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .stepper i{width:28px;height:28px;display:grid;place-items:center;font-style:normal;font-weight:900; border-left:1.8px solid var(--ink);border-right:1.8px solid var(--ink);color:var(--ink); cursor:pointer; user-select:none; background:var(--paper)}
+  .stepper i:active { background:var(--fill2) }
+  .stepper i.minus { border-left:none; }
+  .stepper i.plus { border-right:none; }
+  
+  .slider-row { display:flex; gap:10px; align-items:center; position:relative;}
+  .interactive-slider { -webkit-appearance:none; width:100%; height:6px; background:var(--fill2); border-radius:4px; outline:none; }
+  .interactive-slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:18px; height:18px; border:2.2px solid var(--ink); border-radius:50%; background:#fff; cursor:pointer; box-shadow:0 0 0 2px var(--paper) }
+  .interactive-slider:active::-webkit-slider-thumb { background:var(--fill2); }
 
   .nf{border:2.5px solid var(--ink);border-radius:var(--w1);overflow:hidden;background:#fff}
   .nf .t{padding:10px 12px 8px}
@@ -101,17 +115,18 @@
   .nf .cal .big{font-family:'Fraunces',serif;font-weight:900;font-size:42px;line-height:.85}
   .nf .cal .big sup{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft)}
   .nf .rows{padding:4px 12px 12px}
-  .nf .row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;padding:6px 0;border-bottom:1.5px solid var(--hair)}
-  .nf .row .nm{display:flex;align-items:center;gap:7px}
-  .nf .g{font-family:'Space Mono',monospace}
-  .nf .bar{height:6px;border-radius:4px;background:var(--fill2);overflow:hidden;margin-top:5px}
-  .nf .bar i{display:block;height:100%;border-radius:4px}
+  
+  .nf .row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1.5px solid var(--hair)}
+  .nf .row .nm{font-size:14px; font-weight:700;}
+  .nf .row .nm span { color:var(--soft2); font-weight:400; font-size:11px; margin-left:6px; font-family:'Space Mono',monospace; }
+  .nf .g{font-family:'Space Mono',monospace; font-size:18px; font-weight:800;}
 
   .hero{display:flex;gap:16px;align-items:center}
   .hero .l{flex:1.1}
   .hero h3{font-family:'Fraunces',serif;font-weight:600;font-size:26px;line-height:1.02;margin:4px 0 8px}
   .hero .ey{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
-  .btnsk{display:inline-block;border:2px solid var(--ink);border-radius:11px 8px 11px 8px/8px 11px 8px 11px;padding:8px 14px;font-size:12.5px;font-weight:700;background:#fff;margin:8px 6px 0 0;cursor:pointer;text-align:center; transition: all 0.1s}
+  .hero p { color:var(--soft); font-size:14px; margin: 12px 0 24px; max-width: 85%; line-height:1.5;}
+  .btnsk{display:inline-block;border:2px solid var(--ink);border-radius:11px 8px 11px 8px/8px 11px 8px 11px;padding:8px 14px;font-size:12.5px;font-weight:700;background:#fff;margin:8px 6px 0 0;cursor:pointer;text-align:center; transition: all 0.1s; text-decoration:none; color:var(--ink)}
   .btnsk:active:not(:disabled) { transform: scale(0.97); }
   .btnsk.fill{background:var(--ink);color:#fff}
   .btnsk:disabled { opacity: 0.3; cursor: not-allowed; border-style: dashed; background: #fff !important; color: var(--soft2) !important; }
@@ -121,7 +136,7 @@
   .herocard .big{font-family:'Fraunces',serif;font-weight:900;font-size:34px;line-height:1}
   .herocard .big sup{font-family:'Space Mono',monospace;font-size:9px;color:var(--soft)}
   .herocard .hr{height:7px;background:var(--ink);margin:7px 0}
-  .herocard .mrow{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:11px;padding:3px 0}
+  .herocard .mrow{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:11px;padding:3px 0; align-items:center}
   
   .facet{margin-bottom:13px}
   .facet h4{font-family:'Space Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
@@ -138,9 +153,8 @@
   .card .cc{padding:8px}
   .card .cc .k{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft);margin-top:6px}
 
-  /* HCI Scrollable Container Updates - MASK REMOVED */
   .scroll-panel {
-    max-height: 145px; /* Tweak height for clean cut-off effect without blurring */
+    max-height: 145px; 
     overflow-y: auto;
     -ms-overflow-style: none;  
     scrollbar-width: none; 
@@ -159,7 +173,6 @@
   .totalbar .t2{font-family:'Fraunces',serif;font-weight:900;font-size:24px;color:var(--ink)}
   .totalbar .d{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--soft)}
   
-  /* HCI State Animation (Salient Feedback) */
   @keyframes flashSuccess {
     0% { background-color: var(--paper); }
     50% { background-color: #d1ebd8; }
@@ -177,7 +190,6 @@
   .alt .d{font-family:'Space Mono',monospace;font-weight:700}
   .alt.highlighted-choice{border-color:var(--ink);background:var(--fill);box-shadow:0 0 0 1px var(--ink)}
 
-  /* HCI Visual Chunking Updates */
   .shelf{margin-bottom:11px}
   .shelf h4{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--ink);margin-bottom:6px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; padding:4px; border-radius:4px;}
   .shelf h4:hover { background: var(--fill); }
@@ -207,23 +219,16 @@
   .have.y{border-color:#1f7a4d;color:#1f7a4d}.have.n{border-color:var(--soft2);color:var(--soft2)}
 
   .show-full-recipe{text-align:center;font-weight:800;font-size:15px;margin-top:16px;cursor:pointer;display:block;color:var(--ink)}
-
-  @media print{
-    body{background:#fff;padding:0}
-    .wrap{max-width:none}
-    header.top{display:none}
-    .frame{page-break-inside:avoid;break-inside:avoid;page-break-after:always;margin:0;padding:24px 0}
-  }
 </style>
 </head>
-<body>
+<body class="mode-us">
 <div class="wrap">
   <header class="top">
     <div class="k">EECS 3461 · Snack Overflow Walkthrough Framework</div>
     <h1>System Evolution States</h1>
   </header>
   
-  <div class="frame">
+  <div class="frame" id="frame-1">
     <div class="ftitle"><span class="num">1</span><h2>Homepage — Landing Experience</h2><span class="task">entry point</span></div>
     <div class="device">
       <div class="pad">
@@ -236,23 +241,25 @@
           <div class="l">
             <div class="ey">Plan meals around your numbers</div>
             <h3>Cook to your targets,<br>not someone else's diet.</h3>
-            <div class="lnset"><div class="ln w80"></div><div class="ln w65"></div></div>
-            <div><span class="btnsk fill">Set my targets →</span><span class="btnsk">Cook from my fridge</span></div>
+            
+            <p>Stop guessing your macros. Snack Overflow dynamically scales every recipe's ingredients to perfectly match your personalized metabolic profile and daily nutritional goals.</p>
+            
+            <div><a href="#frame-2" class="btnsk fill">Set my targets →</a><button class="btnsk" disabled>Cook from my fridge</button></div>
           </div>
           <div class="herocard">
             <div class="cap">Your daily target</div>
-            <div class="big">2010<sup>kcal</sup></div>
+            <div class="big sync-cals">2010<sup>kcal</sup></div>
             <div class="hr"></div>
-            <div class="mrow"><span>Protein</span><b>117 g</b></div>
-            <div class="mrow"><span>Carbs</span><b>226 g</b></div>
-            <div class="mrow"><span>Fat</span><b>56 g</b></div>
+            <div class="mrow"><span>Protein</span><b class="sync-p-val">117 g</b></div>
+            <div class="mrow"><span>Carbs</span><b class="sync-c-val">226 g</b></div>
+            <div class="mrow"><span>Fat</span><b class="sync-f-val">56 g</b></div>
           </div>
         </div>
       </div>
     </div>
   </div>
   
-  <div class="frame">
+  <div class="frame" id="frame-2">
     <div class="ftitle"><span class="num">2</span><h2>Daily Targets — Metric Recalculation Engine</h2><span class="task">Task 1</span></div>
     <div class="device">
       <div class="pad">
@@ -263,29 +270,83 @@
         </div>
         <div class="cols">
           <div class="col">
-            <div class="panel"><div class="panel-h"><b>Your stats</b></div>
+            <div class="panel">
+              <div class="panel-h">
+                <b>Your stats</b>
+                <div class="seg system-toggle-btn" style="transform: scale(0.85); margin:0;">
+                  <span class="on" data-sys="us">US</span>
+                  <span data-sys="metric">Metric</span>
+                </div>
+              </div>
               <div class="panel-b">
-                <div class="field"><div class="lab">Sex</div><div class="seg"><span class="on">Female</span><span>Male</span></div></div>
-                <div class="field"><div class="lab">Age <span class="v">allowed 0–120</span></div><span class="stepper"><b>–</b><i>22</i><b>+</b></span></div>
+                
+                <div class="field"><div class="lab">Sex</div><div class="seg logic-group" data-target="sex"><span class="on" data-val="f">Female</span><span data-val="m">Male</span></div></div>
                 
                 <div class="field">
-                  <div class="lab">Weight <span class="v">kg</span></div>
+                  <div class="lab">Age <span class="v">years</span></div>
                   <div class="slider-row">
-                    <div class="slider"></div>
-                    <input type="number" class="num-input" value="65">
+                    <div class="stepper" data-min="1" data-max="130" data-step="1">
+                      <i class="minus">–</i><input type="text" inputmode="numeric" id="val-age" value="22" min="1" max="130" step="1"><i class="plus">+</i>
+                    </div>
                   </div>
+                  <div class="err-msg"></div>
                 </div>
                 
                 <div class="field">
-                  <div class="lab">Height <span class="v">cm</span></div>
-                  <div class="slider-row">
-                    <div class="slider"></div>
-                    <input type="number" class="num-input" value="168">
+                  <div class="lab">Weight <span class="v"><span class="lbl-metric">kg</span><span class="lbl-us">lbs</span></span></div>
+                  
+                  <div class="slider-row sys-metric">
+                    <input type="range" class="interactive-slider" id="sld-kg" min="0" max="635" step="0.1" value="65.0">
+                    <div class="stepper" data-min="0" data-max="635" data-step="0.1">
+                      <i class="minus">–</i><input type="text" inputmode="decimal" id="val-kg" value="65.0" min="0" max="635" step="0.1" data-sync="sld-kg"><i class="plus">+</i>
+                    </div>
                   </div>
+                  <div class="err-msg sys-metric"></div>
+                  
+                  <div class="slider-row sys-us">
+                    <input type="range" class="interactive-slider" id="sld-lbs" min="0" max="1400" step="0.1" value="143.3">
+                    <div class="stepper" data-min="0" data-max="1400" data-step="0.1">
+                      <i class="minus">–</i><input type="text" inputmode="decimal" id="val-lbs" value="143.3" min="0" max="1400" step="0.1" data-sync="sld-lbs"><i class="plus">+</i>
+                    </div>
+                  </div>
+                  <div class="err-msg sys-us"></div>
+                </div>
+                
+                <div class="field">
+                  <div class="lab">Height <span class="v"><span class="lbl-metric">cm</span><span class="lbl-us">ft & in</span></span></div>
+                  
+                  <div class="slider-row sys-metric">
+                    <input type="range" class="interactive-slider" id="sld-cm" min="10.2" max="304.8" step="0.1" value="168.0">
+                    <div class="stepper" data-min="10.2" data-max="304.8" data-step="0.1">
+                      <i class="minus">–</i><input type="text" inputmode="decimal" id="val-cm" value="168.0" min="10.2" max="304.8" step="0.1" data-sync="sld-cm"><i class="plus">+</i>
+                    </div>
+                  </div>
+                  <div class="err-msg sys-metric"></div>
+                  
+                  <div class="slider-row sys-us" style="justify-content: flex-start; gap:16px;">
+                    <div style="display:flex; align-items:center; gap:8px">
+                      <div class="stepper" data-min="0" data-max="10" data-step="1">
+                        <i class="minus">–</i><input type="text" inputmode="numeric" id="val-ft" value="5" min="0" max="10" step="1"><i class="plus">+</i>
+                      </div> <span class="v" style="font-size:11px">ft</span>
+                    </div>
+                    
+                    <div style="display:flex; align-items:center; gap:8px">
+                      <div class="stepper" data-min="0" data-max="11.5" data-step="0.5">
+                        <i class="minus">–</i><input type="text" inputmode="decimal" id="val-in" value="6.0" min="0" max="11.5" step="0.5"><i class="plus">+</i>
+                      </div> <span class="v" style="font-size:11px">in</span>
+                    </div>
+                  </div>
+                  <div class="err-msg sys-us"></div>
                 </div>
 
-                <div class="field"><div class="lab">Activity</div><div class="seg"><span>Sed</span><span>Light</span><span class="on">Moderate</span><span>Very</span></div></div>
-                <div class="field" style="margin:0"><div class="lab">Goal</div><div class="seg"><span>Lose fat</span><span class="on">Maintain</span><span>Build</span></div></div>
+                <div class="field"><div class="lab">Activity</div><div class="seg logic-group" data-target="activity">
+                  <span data-val="1.2">Sed</span><span data-val="1.375">Light</span><span class="on" data-val="1.55">Moderate</span><span data-val="1.725">Very</span>
+                </div></div>
+                
+                <div class="field" style="margin:0"><div class="lab">Goal</div><div class="seg logic-group" data-target="goal">
+                  <span data-val="-500">Lose fat</span><span class="on" data-val="0">Maintain</span><span data-val="500">Build</span>
+                </div></div>
+                
               </div>
             </div>
           </div>
@@ -293,12 +354,12 @@
             <div class="nf">
               <div class="t"><div class="ti">Nutrition Targets</div><div class="me">per day · recalculating live</div></div>
               <div class="rxl"></div>
-              <div class="cal"><span class="l">Calories</span><span class="big">2010<sup>kcal</sup></span></div>
+              <div class="cal"><span class="l">Calories</span><span class="big sync-cals">2010<sup>kcal</sup></span></div>
               <div class="rl"></div>
               <div class="rows">
-                <div class="row"><span class="nm">Protein</span><span class="g">117 g · 23%</span></div><div class="bar"><i style="background:var(--m1);width:23%"></i></div>
-                <div class="row" style="margin-top:5px"><span class="nm">Carbs</span><span class="g">226 g · 45%</span></div><div class="bar"><i style="background:var(--m2);width:45%"></i></div>
-                <div class="row" style="margin-top:5px"><span class="nm">Fat</span><span class="g">56 g · 25%</span></div><div class="bar"><i style="background:var(--m3);width:25%"></i></div>
+                <div class="row"><span class="nm">Protein <span>25%</span></span><span class="g sync-p-val">117 g</span></div>
+                <div class="row"><span class="nm">Carbs <span>45%</span></span><span class="g sync-c-val">226 g</span></div>
+                <div class="row" style="border:none"><span class="nm">Fat <span>30%</span></span><span class="g sync-f-val">56 g</span></div>
               </div>
             </div>
           </div>
@@ -319,7 +380,7 @@
           <div class="facet"><h4>Diet</h4><div class="chips"><span class="chip">Vegan</span><span class="chip on">Vegetarian ×</span><span class="chip">High-protein</span></div></div>
           <div class="facet"><h4>Meal</h4><div class="chips"><span class="chip">Breakfast</span><span class="chip">Lunch</span><span class="chip on">Dinner ×</span></div></div>
           <div class="facet"><h4>Time</h4><div class="chips"><span class="chip">Under 15m</span><span class="chip">Under 30m</span></div></div>
-          <div class="facet" style="margin:0"><h4>Max calories — 700</h4><div class="slider"></div></div>
+          <div class="facet" style="margin:0"><h4>Max calories — 700</h4><div class="interactive-slider" style="margin-top:10px; width:90%"></div></div>
         </div>
         <div class="col" style="flex:1.35">
           <div class="searchbar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="vertical-align:-2px;flex:none"><circle cx="11" cy="11" r="7"></circle><line x1="20.5" y1="20.5" x2="16.5" y2="16.5"></line></svg> <span>Search e.g. pasta, tofu…</span></div>
@@ -818,38 +879,329 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // 1. Global Smart Scaling Toggle (US / Metric)
-    const toggles = document.querySelectorAll('.global-unit-toggle span');
-    toggles.forEach(toggle => {
+    
+    // --- 1. Global Scale Toggles (US/Metric for Recipes) ---
+    const recipeToggles = document.querySelectorAll('.global-unit-toggle span');
+    recipeToggles.forEach(toggle => {
       toggle.addEventListener('click', (e) => {
-        const selectedSystem = e.target.getAttribute('data-target'); // 'us' or 'metric'
-        
-        // Update global toggles UI to reflect selection across all frames
-        toggles.forEach(t => {
+        const selectedSystem = e.target.getAttribute('data-target');
+        recipeToggles.forEach(t => {
           if (t.getAttribute('data-target') === selectedSystem) t.classList.add('on');
           else t.classList.remove('on');
         });
-
-        // Mutate the values in the DOM
-        const unitValues = document.querySelectorAll('.unit-val');
-        unitValues.forEach(val => {
+        document.querySelectorAll('.unit-val').forEach(val => {
             val.innerText = val.getAttribute('data-' + selectedSystem);
         });
       });
     });
 
-    // 2. Restart Salient Animation on Frame 7 if scrolled into view (Simulation)
-    const flashElements = document.querySelectorAll('.flash-animate');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animation = 'none';
-          entry.target.offsetHeight; /* trigger reflow */
-          entry.target.style.animation = null; 
+    // --- 2. System Settings Toggle (US/Metric for Stats Panel) & Snapping Logic ---
+    const sysToggles = document.querySelectorAll('.system-toggle-btn span');
+    sysToggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        const sys = e.target.getAttribute('data-sys');
+        sysToggles.forEach(t => t.classList.remove('on'));
+        e.target.classList.add('on');
+        
+        if (sys === 'us') {
+          document.body.classList.add('mode-us');
+          let kg = parseFloat(document.getElementById('val-kg').value) || 0;
+          if (kg > 635) kg = 635; 
+          
+          let lbs = (kg === 635) ? 1400 : Math.round((kg * 2.20462) * 10) / 10;
+          document.getElementById('val-lbs').value = lbs.toFixed(1);
+          document.getElementById('sld-lbs').value = lbs.toFixed(1);
+          
+          let cm = parseFloat(document.getElementById('val-cm').value) || 0;
+          if (cm > 304.8) cm = 304.8;
+          let totalInches = (cm === 304.8) ? 120 : cm / 2.54;
+          document.getElementById('val-ft').value = Math.floor(totalInches / 12);
+          document.getElementById('val-in').value = (Math.round((totalInches % 12) * 2) / 2).toFixed(1);
+        } else {
+          document.body.classList.remove('mode-us');
+          let lbs = parseFloat(document.getElementById('val-lbs').value) || 0;
+          if (lbs > 1400) lbs = 1400; 
+          
+          let kg = (lbs === 1400) ? 635 : Math.round((lbs / 2.20462) * 10) / 10;
+          document.getElementById('val-kg').value = kg.toFixed(1);
+          document.getElementById('sld-kg').value = kg.toFixed(1);
+          
+          let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+          let inc = parseFloat(document.getElementById('val-in').value) || 0;
+          let totalInches = (ft * 12) + inc;
+          if (totalInches > 120) totalInches = 120;
+          
+          let cm = (totalInches === 120) ? 304.8 : totalInches * 2.54;
+          document.getElementById('val-cm').value = cm.toFixed(1);
+          document.getElementById('sld-cm').value = cm.toFixed(1);
+        }
+        
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            if (input.closest('.slider-row').offsetParent !== null) {
+                validateInput(input);
+            }
+        });
+        calculateMacros();
+      });
+    });
+
+    // --- 3. Segmented Logic Groups (Sex, Activity, Goal) ---
+    document.querySelectorAll('.logic-group span').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        let parent = e.target.closest('.logic-group');
+        parent.querySelectorAll('span').forEach(s => s.classList.remove('on'));
+        e.target.classList.add('on');
+        calculateMacros();
+      });
+    });
+
+    // --- 4. Custom Steppers, Input Poka-Yoke & Inline Validation ---
+    function validateInput(input) {
+      const container = input.closest('.stepper');
+      const field = input.closest('.field');
+      
+      let errEl = null;
+      if (input.id.includes('kg') || input.id.includes('cm')) {
+          errEl = field.querySelector('.err-msg.sys-metric');
+      } else if (input.id.includes('lbs') || input.id.includes('ft') || input.id.includes('in')) {
+          errEl = field.querySelector('.err-msg.sys-us');
+      } else {
+          errEl = field.querySelector('.err-msg:not(.sys-metric):not(.sys-us)'); 
+      }
+
+      let errMsg = '';
+      let rawVal = input.value;
+      let val = parseFloat(rawVal);
+      let min = parseFloat(input.getAttribute('min'));
+      let max = parseFloat(input.getAttribute('max'));
+
+      // Dynamic constraints for US Height dependencies
+      if (input.id === 'val-in') {
+          let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+          if (ft >= 10) max = 0;
+          else max = 11.5;
+          
+          if (ft === 0) min = 4;
+      }
+
+      if (rawVal.includes('-')) {
+        errMsg = "Negative numbers not allowed.";
+      } else if (input.id === 'val-age' && rawVal.includes('.')) {
+        errMsg = "Only whole numbers allowed.";
+      } else if (val < min) {
+        if (input.id === 'val-cm') errMsg = `Minimum is 10.2 cm.`;
+        else if (input.id === 'val-age') errMsg = `Minimum is 1 year.`;
+        else if (input.id === 'val-ft') errMsg = `Minimum height is 0 ft.`;
+        else if (input.id === 'val-in') errMsg = `Minimum height is 4 in.`;
+        else errMsg = `Minimum is ${min}.`;
+      } else if (val > max) {
+        if (input.id === 'val-in' && parseFloat(document.getElementById('val-ft').value) >= 10) {
+            errMsg = "Maximum height is 10 ft.";
+        } else if (input.id === 'val-ft') {
+            errMsg = "Maximum height is 10 ft.";
+        } else if (input.id === 'val-kg') {
+            errMsg = "Maximum is 635 kg.";
+        } else if (input.id === 'val-lbs') {
+            errMsg = "Maximum is 1400 lbs.";
+        } else if (input.id === 'val-cm') {
+            errMsg = "Maximum is 304.8 cm.";
+        } else if (input.id === 'val-in') {
+            errMsg = "Maximum is 11.5 in.";
+        } else {
+            errMsg = `Maximum is ${max}.`;
+        }
+      } else if (input.id === 'val-ft' && val >= 10 && parseFloat(document.getElementById('val-in').value) > 0) {
+        errMsg = "Maximum height is 10 ft.";
+      }
+
+      if (errMsg) {
+        container.classList.add('has-error');
+        if(errEl) { errEl.innerText = errMsg; errEl.style.display = 'block'; }
+        return false;
+      } else {
+        container.classList.remove('has-error');
+        if (input.id === 'val-ft' && document.getElementById('val-in').closest('.stepper').classList.contains('has-error')) {
+            // Wait for sibling to clear
+        } else if (input.id === 'val-in' && document.getElementById('val-ft').closest('.stepper').classList.contains('has-error')) {
+            // Wait for sibling to clear
+        } else {
+            if(errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
+        }
+        return true;
+      }
+    }
+
+    document.querySelectorAll('.stepper').forEach(stepper => {
+      const minus = stepper.querySelector('.minus');
+      const plus = stepper.querySelector('.plus');
+      const input = stepper.querySelector('input');
+      const step = parseFloat(input.getAttribute('step'));
+      const min = parseFloat(input.getAttribute('min'));
+      let max = parseFloat(input.getAttribute('max'));
+      
+      const updateVal = (direction) => {
+        let val = parseFloat(input.value);
+        
+        let currentMin = min;
+        let currentMax = max;
+        
+        if (input.id === 'val-in') {
+            let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+            if (ft >= 10) currentMax = 0;
+            if (ft === 0) currentMin = 4;
+        }
+
+        if(isNaN(val)) val = currentMin;
+
+        val += (direction * step);
+        
+        // --- HCI Fix: Silent button clamping ---
+        if (val < currentMin) val = currentMin;
+        if (val > currentMax) val = currentMax;
+
+        if (input.id === 'val-ft' && val === 10) {
+            document.getElementById('val-in').value = "0.0";
+            validateInput(document.getElementById('val-in'));
+        }
+        
+        if (input.id === 'val-age' || input.id === 'val-ft') {
+            input.value = Math.round(val);
+        } else if (input.id === 'val-in') {
+            input.value = (Math.round(val * 2) / 2).toFixed(1);
+        } else {
+            input.value = val.toFixed(1);
+        }
+        
+        if (validateInput(input)) {
+           if(input.dataset.sync) document.getElementById(input.dataset.sync).value = input.value;
+           calculateMacros();
+        } else {
+           displayHardStop();
+        }
+      };
+      
+      minus.addEventListener('click', () => updateVal(-1));
+      plus.addEventListener('click', () => updateVal(1));
+      
+      // Real-time Input Poka-Yoke & Validation
+      input.addEventListener('input', () => {
+        
+        // Strip out non-numeric characters instantly
+        let cleanVal = input.value.replace(/[^0-9.-]/g, '');
+        
+        // Prevent multiple decimals
+        let parts = cleanVal.split('.');
+        if (parts.length > 2) cleanVal = parts[0] + '.' + parts.slice(1).join('');
+        
+        // Prevent minus sign anywhere except index 0
+        if (cleanVal.indexOf('-') > 0) cleanVal = cleanVal.replace(/-/g, '');
+        
+        input.value = cleanVal;
+
+        if (validateInput(input)) {
+          if (input.dataset.sync) document.getElementById(input.dataset.sync).value = parseFloat(input.value);
+          calculateMacros();
+        } else {
+          displayHardStop();
+        }
+      });
+      
+      // Default to exact minimum boundaries on empty box blur
+      input.addEventListener('blur', () => {
+        let val = parseFloat(input.value);
+        let currentMin = min;
+        
+        if (input.id === 'val-in') {
+            let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+            if (ft === 0) currentMin = 4;
+        }
+
+        if (isNaN(val)) {
+            val = input.id.includes('in') ? 0 : currentMin;
+            if (input.id === 'val-in' && parseFloat(document.getElementById('val-ft').value) === 0) {
+               val = 4;
+            }
+        }
+
+        if (input.id === 'val-age' || input.id === 'val-ft') {
+            input.value = Math.round(val);
+        } else if (input.id === 'val-in') {
+            input.value = (Math.round(val * 2) / 2).toFixed(1);
+        } else {
+            input.value = val.toFixed(1);
+        }
+        
+        if (validateInput(input)) {
+           if(input.dataset.sync) document.getElementById(input.dataset.sync).value = input.value;
+           calculateMacros();
+        } else {
+           displayHardStop();
         }
       });
     });
-    flashElements.forEach(el => observer.observe(el));
+
+    // --- 5. Two-Way Slider Bindings ---
+    document.querySelectorAll('.interactive-slider').forEach(slider => {
+      slider.addEventListener('input', (e) => {
+        const matchingInput = document.querySelector(`input[data-sync="${e.target.id}"]`);
+        if(matchingInput) {
+            matchingInput.value = e.target.value;
+            validateInput(matchingInput);
+        }
+        calculateMacros();
+      });
+    });
+
+    // --- 6. Hard Stop UI Function ---
+    function displayHardStop() {
+      document.querySelectorAll('.sync-cals').forEach(el => el.innerHTML = `---<sup>kcal</sup>`);
+      document.querySelectorAll('.sync-p-val').forEach(el => el.innerHTML = `--- g`);
+      document.querySelectorAll('.sync-c-val').forEach(el => el.innerHTML = `--- g`);
+      document.querySelectorAll('.sync-f-val').forEach(el => el.innerHTML = `--- g`);
+    }
+
+    // --- 7. The Mifflin-St Jeor Calculation Engine ---
+    function calculateMacros() {
+      if(document.querySelectorAll('.has-error').length > 0) return;
+
+      const isMetric = !document.body.classList.contains('mode-us');
+      let isFemale = document.querySelector('.logic-group[data-target="sex"] .on').dataset.val === 'f';
+      let age = parseFloat(document.getElementById('val-age').value) || 22;
+      
+      let weightKg = isMetric ? 
+        parseFloat(document.getElementById('val-kg').value) : 
+        parseFloat(document.getElementById('val-lbs').value) / 2.20462;
+        
+      let heightCm = isMetric ? 
+        parseFloat(document.getElementById('val-cm').value) : 
+        ((parseFloat(document.getElementById('val-ft').value) * 12) + parseFloat(document.getElementById('val-in').value)) * 2.54;
+
+      if(isNaN(weightKg) || isNaN(heightCm) || isNaN(age)) {
+        displayHardStop();
+        return;
+      }
+
+      let bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + (isFemale ? -161 : 5);
+      let actMult = parseFloat(document.querySelector('.logic-group[data-target="activity"] .on').dataset.val);
+      let tdee = bmr * actMult;
+      
+      let goalMod = parseFloat(document.querySelector('.logic-group[data-target="goal"] .on').dataset.val);
+      let targetCals = Math.round(tdee + goalMod);
+      
+      if(targetCals < 0) targetCals = 0;
+      
+      let proteinGrams = Math.round((targetCals * 0.25) / 4);
+      let carbsGrams = Math.round((targetCals * 0.45) / 4);
+      let fatGrams = Math.round((targetCals * 0.30) / 9);
+
+      document.querySelectorAll('.sync-cals').forEach(el => el.innerHTML = `${targetCals}<sup>kcal</sup>`);
+      document.querySelectorAll('.sync-p-val').forEach(el => el.innerHTML = `${proteinGrams} g`);
+      document.querySelectorAll('.sync-c-val').forEach(el => el.innerHTML = `${carbsGrams} g`);
+      document.querySelectorAll('.sync-f-val').forEach(el => el.innerHTML = `${fatGrams} g`);
+    }
+
+    document.querySelectorAll('input[type="text"]').forEach(input => validateInput(input));
+    calculateMacros();
   });
 </script>
 </body>
