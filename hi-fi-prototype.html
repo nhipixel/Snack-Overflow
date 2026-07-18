@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Snack Overflow — Medium-Fidelity Prototype</title>
+<title>Snack Overflow — High-Fidelity Prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -28,13 +28,13 @@
   header.top .k{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:700}
   header.top h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(34px,5vw,52px);line-height:1.02;margin:8px 0 8px;font-variation-settings:'opsz' 120,'SOFT' 30,'WONK' 1}
 
-  .frame{margin:54px 0}
+  .frame{margin:54px 0; scroll-margin-top: 40px;}
   .ftitle{display:flex;align-items:baseline;gap:14px;border-bottom:2px dashed var(--hair);padding-bottom:9px;margin:0 0 18px}
   .ftitle .num{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#fff;background:var(--green);width:26px;height:26px;border-radius:9px 7px 9px 6px/6px 9px 7px 9px;display:grid;place-items:center;flex:none}
   .ftitle h2{font-family:'Fraunces',serif;font-weight:600;font-size:24px}
   .ftitle .task{font-family:'Space Mono',monospace;font-size:12px;color:var(--soft);margin-left:auto}
 
-  .device{position:relative;background:#fff;border:2.5px solid var(--ink);border-radius:16px}
+  .device{position:relative;background:#fff;border:2.5px solid var(--ink);border-radius:16px; box-shadow: 8px 8px 0 rgba(38,36,30,0.06);}
   .pad{padding:16px;min-height:480px;display:flex;flex-direction:column}
   .pad>.nav+*{margin-top:auto}
   .pad>:last-child{margin-bottom:auto}
@@ -48,12 +48,12 @@
   .nav .logo{font-family:'Fraunces',serif;font-weight:900;font-size:16px;display:flex;align-items:center;gap:7px}
   .nav .mark{width:22px;height:22px;border-radius:8px 6px 8px 5px/5px 8px 6px 8px;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:'Space Mono',monospace;font-weight:700;font-size:11px}
   .nav .tabs{display:flex;gap:3px}
-  .nav .t{font-size:12px;font-weight:600;color:var(--soft);padding:5px 9px;border-radius:8px 6px 8px 6px/6px 8px 6px 8px}
+  .nav .t{font-size:12px;font-weight:600;color:var(--soft);padding:5px 9px;border-radius:8px 6px 8px 6px/6px 8px 6px 8px; text-decoration:none;}
   .nav .t.on{background:var(--ink);color:#fff}
   .nav .acct{margin-left:auto;font-family:'Space Mono',monospace;font-size:10px;border:1.8px solid var(--soft2);color:var(--soft);padding:4px 9px;border-radius:var(--wp)}
 
   .r-head-container { margin-bottom:14px; }
-  .r-back { font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:var(--soft); cursor:pointer; display:inline-block; margin-bottom:10px; }
+  .r-back { font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:var(--soft); cursor:pointer; display:inline-block; margin-bottom:10px; text-decoration:none;}
   .r-head { border:2.5px solid var(--ink); border-radius:var(--w1); background:#fff; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; }
   .r-head .r-info { max-width:70%; }
   .r-head h3 { font-family:'Fraunces',serif; font-weight:800; font-size:24px; line-height:1; margin-bottom:6px; }
@@ -76,8 +76,9 @@
   /* Error Validation Classes */
   .field{margin-bottom:16px; position:relative;}
   .err-msg { display:none; color:var(--red); font-family:'Space Mono',monospace; font-size:10px; margin-top:4px; position:absolute; bottom:-14px; left:0;}
-  .has-error { border-color:var(--red) !important; background-color:#fffafa !important;}
+  .has-error .stepper { border-color:var(--red) !important; background-color:#fffafa !important;}
   .has-error input { color:var(--red) !important; }
+  .has-error .err-msg { display:block; }
   
   .seg{display:flex;gap:5px;flex-wrap:wrap}
   .seg span{font-size:11.5px;font-weight:600;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;padding:5px 9px;background:#fff; cursor:pointer; user-select:none; transition:0.1s}
@@ -141,24 +142,30 @@
   .facet{margin-bottom:13px}
   .facet h4{font-family:'Space Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
   .chips{display:flex;gap:6px;flex-wrap:wrap}
-  .chip{font-size:11.5px;font-weight:600;border:1.8px solid var(--ink);border-radius:var(--wp);padding:5px 11px;background:#fff;display:inline-flex;gap:5px;align-items:center}
+  .chip{font-size:11.5px;font-weight:600;border:1.8px solid var(--ink);border-radius:var(--wp);padding:5px 11px;background:#fff;display:inline-flex;gap:5px;align-items:center; cursor:pointer; transition: 0.1s;}
   .chip.on{background:var(--ink);color:#fff}
   
   .searchbar{display:flex;align-items:center;gap:8px;border:2px solid var(--ink);border-radius:var(--w1);padding:9px 12px;background:#fff;font-size:13px;color:var(--soft2)}
+  .searchbar input {border:none; outline:none; font-family:'Space Mono', monospace; font-size:13px; color:var(--ink); width:100%;}
+  .searchbar input::placeholder {color:var(--soft2);}
+
   .resbar{display:flex;justify-content:space-between;align-items:center;margin:9px 2px;font-family:'Space Mono',monospace;font-size:11px;color:var(--soft)}
   .resbar b{color:var(--ink)}
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-  .card{border:2px solid var(--ink);border-radius:var(--w1);overflow:hidden;background:#fff}
-  .card .im{height:48px;border-bottom:2px solid var(--ink)}
-  .card .cc{padding:8px}
-  .card .cc .k{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft);margin-top:6px}
 
-  .scroll-panel {
-    max-height: 145px; 
-    overflow-y: auto;
-    -ms-overflow-style: none;  
-    scrollbar-width: none; 
-  }
+  /* Frame 3 Recipe Scroll Affordance */
+  .recipe-grid-container { max-height: 154px; overflow-y: auto; scrollbar-width: none; padding-bottom:10px; }
+  .recipe-grid-container::-webkit-scrollbar { display: none; }
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  
+  .card{border:2px solid var(--ink);border-radius:var(--w1);overflow:hidden;background:#fff; cursor:pointer; text-decoration:none; display:block; color:var(--ink);}
+  .card:active { transform: scale(0.98); }
+  .card .im{height:48px;border-bottom:2px solid var(--ink); position:relative;}
+  .card .im span { position:absolute; bottom:4px; right:4px; font-size:9px; background:var(--ink); color:#fff; font-family:'Space Mono', monospace; padding:2px 6px; border-radius:4px; font-weight:700;}
+  .card .cc{padding:8px}
+  .card .cc .name {font-size:12px; font-weight:700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height:1.2; margin-bottom:4px;}
+  .card .cc .k{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft);}
+
+  .scroll-panel { max-height: 145px; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; }
   .scroll-panel::-webkit-scrollbar { display: none; }
 
   .ing{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1.5px solid var(--hair);font-size:13px}
@@ -173,11 +180,7 @@
   .totalbar .t2{font-family:'Fraunces',serif;font-weight:900;font-size:24px;color:var(--ink)}
   .totalbar .d{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--soft)}
   
-  @keyframes flashSuccess {
-    0% { background-color: var(--paper); }
-    50% { background-color: #d1ebd8; }
-    100% { background-color: var(--paper); }
-  }
+  @keyframes flashSuccess { 0% { background-color: var(--paper); } 50% { background-color: #d1ebd8; } 100% { background-color: var(--paper); } }
   .flash-animate { animation: flashSuccess 1.5s ease-out; }
 
   .alt{display:flex;align-items:center;gap:9px;padding:9px;border:1.8px solid var(--ink);border-radius:var(--w2);margin-bottom:7px;font-size:12.5px;cursor:pointer}
@@ -228,13 +231,15 @@
     <h1>System Evolution States</h1>
   </header>
   
+  <!-- Frame 1 -->
   <div class="frame" id="frame-1">
     <div class="ftitle"><span class="num">1</span><h2>Homepage — Landing Experience</h2><span class="task">entry point</span></div>
     <div class="device">
       <div class="pad">
         <div class="nav">
           <div class="logo"><span class="mark">{}</span>SnackOverflow</div>
-          <div class="tabs"><span class="t">Daily Targets</span><span class="t">Search</span><span class="t">Pantry</span></div>
+          <!-- Active Nav Links -->
+          <div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-9" class="t">Pantry</a></div>
           <span class="acct">no account</span>
         </div>
         <div class="hero">
@@ -259,13 +264,14 @@
     </div>
   </div>
   
+  <!-- Frame 2 -->
   <div class="frame" id="frame-2">
     <div class="ftitle"><span class="num">2</span><h2>Daily Targets — Metric Recalculation Engine</h2><span class="task">Task 1</span></div>
     <div class="device">
       <div class="pad">
         <div class="nav">
           <div class="logo"><span class="mark">{}</span>SnackOverflow</div>
-          <div class="tabs"><span class="t on">Daily Targets</span><span class="t">Search</span><span class="t">Pantry</span></div>
+          <div class="tabs"><a href="#frame-2" class="t on">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-9" class="t">Pantry</a></div>
           <span class="acct">no account</span>
         </div>
         <div class="cols">
@@ -282,6 +288,7 @@
                 
                 <div class="field"><div class="lab">Sex</div><div class="seg logic-group" data-target="sex"><span class="on" data-val="f">Female</span><span data-val="m">Male</span></div></div>
                 
+                <!-- Age Input -->
                 <div class="field">
                   <div class="lab">Age <span class="v">years</span></div>
                   <div class="slider-row">
@@ -292,6 +299,7 @@
                   <div class="err-msg"></div>
                 </div>
                 
+                <!-- Weight Input -->
                 <div class="field">
                   <div class="lab">Weight <span class="v"><span class="lbl-metric">kg</span><span class="lbl-us">lbs</span></span></div>
                   
@@ -312,6 +320,7 @@
                   <div class="err-msg sys-us"></div>
                 </div>
                 
+                <!-- Height Input -->
                 <div class="field">
                   <div class="lab">Height <span class="v"><span class="lbl-metric">cm</span><span class="lbl-us">ft & in</span></span></div>
                   
@@ -368,27 +377,66 @@
     </div>
   </div>
   
-  <div class="frame">
+  <!-- Frame 3 (UPDATED) -->
+  <div class="frame" id="frame-3">
     <div class="ftitle"><span class="num">3</span><h2>Search — Faceted Filtering Engine</h2><span class="task">Task 2</span></div>
     <div class="device">
       <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><span class="t">Daily Targets</span><span class="t on">Search</span><span class="t">Pantry</span></div>
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div>
+      <div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
       <span class="acct">no account</span>
     </div>
       <div class="cols">
         <div class="col" style="flex:.6">
-          <div class="facet"><h4>Diet</h4><div class="chips"><span class="chip">Vegan</span><span class="chip on">Vegetarian ×</span><span class="chip">High-protein</span></div></div>
-          <div class="facet"><h4>Meal</h4><div class="chips"><span class="chip">Breakfast</span><span class="chip">Lunch</span><span class="chip on">Dinner ×</span></div></div>
-          <div class="facet"><h4>Time</h4><div class="chips"><span class="chip">Under 15m</span><span class="chip">Under 30m</span></div></div>
-          <div class="facet" style="margin:0"><h4>Max calories — 700</h4><div class="interactive-slider" style="margin-top:10px; width:90%"></div></div>
+          <div class="facet">
+            <h4>Diet</h4>
+            <div class="chips filter-group" data-filter="diet">
+              <span class="chip" data-val="Vegan">Vegan</span><span class="chip on" data-val="Vegetarian">Vegetarian ×</span><span class="chip" data-val="High-protein">High-protein</span>
+            </div>
+          </div>
+          <div class="facet">
+            <h4>Meal</h4>
+            <div class="chips filter-group" data-filter="meal">
+              <span class="chip" data-val="Breakfast">Breakfast</span><span class="chip" data-val="Lunch">Lunch</span><span class="chip on" data-val="Dinner">Dinner ×</span>
+            </div>
+          </div>
+          <div class="facet">
+            <h4>Time</h4>
+            <div class="chips filter-group" data-filter="time">
+              <span class="chip" data-val="Under 15m">Under 15m</span><span class="chip" data-val="Under 30m">Under 30m</span><span class="chip" data-val="Under 60m">Under 60m</span><span class="chip" data-val="60m +">60m +</span>
+            </div>
+          </div>
+          
+          <!-- Max Calorie Interactive Sync Component -->
+          <div class="field" style="margin:0">
+            <h4 style="font-family:'Space Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--soft);margin-bottom:7px">Max calories</h4>
+            <div class="slider-row">
+              <input type="range" class="interactive-slider" id="sld-cal" min="50" max="1000" step="10" value="700">
+              <div class="stepper" data-min="50" data-max="1000" data-step="10" style="transform: scale(0.9); transform-origin: left center;">
+                <i class="minus">–</i><input type="text" inputmode="numeric" id="val-cal" value="700" min="50" max="1000" step="10" data-sync="sld-cal"><i class="plus">+</i>
+              </div>
+            </div>
+            <div class="err-msg"></div>
+          </div>
+          
         </div>
-        <div class="col" style="flex:1.35">
-          <div class="searchbar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="vertical-align:-2px;flex:none"><circle cx="11" cy="11" r="7"></circle><line x1="20.5" y1="20.5" x2="16.5" y2="16.5"></line></svg> <span>Search e.g. pasta, tofu…</span></div>
-          <div class="resbar"><span><span class="chip on" style="font-size:10px;padding:3px 8px">Vegetarian ×</span> <span class="chip on" style="font-size:10px;padding:3px 8px">Dinner ×</span></span><span>Suggested recipes</span></div>
-          <div class="cards">
-            <div class="card"><div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)"></div><div class="cc"><div class="ln w80"></div><div class="k">640 kcal</div></div></div>
-            <div class="card"><div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)"></div><div class="cc"><div class="ln w80"></div><div class="k">520 kcal</div></div></div>
-            <div class="card"><div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)"></div><div class="cc"><div class="ln w80"></div><div class="k">430 kcal</div></div></div>
+        <div class="col" style="flex:1.35; display:flex; flex-direction:column;">
+          <!-- Live Search Input -->
+          <div class="searchbar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="vertical-align:-2px;flex:none"><circle cx="11" cy="11" r="7"></circle><line x1="20.5" y1="20.5" x2="16.5" y2="16.5"></line></svg> 
+            <input type="text" id="recipe-search-input" placeholder="Search e.g. pasta, tofu...">
+          </div>
+          
+          <div class="resbar">
+            <span id="active-filter-tags"><span class="chip on" style="font-size:10px;padding:3px 8px">Vegetarian ×</span> <span class="chip on" style="font-size:10px;padding:3px 8px">Dinner ×</span></span>
+            <span id="search-results-title">Suggested recipes</span>
+          </div>
+          
+          <!-- Dynamic Scroll Container -->
+          <div class="recipe-grid-container">
+            <div class="cards" id="dynamic-recipe-grid">
+               <!-- Recipes injected here by JS -->
+            </div>
           </div>
         </div>
       </div>
@@ -396,16 +444,17 @@
     </div>
   </div>
   
-  <div class="frame">
+  <!-- Frame 4 -->
+  <div class="frame" id="frame-4">
     <div class="ftitle"><span class="num">4</span><h2>Recipe Customization — Base State (Before Swap Trigger)</h2><span class="task">Task 3.1</span></div>
     <div class="device">
       <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><span class="t">Daily Targets</span><span class="t on">Search</span><span class="t">Pantry</span></div>
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
       <span class="acct">no account</span>
     </div>
       
       <div class="r-head-container">
-        <div class="r-back">← Back</div>
+        <a href="#frame-3" class="r-back">← Back</a>
         <div class="r-head">
           <div class="r-info">
             <h3>Creamy Spinach Parmesan</h3>
@@ -452,16 +501,17 @@
     </div>
   </div>
   
+  <!-- Frame 5 -->
   <div class="frame">
     <div class="ftitle"><span class="num">5</span><h2>Recipe Customization — Alternatives Revealed (Confirm Disabled)</h2><span class="task">Task 3.2</span></div>
     <div class="device">
       <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><span class="t">Daily Targets</span><span class="t on">Search</span><span class="t">Pantry</span></div>
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
       <span class="acct">no account</span>
     </div>
       
       <div class="r-head-container">
-        <div class="r-back">← Back</div>
+        <a href="#frame-3" class="r-back">← Back</a>
         <div class="r-head">
           <div class="r-info">
             <h3>Creamy Spinach Parmesan</h3>
@@ -538,16 +588,17 @@
     </div>
   </div>
   
+  <!-- Frame 6 -->
   <div class="frame">
     <div class="ftitle"><span class="num">6</span><h2>Recipe Customization — Alternative Selected (Action Accessible)</h2><span class="task">Task 3.3</span></div>
     <div class="device">
       <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><span class="t">Daily Targets</span><span class="t on">Search</span><span class="t">Pantry</span></div>
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
     <span class="acct">no account</span>
   </div>
       
       <div class="r-head-container">
-        <div class="r-back">← Back</div>
+        <a href="#frame-3" class="r-back">← Back</a>
         <div class="r-head">
           <div class="r-info">
             <h3>Creamy Spinach Parmesan</h3>
@@ -624,16 +675,17 @@
     </div>
   </div>
   
+  <!-- Frame 7 -->
   <div class="frame">
     <div class="ftitle"><span class="num">7</span><h2>Recipe Customization — Mutation Resolved &amp; Recalculated</h2><span class="task">Task 3.4</span></div>
     <div class="device">
       <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><span class="t">Daily Targets</span><span class="t on">Search</span><span class="t">Pantry</span></div>
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
     <span class="acct">no account</span>
   </div>
       
       <div class="r-head-container">
-        <div class="r-back">← Back</div>
+        <a href="#frame-3" class="r-back">← Back</a>
         <div class="r-head">
           <div class="r-info">
             <h3>Creamy Spinach Parmesan</h3>
@@ -680,16 +732,17 @@
     </div>
   </div>
   
+  <!-- Frame 8 -->
   <div class="frame">
     <div class="ftitle"><span class="num">8</span><h2>Recipe Customization — Reversibility &amp; Undo (Menu Re-opened)</h2><span class="task">Task 3.5</span></div>
     <div class="device">
       <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><span class="t">Daily Targets</span><span class="t on">Search</span><span class="t">Pantry</span></div>
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
     <span class="acct">no account</span>
   </div>
       
       <div class="r-head-container">
-        <div class="r-back">← Back</div>
+        <a href="#frame-3" class="r-back">← Back</a>
         <div class="r-head">
           <div class="r-info">
             <h3>Creamy Spinach Parmesan</h3>
@@ -766,11 +819,12 @@
     </div>
   </div>
   
-  <div class="frame">
+  <!-- Frame 9 -->
+  <div class="frame" id="frame-9">
     <div class="ftitle"><span class="num">9</span><h2>The Digital Pantry — Bare Workspace (Generation Guarded)</h2><span class="task">Task 4.1</span></div>
     <div class="device">
       <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><span class="t">Daily Targets</span><span class="t">Search</span><span class="t on">Pantry</span></div>
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-9" class="t on">Pantry</a></div>
     <span class="acct">no account</span>
   </div>
       <div class="cols">
@@ -805,78 +859,10 @@
       </div>
     </div>
   </div>
-  
-  <div class="frame">
-    <div class="ftitle"><span class="num">10</span><h2>The Digital Pantry — Constructive State (Generation Unlocked)</h2><span class="task">Task 4.2</span></div>
-    <div class="device">
-      <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><span class="t">Daily Targets</span><span class="t">Search</span><span class="t on">Pantry</span></div>
-    <span class="acct">no account</span>
-  </div>
-      <div class="cols">
-        <div class="col" style="flex:1.3">
-          <div class="searchbar" style="margin-bottom:11px"><span class="mono" style="font-size:11px">🔍 What ingredients do you have?</span></div>
-          
-          <div class="shelf">
-            <h4 onclick="this.parentElement.classList.toggle('collapsed')">Produce <span class="chevron">▾</span></h4>
-            <div class="items">
-              <span class="item">Spinach <span class="p">+</span></span><span class="item">Tomato <span class="p">+</span></span><span class="item on">Broccoli <span class="p">✓</span></span>
-            </div>
-          </div>
-          
-          <div class="shelf" style="margin:0">
-            <h4 onclick="this.parentElement.classList.toggle('collapsed')">Proteins <span class="chevron">▾</span></h4>
-            <div class="items">
-              <span class="item on">Tofu <span class="p">✓</span></span><span class="item">Eggs <span class="p">+</span></span><span class="item">Salmon<span class="p">+</span></span>
-            </div>
-          </div>
-          
-        </div>
-        <div class="col">
-          <div class="basket"><div class="bh">Your basket <span class="c">2 items</span></div>
-            <div style="flex-grow:1; padding-top:10px">
-              <span class="bchip">Tofu ×</span><span class="bchip">Broccoli ×</span>
-            </div>
-            <div class="gen-btn-container">
-              <button class="btnsk fill" style="width:100%">Generate recipes</button>
-            </div>
-          </div>
-          <div class="ph-note" style="color:#1f7a4d; font-weight:700">Constraint satisfied ✓</div>
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="frame">
-    <div class="ftitle"><span class="num">11</span><h2>Recommendation Engine — Direct Recipe Execution Match</h2><span class="task">Task 4.3</span></div>
-    <div class="device">
-      <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><span class="t">Daily Targets</span><span class="t">Search</span><span class="t on">Pantry</span></div>
-    <span class="acct">no account</span>
-  </div>
-      <div class="match">
-        
-        <button class="btnsk fill" style="position:absolute; top:14px; right:14px; margin:0; padding:6px 12px; font-size:11.5px">Jump to Recipe</button>
-        
-        <div class="mi imgph"></div>
-        <div style="flex:1">
-          <div class="h">Crispy Tofu Power Bowl</div>
-          <div style="margin:5px 0"><span class="chip on" style="font-size:10px;padding:3px 8px">520 kcal</span><span class="chip" style="font-size:10px;padding:3px 8px">20 min</span><span class="chip" style="font-size:10px;padding:3px 8px">Vegan</span></div>
-          <div class="mono" style="font-size:11px">You already have <b>83%</b> of the ingredients</div>
-          <div class="meter"><i></i></div>
-          <span class="have y">✓ Tofu</span><span class="have y">✓ Broccoli</span><span class="have n">+ buy Rice</span>
-        </div>
-      </div>
-      <div style="margin-top:11px"><div class="mono" style="font-size:11px;color:var(--soft);margin-bottom:6px">ALTERNATIVE CALCULATED OPTIONS</div>
-        <div class="cards"><div class="card"><div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)"></div><div class="cc"><div class="ln w80"></div><div class="k">440 kcal</div></div></div><div class="card"><div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)"></div><div class="cc"><div class="ln w80"></div><div class="k">330 kcal</div></div></div><div class="card"><div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)"></div><div class="cc"><div class="ln w80"></div><div class="k">290 kcal</div></div></div></div>
-      </div>
-      </div>
-    </div>
-  </div>
 
 </div>
 
+<!-- Interactive UI Controller -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     
@@ -937,7 +923,7 @@
         }
         
         document.querySelectorAll('input[type="text"]').forEach(input => {
-            if (input.closest('.slider-row').offsetParent !== null) {
+            if (input.closest('.slider-row') && input.closest('.slider-row').offsetParent !== null) {
                 validateInput(input);
             }
         });
@@ -956,9 +942,11 @@
     });
 
     // --- 4. Custom Steppers, Input Poka-Yoke & Inline Validation ---
-    function validateInput(input) {
+    function validateInput(input, isCrossCheck = false) {
+      if (!input) return true;
       const container = input.closest('.stepper');
       const field = input.closest('.field');
+      if (!container || !field) return true;
       
       let errEl = null;
       if (input.id.includes('kg') || input.id.includes('cm')) {
@@ -980,38 +968,39 @@
           let ft = parseFloat(document.getElementById('val-ft').value) || 0;
           if (ft >= 10) max = 0;
           else max = 11.5;
-          
           if (ft === 0) min = 4;
       }
 
-      if (rawVal.includes('-')) {
-        errMsg = "Negative numbers not allowed.";
-      } else if (input.id === 'val-age' && rawVal.includes('.')) {
-        errMsg = "Only whole numbers allowed.";
-      } else if (val < min) {
-        if (input.id === 'val-cm') errMsg = `Minimum is 10.2 cm.`;
-        else if (input.id === 'val-age') errMsg = `Minimum is 1 year.`;
-        else if (input.id === 'val-ft') errMsg = `Minimum height is 0 ft.`;
-        else if (input.id === 'val-in') errMsg = `Minimum height is 4 in.`;
-        else errMsg = `Minimum is ${min}.`;
-      } else if (val > max) {
-        if (input.id === 'val-in' && parseFloat(document.getElementById('val-ft').value) >= 10) {
+      // Check Real-Time Conditions ONLY if not empty
+      if (rawVal !== '') {
+          if (val < min) {
+            if (input.id === 'val-cm') errMsg = `Minimum is 10.2 cm.`;
+            else if (input.id === 'val-age') errMsg = `Minimum is 1 year.`;
+            else if (input.id === 'val-ft') errMsg = `Minimum height is 0 ft.`;
+            else if (input.id === 'val-in') errMsg = `Minimum height is 4 in.`;
+            else if (input.id === 'val-cal') errMsg = `Minimum is 50 kcal.`;
+            else errMsg = `Minimum is ${min}.`;
+          } else if (val > max) {
+            if (input.id === 'val-in' && parseFloat(document.getElementById('val-ft').value) >= 10) {
+                errMsg = "Maximum height is 10 ft.";
+            } else if (input.id === 'val-ft') {
+                errMsg = "Maximum height is 10 ft.";
+            } else if (input.id === 'val-kg') {
+                errMsg = "Maximum is 635 kg.";
+            } else if (input.id === 'val-lbs') {
+                errMsg = "Maximum is 1400 lbs.";
+            } else if (input.id === 'val-cm') {
+                errMsg = "Maximum is 304.8 cm.";
+            } else if (input.id === 'val-in') {
+                errMsg = "Maximum is 11.5 in.";
+            } else if (input.id === 'val-cal') {
+                errMsg = "Maximum is 1000 kcal.";
+            } else {
+                errMsg = `Maximum is ${max}.`;
+            }
+          } else if (input.id === 'val-ft' && val >= 10 && parseFloat(document.getElementById('val-in').value) > 0) {
             errMsg = "Maximum height is 10 ft.";
-        } else if (input.id === 'val-ft') {
-            errMsg = "Maximum height is 10 ft.";
-        } else if (input.id === 'val-kg') {
-            errMsg = "Maximum is 635 kg.";
-        } else if (input.id === 'val-lbs') {
-            errMsg = "Maximum is 1400 lbs.";
-        } else if (input.id === 'val-cm') {
-            errMsg = "Maximum is 304.8 cm.";
-        } else if (input.id === 'val-in') {
-            errMsg = "Maximum is 11.5 in.";
-        } else {
-            errMsg = `Maximum is ${max}.`;
-        }
-      } else if (input.id === 'val-ft' && val >= 10 && parseFloat(document.getElementById('val-in').value) > 0) {
-        errMsg = "Maximum height is 10 ft.";
+          }
       }
 
       if (errMsg) {
@@ -1020,14 +1009,22 @@
         return false;
       } else {
         container.classList.remove('has-error');
-        if (input.id === 'val-ft' && document.getElementById('val-in').closest('.stepper').classList.contains('has-error')) {
-            // Wait for sibling to clear
-        } else if (input.id === 'val-in' && document.getElementById('val-ft').closest('.stepper').classList.contains('has-error')) {
-            // Wait for sibling to clear
+        
+        // Wait to clear shared error text if the sibling input is still failing
+        if (input.id === 'val-ft') {
+            const inContainer = document.getElementById('val-in').closest('.stepper');
+            if (!inContainer.classList.contains('has-error') && errEl) {
+                errEl.innerText = ''; errEl.style.display = 'none';
+            }
+        } else if (input.id === 'val-in') {
+            const ftContainer = document.getElementById('val-ft').closest('.stepper');
+            if (!ftContainer.classList.contains('has-error') && errEl) {
+                errEl.innerText = ''; errEl.style.display = 'none';
+            }
         } else {
             if(errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
         }
-        return true;
+        return rawVal !== ''; 
       }
     }
 
@@ -1051,20 +1048,22 @@
             if (ft === 0) currentMin = 4;
         }
 
-        if(isNaN(val)) val = currentMin;
-
-        val += (direction * step);
+        if(isNaN(val)) {
+            val = (direction > 0) ? currentMin : currentMax;
+        } else {
+            val += (direction * step);
+        }
         
         // --- HCI Fix: Silent button clamping ---
         if (val < currentMin) val = currentMin;
         if (val > currentMax) val = currentMax;
 
-        if (input.id === 'val-ft' && val === 10) {
+        if (input.id === 'val-ft' && val >= 10) {
             document.getElementById('val-in').value = "0.0";
             validateInput(document.getElementById('val-in'));
         }
         
-        if (input.id === 'val-age' || input.id === 'val-ft') {
+        if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') {
             input.value = Math.round(val);
         } else if (input.id === 'val-in') {
             input.value = (Math.round(val * 2) / 2).toFixed(1);
@@ -1072,11 +1071,16 @@
             input.value = val.toFixed(1);
         }
         
-        if (validateInput(input)) {
+        validateInput(input);
+        if (input.id === 'val-in') validateInput(document.getElementById('val-ft'), true);
+        if (input.id === 'val-ft') validateInput(document.getElementById('val-in'), true);
+
+        if (document.querySelectorAll('.has-error').length === 0) {
            if(input.dataset.sync) document.getElementById(input.dataset.sync).value = input.value;
            calculateMacros();
+           if(input.id === 'val-cal' && typeof renderRecipes === 'function') renderRecipes();
         } else {
-           displayHardStop();
+           if(input.id !== 'val-cal') displayHardStop();
         }
       };
       
@@ -1087,28 +1091,42 @@
       input.addEventListener('input', () => {
         
         // Strip out non-numeric characters instantly
-        let cleanVal = input.value.replace(/[^0-9.-]/g, '');
-        
-        // Prevent multiple decimals
-        let parts = cleanVal.split('.');
-        if (parts.length > 2) cleanVal = parts[0] + '.' + parts.slice(1).join('');
-        
-        // Prevent minus sign anywhere except index 0
-        if (cleanVal.indexOf('-') > 0) cleanVal = cleanVal.replace(/-/g, '');
-        
-        input.value = cleanVal;
-
-        if (validateInput(input)) {
-          if (input.dataset.sync) document.getElementById(input.dataset.sync).value = parseFloat(input.value);
-          calculateMacros();
+        let cleanVal = input.value;
+        if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') {
+            cleanVal = cleanVal.replace(/[^0-9]/g, ''); // Integers only
         } else {
-          displayHardStop();
+            cleanVal = cleanVal.replace(/[^0-9.]/g, ''); // Decimals allowed
+            // Prevent multiple decimals
+            let parts = cleanVal.split('.');
+            if (parts.length > 2) cleanVal = parts[0] + '.' + parts.slice(1).join('');
+        }
+        
+        if (input.value !== cleanVal) {
+            input.value = cleanVal;
+        }
+
+        validateInput(input);
+        if (input.id === 'val-in') validateInput(document.getElementById('val-ft'), true);
+        if (input.id === 'val-ft') validateInput(document.getElementById('val-in'), true);
+
+        // Check for empty visible inputs
+        let anyEmpty = false;
+        document.querySelectorAll('input[type="text"]').forEach(inp => {
+            if (inp.offsetParent !== null && inp.value === '') anyEmpty = true;
+        });
+
+        if (document.querySelectorAll('.has-error').length === 0 && !anyEmpty) {
+          if (input.dataset.sync) document.getElementById(input.dataset.sync).value = parseFloat(input.value) || 0;
+          if (input.id !== 'val-cal') calculateMacros();
+          if (input.id === 'val-cal' && typeof renderRecipes === 'function') renderRecipes();
+        } else {
+          if (input.id !== 'val-cal') displayHardStop();
         }
       });
       
       // Default to exact minimum boundaries on empty box blur
       input.addEventListener('blur', () => {
-        let val = parseFloat(input.value);
+        let rawVal = input.value;
         let currentMin = min;
         
         if (input.id === 'val-in') {
@@ -1116,26 +1134,37 @@
             if (ft === 0) currentMin = 4;
         }
 
-        if (isNaN(val)) {
-            val = input.id.includes('in') ? 0 : currentMin;
-            if (input.id === 'val-in' && parseFloat(document.getElementById('val-ft').value) === 0) {
-               val = 4;
-            }
+        let defaultVal = currentMin;
+        if (input.id === 'val-in') {
+            let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+            defaultVal = (ft === 0) ? 4.0 : 0.0;
         }
 
-        if (input.id === 'val-age' || input.id === 'val-ft') {
-            input.value = Math.round(val);
-        } else if (input.id === 'val-in') {
-            input.value = (Math.round(val * 2) / 2).toFixed(1);
+        if (rawVal === '' || isNaN(parseFloat(rawVal))) {
+            if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') {
+                input.value = Math.round(defaultVal);
+            } else {
+                input.value = defaultVal.toFixed(1);
+            }
         } else {
-            input.value = val.toFixed(1);
+            let val = parseFloat(rawVal);
+            if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') {
+                input.value = Math.round(val);
+            } else if (input.id === 'val-in') {
+                input.value = (Math.round(val * 2) / 2).toFixed(1);
+            } else {
+                input.value = val.toFixed(1);
+            }
         }
         
-        if (validateInput(input)) {
-           if(input.dataset.sync) document.getElementById(input.dataset.sync).value = input.value;
-           calculateMacros();
-        } else {
-           displayHardStop();
+        validateInput(input);
+        if (input.id === 'val-in') validateInput(document.getElementById('val-ft'), true);
+        if (input.id === 'val-ft') validateInput(document.getElementById('val-in'), true);
+
+        if (document.querySelectorAll('.has-error').length === 0) {
+            if (input.dataset.sync) document.getElementById(input.dataset.sync).value = input.value;
+            if (input.id !== 'val-cal') calculateMacros();
+            if (input.id === 'val-cal' && typeof renderRecipes === 'function') renderRecipes();
         }
       });
     });
@@ -1148,24 +1177,26 @@
             matchingInput.value = e.target.value;
             validateInput(matchingInput);
         }
-        calculateMacros();
+        if (e.target.id !== 'sld-cal') calculateMacros();
+        if (e.target.id === 'sld-cal' && typeof renderRecipes === 'function') renderRecipes();
       });
     });
 
     // --- 6. Hard Stop UI Function ---
     function displayHardStop() {
-      document.querySelectorAll('.sync-cals').forEach(el => el.innerHTML = `---<sup>kcal</sup>`);
-      document.querySelectorAll('.sync-p-val').forEach(el => el.innerHTML = `--- g`);
-      document.querySelectorAll('.sync-c-val').forEach(el => el.innerHTML = `--- g`);
-      document.querySelectorAll('.sync-f-val').forEach(el => el.innerHTML = `--- g`);
+      // Ensure we only wipe Frame 2 data
+      document.querySelectorAll('#frame-2 .sync-cals').forEach(el => el.innerHTML = `---<sup>kcal</sup>`);
+      document.querySelectorAll('#frame-2 .sync-p-val').forEach(el => el.innerHTML = `--- g`);
+      document.querySelectorAll('#frame-2 .sync-c-val').forEach(el => el.innerHTML = `--- g`);
+      document.querySelectorAll('#frame-2 .sync-f-val').forEach(el => el.innerHTML = `--- g`);
     }
 
     // --- 7. The Mifflin-St Jeor Calculation Engine ---
     function calculateMacros() {
-      if(document.querySelectorAll('.has-error').length > 0) return;
+      if(document.querySelectorAll('#frame-2 .has-error').length > 0) return;
 
       const isMetric = !document.body.classList.contains('mode-us');
-      let isFemale = document.querySelector('.logic-group[data-target="sex"] .on').dataset.val === 'f';
+      let isFemale = document.querySelector('#frame-2 .logic-group[data-target="sex"] .on').dataset.val === 'f';
       let age = parseFloat(document.getElementById('val-age').value) || 22;
       
       let weightKg = isMetric ? 
@@ -1182,10 +1213,10 @@
       }
 
       let bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + (isFemale ? -161 : 5);
-      let actMult = parseFloat(document.querySelector('.logic-group[data-target="activity"] .on').dataset.val);
+      let actMult = parseFloat(document.querySelector('#frame-2 .logic-group[data-target="activity"] .on').dataset.val);
       let tdee = bmr * actMult;
       
-      let goalMod = parseFloat(document.querySelector('.logic-group[data-target="goal"] .on').dataset.val);
+      let goalMod = parseFloat(document.querySelector('#frame-2 .logic-group[data-target="goal"] .on').dataset.val);
       let targetCals = Math.round(tdee + goalMod);
       
       if(targetCals < 0) targetCals = 0;
@@ -1202,6 +1233,119 @@
 
     document.querySelectorAll('input[type="text"]').forEach(input => validateInput(input));
     calculateMacros();
+
+    // ---------------------------------------------------------
+    // --- FRAME 3: RECIPE FILTERING & LIVE SEARCH ENGINE ---
+    // ---------------------------------------------------------
+    
+    // The "Dummy Database"
+    const recipes = [
+      { name: "Creamy Spinach Parmesan", cal: 640, time: "Under 15m", diet: ["Vegetarian"], meal: ["Dinner"] },
+      { name: "Crispy Tofu Power Bowl", cal: 520, time: "Under 30m", diet: ["Vegan", "Vegetarian"], meal: ["Lunch", "Dinner"] },
+      { name: "Protein Oat Pancakes", cal: 430, time: "Under 15m", diet: ["Vegetarian", "High-protein"], meal: ["Breakfast"] },
+      { name: "Spicy Lentil Pasta", cal: 550, time: "Under 30m", diet: ["Vegan", "Vegetarian", "High-protein"], meal: ["Dinner"] },
+      { name: "Avocado Egg Toast", cal: 350, time: "Under 15m", diet: ["Vegetarian"], meal: ["Breakfast"] },
+      { name: "Grilled Salmon Asparagus", cal: 600, time: "Under 60m", diet: ["High-protein"], meal: ["Dinner"] },
+      { name: "Slow Roast Chicken", cal: 850, time: "60m +", diet: ["High-protein"], meal: ["Dinner"] }
+    ];
+
+    const filterChips = document.querySelectorAll('#frame-3 .filter-group .chip');
+    const searchInput = document.getElementById('recipe-search-input');
+    const maxCalInput = document.getElementById('val-cal');
+    const recipeGrid = document.getElementById('dynamic-recipe-grid');
+    const activeTagsContainer = document.getElementById('active-filter-tags');
+    const searchTitle = document.getElementById('search-results-title');
+
+    // Toggle Filter Chips
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.target.classList.toggle('on');
+        
+        // UI Polish: Add/Remove the "×" visually
+        if (e.target.classList.contains('on')) {
+            if (!e.target.innerText.includes('×')) e.target.innerText += ' ×';
+        } else {
+            e.target.innerText = e.target.innerText.replace(' ×', '');
+        }
+        renderRecipes();
+      });
+    });
+
+    // Search Input Listener
+    searchInput.addEventListener('input', () => {
+        if (searchInput.value.trim().length > 0) {
+            searchTitle.innerText = "Search Results";
+        } else {
+            searchTitle.innerText = "Suggested recipes";
+        }
+        renderRecipes();
+    });
+
+    // Render Engine
+    function renderRecipes() {
+      // 1. Gather Active Filters
+      const activeDiets = Array.from(document.querySelectorAll('.filter-group[data-filter="diet"] .chip.on')).map(c => c.getAttribute('data-val'));
+      const activeMeals = Array.from(document.querySelectorAll('.filter-group[data-filter="meal"] .chip.on')).map(c => c.getAttribute('data-val'));
+      const activeTimes = Array.from(document.querySelectorAll('.filter-group[data-filter="time"] .chip.on')).map(c => c.getAttribute('data-val'));
+      const maxCal = parseFloat(maxCalInput.value) || 1000;
+      const searchText = searchInput.value.toLowerCase().trim();
+
+      // 2. Update the "Active Tags" sub-bar (Visibility of System Status)
+      let tagsHTML = '';
+      [...activeDiets, ...activeMeals, ...activeTimes].forEach(tag => {
+          tagsHTML += `<span class="chip on" style="font-size:10px;padding:3px 8px; margin-right:4px;">${tag} &times;</span>`;
+      });
+      activeTagsContainer.innerHTML = tagsHTML;
+
+      // 3. Filter the Data (AND logic between groups, OR logic within groups)
+      const filtered = recipes.filter(r => {
+        // Calorie Check (AND)
+        if (r.cal > maxCal) return false;
+        
+        // Search Check (AND)
+        if (searchText && !r.name.toLowerCase().includes(searchText)) return false;
+
+        // Diet Check (OR)
+        if (activeDiets.length > 0) {
+            const hasDiet = activeDiets.some(diet => r.diet.includes(diet));
+            if (!hasDiet) return false;
+        }
+
+        // Meal Check (OR)
+        if (activeMeals.length > 0) {
+            const hasMeal = activeMeals.some(meal => r.meal.includes(meal));
+            if (!hasMeal) return false;
+        }
+
+        // Time Check (OR)
+        if (activeTimes.length > 0) {
+            if (!activeTimes.includes(r.time)) return false;
+        }
+
+        return true; // Passed all filters
+      });
+
+      // 4. Inject to DOM
+      if (filtered.length === 0) {
+          recipeGrid.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: var(--soft2); font-family: 'Space Mono', monospace; font-size: 11px;">0 recipes found. Try loosening your filters.</div>`;
+      } else {
+          recipeGrid.innerHTML = filtered.map(r => `
+            <a href="#frame-4" class="card">
+              <div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)">
+                <span>${r.time}</span>
+              </div>
+              <div class="cc">
+                <div class="name">${r.name}</div>
+                <div class="k">${r.cal} kcal</div>
+              </div>
+            </a>
+          `).join('');
+      }
+    }
+
+    // Initialize Frame 3
+    renderRecipes();
+
   });
 </script>
 </body>

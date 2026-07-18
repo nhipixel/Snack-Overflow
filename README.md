@@ -7,4 +7,3 @@ Web application for planning meals around personal nutrition targets. Set daily 
 - **`lofi-prototype.html`**: Low-fidelity wireframes; append `?frame=N` (1–6) to view a single frame.
 - **`lofi-screens/`**: PNG exports of each lo-fi wireframe (1-homepage through 6-result).
 - **`prototype.html`**: Interactive hi-fi prototype. 
-
