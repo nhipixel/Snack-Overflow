@@ -9,40 +9,32 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#FBF9F3; --ink:#26241e; --soft:#6c6557; --soft2:#a59e8e;
-    --hair:#d9d3c5; --fill:#ECE8DE; --fill2:#ddd7c8;
-    --m1:#4a463f; --m2:#857f72; --m3:#b8b1a1;
-    --red:#d6322a; --green:#1f7a4d;
-    --wave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='8'%3E%3Cpath d='M0 5 q5 -4 11 0 t11 0 t11 0 t11 0' fill='none' stroke='%23bdb6a6' stroke-width='1.4'/%3E%3C/svg%3E");
+    --paper:#F9FAFB; --ink:#111827; --soft:#6B7280; --soft2:#9CA3AF;
+    --hair:#E5E7EB; --fill:#F3F4F6; --fill2:#E5E7EB;
+    --m1:#374151; --m2:#6B7280; --m3:#D1D5DB;
+    --red:#EF4444; --green:#10B981;
+    --wave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='8'%3E%3Cpath d='M0 5 q5 -4 11 0 t11 0 t11 0 t11 0' fill='none' stroke='%23E5E7EB' stroke-width='1.4'/%3E%3C/svg%3E");
     --w1:14px 10px 16px 11px/11px 16px 10px 14px;
     --w2:10px 16px 11px 15px/15px 11px 16px 10px;
     --wp:20px 17px 22px 18px/18px 22px 17px 20px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Hanken Grotesk',sans-serif;color:var(--ink);background:var(--paper);
-    background-image:radial-gradient(#e7e1d3 1px,transparent 1px);background-size:24px 24px;line-height:1.45;padding:0 0 80px; scroll-behavior: smooth;}
+    line-height:1.45;padding:40px 0 80px; scroll-behavior: smooth;}
   .mono{font-family:'Space Mono',monospace}
   .wrap{max-width:1080px;margin:0 auto;padding:0 26px}
 
-  header.top{text-align:center;padding:48px 0 20px}
-  header.top .k{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:700}
-  header.top h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(34px,5vw,52px);line-height:1.02;margin:8px 0 8px;font-variation-settings:'opsz' 120,'SOFT' 30,'WONK' 1}
+  .frame{margin:40px 0; scroll-margin-top: 40px;}
 
-  .frame{margin:54px 0; scroll-margin-top: 40px;}
-  .ftitle{display:flex;align-items:baseline;gap:14px;border-bottom:2px dashed var(--hair);padding-bottom:9px;margin:0 0 18px}
-  .ftitle .num{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#fff;background:var(--green);width:26px;height:26px;border-radius:9px 7px 9px 6px/6px 9px 7px 9px;display:grid;place-items:center;flex:none}
-  .ftitle h2{font-family:'Fraunces',serif;font-weight:600;font-size:24px}
-  .ftitle .task{font-family:'Space Mono',monospace;font-size:12px;color:var(--soft);margin-left:auto}
-
-  .device{position:relative;background:#fff;border:2.5px solid var(--ink);border-radius:16px; box-shadow: 8px 8px 0 rgba(38,36,30,0.06);}
+  .device{position:relative;background:#fff;border:2.5px solid var(--ink);border-radius:16px; box-shadow: 8px 8px 0 rgba(17,24,39,0.06);}
   .pad{padding:16px;min-height:480px;display:flex;flex-direction:column}
   .pad>.nav+*{margin-top:auto}
   .pad>:last-child{margin-bottom:auto}
 
   .imgph{position:relative;background:#fff;border:2px solid var(--ink);border-radius:var(--w2)}
   .imgph::before,.imgph::after{content:"";position:absolute;inset:5px}
-  .imgph::before{background:linear-gradient(to top right,transparent calc(50% - 1px),var(--soft2) 50%,transparent calc(50% + 1px))}
-  .imgph::after{background:linear-gradient(to bottom right,transparent calc(50% - 1px),var(--soft2) 50%,transparent calc(50% + 1px))}
+  .imgph::before{background:linear-gradient(to top right,transparent calc(50% - 1px),var(--fill2) 50%,transparent calc(50% + 1px))}
+  .imgph::after{background:linear-gradient(to bottom right,transparent calc(50% - 1px),var(--fill2) 50%,transparent calc(50% + 1px))}
 
   .nav{display:flex;align-items:center;gap:16px;padding:10px 14px;border:2px solid var(--ink);border-radius:var(--w1);background:#fff;margin-bottom:12px}
   .nav .logo{font-family:'Fraunces',serif;font-weight:900;font-size:16px;display:flex;align-items:center;gap:7px}
@@ -50,33 +42,33 @@
   .nav .tabs{display:flex;gap:3px}
   .nav .t{font-size:12px;font-weight:600;color:var(--soft);padding:5px 9px;border-radius:8px 6px 8px 6px/6px 8px 6px 8px; text-decoration:none;}
   .nav .t.on{background:var(--ink);color:#fff}
-  .nav .acct{margin-left:auto;font-family:'Space Mono',monospace;font-size:10px;border:1.8px solid var(--soft2);color:var(--soft);padding:4px 9px;border-radius:var(--wp)}
+  .nav .acct{margin-left:auto;font-family:'Space Mono',monospace;font-size:10px;border:1.8px solid var(--hair);color:var(--soft);padding:4px 9px;border-radius:var(--wp)}
 
   .r-head-container { margin-bottom:14px; }
-  .r-back { font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:var(--soft); cursor:pointer; display:inline-block; margin-bottom:10px; text-decoration:none;}
+  .r-back { font-family:'Space Mono',monospace; font-size:11px; font-weight:700; color:var(--soft); cursor:pointer; display:inline-block; margin-bottom:10px; text-decoration:none; padding:4px 0;}
+  .r-back:hover { color:var(--ink); }
   .r-head { border:2.5px solid var(--ink); border-radius:var(--w1); background:#fff; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; }
   .r-head .r-info { max-width:70%; }
-  .r-head h3 { font-family:'Fraunces',serif; font-weight:800; font-size:24px; line-height:1; margin-bottom:6px; }
-  .r-head .r-desc { font-size:12.5px; color:var(--soft); margin-bottom:10px; line-height:1.3; }
-  .r-head .r-tags { display:flex; gap:6px; }
-  .r-head .r-tag { font-size:10px; font-weight:700; border:1.5px solid var(--ink); border-radius:var(--wp); padding:3px 8px; background:var(--fill); display:inline-block; }
+  .r-head h3 { font-family:'Fraunces',serif; font-weight:800; font-size:24px; line-height:1; margin-bottom:8px; }
+  .r-head .r-desc { font-size:13px; color:var(--soft); margin-bottom:12px; line-height:1.4; }
+  .r-head .r-tags { display:flex; gap:6px; flex-wrap: wrap; }
+  .r-head .r-tag { font-size:10.5px; font-weight:700; border:1.5px solid var(--ink); border-radius:var(--wp); padding:3px 8px; background:var(--paper); display:inline-block; }
   .r-head .r-cal-box { text-align:right; }
   .r-head .r-cal-lbl { font-family:'Space Mono',monospace; font-size:10px; color:var(--soft); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px; }
-  .r-head .r-cal-val { font-family:'Fraunces',serif; font-weight:900; font-size:32px; line-height:1; color:var(--ink); }
+  .r-head .r-cal-val { font-family:'Fraunces',serif; font-weight:900; font-size:32px; line-height:1; color:var(--ink); transition: color 0.3s;}
 
   .cols{display:flex;gap:12px}.col{flex:1}
   .panel{border:2px solid var(--ink);border-radius:var(--w1);background:#fff;overflow:hidden; display:flex; flex-direction:column}
-  .panel-h{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:2px solid var(--ink)}
-  .panel-h b{font-family:'Fraunces',serif;font-weight:600;font-size:15px}
-  .panel-b{padding:12px; flex-grow:1}
+  .panel-h{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:2px solid var(--ink)}
+  .panel-h b{font-family:'Fraunces',serif;font-weight:700;font-size:16px}
+  .panel-b{padding:12px 14px; flex-grow:1}
 
   .lab{font-size:12px;font-weight:700;display:flex;justify-content:space-between;margin-bottom:6px; align-items:flex-end}
   .lab .v{font-family:'Space Mono',monospace;color:var(--soft)}
   
-  /* Error Validation Classes */
   .field{margin-bottom:16px; position:relative;}
   .err-msg { display:none; color:var(--red); font-family:'Space Mono',monospace; font-size:10px; margin-top:4px; position:absolute; bottom:-14px; left:0;}
-  .has-error .stepper { border-color:var(--red) !important; background-color:#fffafa !important;}
+  .has-error .stepper { border-color:var(--red) !important; background-color:#FEF2F2 !important;}
   .has-error input { color:var(--red) !important; }
   .has-error .err-msg { display:block; }
   
@@ -102,7 +94,7 @@
   .stepper i.plus { border-right:none; }
   
   .slider-row { display:flex; gap:10px; align-items:center; position:relative;}
-  .interactive-slider { -webkit-appearance:none; width:100%; height:6px; background:var(--fill2); border-radius:4px; outline:none; }
+  .interactive-slider { -webkit-appearance:none; width:100%; height:6px; background:var(--hair); border-radius:4px; outline:none; }
   .interactive-slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:18px; height:18px; border:2.2px solid var(--ink); border-radius:50%; background:#fff; cursor:pointer; box-shadow:0 0 0 2px var(--paper) }
   .interactive-slider:active::-webkit-slider-thumb { background:var(--fill2); }
 
@@ -146,13 +138,12 @@
   .chip.on{background:var(--ink);color:#fff}
   
   .searchbar{display:flex;align-items:center;gap:8px;border:2px solid var(--ink);border-radius:var(--w1);padding:9px 12px;background:#fff;font-size:13px;color:var(--soft2)}
-  .searchbar input {border:none; outline:none; font-family:'Space Mono', monospace; font-size:13px; color:var(--ink); width:100%;}
+  .searchbar input {border:none; outline:none; font-family:'Space Mono', monospace; font-size:13px; color:var(--ink); width:100%; background:transparent;}
   .searchbar input::placeholder {color:var(--soft2);}
 
   .resbar{display:flex;justify-content:space-between;align-items:center;margin:9px 2px;font-family:'Space Mono',monospace;font-size:11px;color:var(--soft)}
   .resbar b{color:var(--ink)}
 
-  /* Frame 3 Recipe Scroll Affordance */
   .recipe-grid-container { max-height: 154px; overflow-y: auto; scrollbar-width: none; padding-bottom:10px; }
   .recipe-grid-container::-webkit-scrollbar { display: none; }
   .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
@@ -165,31 +156,33 @@
   .card .cc .name {font-size:12px; font-weight:700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height:1.2; margin-bottom:4px;}
   .card .cc .k{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft);}
 
-  .scroll-panel { max-height: 145px; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; }
+  .scroll-panel { max-height: 285px; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; }
   .scroll-panel::-webkit-scrollbar { display: none; }
 
-  .ing{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1.5px solid var(--hair);font-size:13px}
-  .ing .nm{flex:1;font-weight:600}
-  .ing .nm small{display:block;font-weight:400;color:var(--soft);font-size:11px}
-  .ing .kc{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--soft)}
-  .swap{font-size:11px;font-weight:700;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;padding:4px 9px;background:#fff;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px}
+  .ing{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1.5px solid var(--hair);font-size:15px}
+  .ing .nm{flex:1;font-weight:700;}
+  .ing .nm small{display:block;font-weight:600;color:var(--soft);font-size:14.5px; margin-top:4px;}
+  .ing .kc{font-family:'Space Mono',monospace;font-size:14.5px;font-weight:600;color:var(--soft)}
+  
+  .swap{font-size:11.5px;font-weight:700;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;padding:5px 10px;background:#fff;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px}
   .swap.selected-active{background:var(--ink);color:#fff}
+  .swap.inactive { cursor: default; }
   
-  .totalbar{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:12px 14px;background:#fff;border:2.5px solid var(--ink);border-radius:var(--w1);box-shadow:3px 3px 0 var(--soft2)}
-  .totalbar .t1{font-family:'Space Mono',monospace;font-size:10px;color:var(--soft);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px}
-  .totalbar .t2{font-family:'Fraunces',serif;font-weight:900;font-size:24px;color:var(--ink)}
-  .totalbar .d{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--soft)}
+  .totalbar{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:14px 16px;background:#fff;border:2.5px solid var(--ink);border-radius:var(--w1);box-shadow:3px 3px 0 rgba(17,24,39,0.1); transition: 0.3s;}
+  .totalbar .t1{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--soft);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px}
+  .totalbar .t2{font-family:'Fraunces',serif;font-weight:900;font-size:26px;color:var(--ink); transition: 0.3s;}
+  .totalbar .d{font-family:'Space Mono',monospace;font-size:11.5px;font-weight:700;color:var(--soft)}
   
-  @keyframes flashSuccess { 0% { background-color: var(--paper); } 50% { background-color: #d1ebd8; } 100% { background-color: var(--paper); } }
-  .flash-animate { animation: flashSuccess 1.5s ease-out; }
+  @keyframes flashSuccess { 0% { background-color: var(--paper); } 50% { background-color: #D1FAE5; } 100% { background-color: var(--paper); } }
+  .flash-animate { animation: flashSuccess 1.0s ease-out; }
 
-  .alt{display:flex;align-items:center;gap:9px;padding:9px;border:1.8px solid var(--ink);border-radius:var(--w2);margin-bottom:7px;font-size:12.5px;cursor:pointer}
-  .alt .bullet{width:18px;height:18px;flex:none;border:2px solid var(--soft2);border-radius:50%;background:var(--paper);position:relative;transition:all 0.1s;}
+  .alt{display:flex;align-items:center;gap:9px;padding:9px 12px;border:1.8px solid var(--ink);border-radius:var(--w2);margin-bottom:8px;font-size:13px;cursor:pointer}
+  .alt .bullet{width:16px;height:16px;flex:none;border:2px solid var(--soft2);border-radius:50%;background:transparent;position:relative;transition:all 0.1s; display:flex; align-items:center; justify-content:center;}
   .alt:hover .bullet{border-color:var(--soft);}
-  .alt.highlighted-choice .bullet{border-color:var(--ink);background:#fff;}
-  .alt.highlighted-choice .bullet::after{content:"";position:absolute;inset:3px;background:var(--ink);border-radius:50%;}
-  .alt .nm{flex:1;font-weight:600}
-  .alt .nm small{margin-left:7px;font-weight:400;font-size:11px;color:var(--soft)}
+  .alt.highlighted-choice .bullet{border-color:var(--ink);}
+  .alt.highlighted-choice .bullet::after{content:"";width:8px; height:8px; background:var(--ink);border-radius:50%;}
+  .alt .nm{flex:1;font-weight:700}
+  .alt .nm small{margin-left:7px;font-weight:500;font-size:12.5px;color:var(--soft)}
   .alt .d{font-family:'Space Mono',monospace;font-weight:700}
   .alt.highlighted-choice{border-color:var(--ink);background:var(--fill);box-shadow:0 0 0 1px var(--ink)}
 
@@ -219,27 +212,35 @@
   .meter{height:8px;background:var(--fill2);border-radius:5px;overflow:hidden;margin:8px 0 7px}
   .meter i{display:block;height:100%;width:83%;background:var(--ink)}
   .have{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;border:1.8px solid;border-radius:8px 6px 8px 6px/6px 8px 6px 8px;padding:3px 7px;margin:0 4px 4px 0;display:inline-block}
-  .have.y{border-color:#1f7a4d;color:#1f7a4d}.have.n{border-color:var(--soft2);color:var(--soft2)}
+  .have.y{border-color:var(--green);color:var(--green)}.have.n{border-color:var(--soft2);color:var(--soft2)}
 
-  .show-full-recipe{text-align:center;font-weight:800;font-size:15px;margin-top:16px;cursor:pointer;display:block;color:var(--ink)}
+  .show-full-recipe{text-align:center;font-weight:800;font-size:15px;margin-top:16px;cursor:pointer;display:block;color:var(--ink); text-decoration:none;}
+  
+  .discovery-badge { background: #D1FAE5; color: var(--green); padding: 8px 12px; border-radius: var(--wp); border: 1.5px dashed var(--green); font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; display: inline-block; margin-top: 12px; }
+  
+  .expanded-recipe-container { display:none; border-top: 2.5px dashed var(--ink); margin-top: 24px; padding-top: 24px; }
+  .recipe-section-title { font-family:'Fraunces',serif; font-size: 20px; margin: 24px 0 12px; border-bottom: 2px solid var(--ink); padding-bottom: 6px; font-weight:800; }
+  
+  .fr-ing { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1.5px solid var(--hair); font-size: 14.5px; }
+  .fr-ing .fr-nm { font-weight: 700; color: var(--ink); }
+  .fr-ing .fr-amt { font-family: 'Space Mono', monospace; color: var(--soft); font-size: 12.5px; }
+
+  /* Expanded Clean Instructions */
+  .step { padding: 20px 0; border-bottom: 1.5px solid var(--hair); display:flex; gap:18px; align-items:flex-start; font-size: 16px; line-height: 1.6; color:var(--ink);}
+  .step b { font-family: 'Space Mono', monospace; font-size: 18px; color: var(--ink); flex:none; margin-top:0px; }
+  .step p {margin:0;}
 </style>
 </head>
 <body class="mode-us">
 <div class="wrap">
-  <header class="top">
-    <div class="k">EECS 3461 · Snack Overflow Walkthrough Framework</div>
-    <h1>System Evolution States</h1>
-  </header>
   
-  <!-- Frame 1 -->
+  <!-- Frame 1: Landing -->
   <div class="frame" id="frame-1">
-    <div class="ftitle"><span class="num">1</span><h2>Homepage — Landing Experience</h2><span class="task">entry point</span></div>
     <div class="device">
       <div class="pad">
         <div class="nav">
           <div class="logo"><span class="mark">{}</span>SnackOverflow</div>
-          <!-- Active Nav Links -->
-          <div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-9" class="t">Pantry</a></div>
+          <div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-5" class="t">Pantry</a></div>
           <span class="acct">no account</span>
         </div>
         <div class="hero">
@@ -264,16 +265,16 @@
     </div>
   </div>
   
-  <!-- Frame 2 -->
+  <!-- Frame 2: Daily Targets -->
   <div class="frame" id="frame-2">
-    <div class="ftitle"><span class="num">2</span><h2>Daily Targets — Metric Recalculation Engine</h2><span class="task">Task 1</span></div>
     <div class="device">
       <div class="pad">
         <div class="nav">
           <div class="logo"><span class="mark">{}</span>SnackOverflow</div>
-          <div class="tabs"><a href="#frame-2" class="t on">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-9" class="t">Pantry</a></div>
+          <div class="tabs"><a href="#frame-2" class="t on">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-5" class="t">Pantry</a></div>
           <span class="acct">no account</span>
         </div>
+        <div class="r-head-container"><a href="#frame-1" class="r-back">← Back to Homepage</a></div>
         <div class="cols">
           <div class="col">
             <div class="panel">
@@ -377,15 +378,15 @@
     </div>
   </div>
   
-  <!-- Frame 3 (UPDATED) -->
+  <!-- Frame 3: Search -->
   <div class="frame" id="frame-3">
-    <div class="ftitle"><span class="num">3</span><h2>Search — Faceted Filtering Engine</h2><span class="task">Task 2</span></div>
     <div class="device">
       <div class="pad">
       <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div>
-      <div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
+      <div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-5" class="t">Pantry</a></div>
       <span class="acct">no account</span>
     </div>
+      <div class="r-head-container"><a href="#frame-1" class="r-back">← Back to Homepage</a></div>
       <div class="cols">
         <div class="col" style="flex:.6">
           <div class="facet">
@@ -407,7 +408,6 @@
             </div>
           </div>
           
-          <!-- Max Calorie Interactive Sync Component -->
           <div class="field" style="margin:0">
             <h4 style="font-family:'Space Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--soft);margin-bottom:7px">Max calories</h4>
             <div class="slider-row">
@@ -421,7 +421,6 @@
           
         </div>
         <div class="col" style="flex:1.35; display:flex; flex-direction:column;">
-          <!-- Live Search Input -->
           <div class="searchbar">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="vertical-align:-2px;flex:none"><circle cx="11" cy="11" r="7"></circle><line x1="20.5" y1="20.5" x2="16.5" y2="16.5"></line></svg> 
             <input type="text" id="recipe-search-input" placeholder="Search e.g. pasta, tofu...">
@@ -432,7 +431,6 @@
             <span id="search-results-title">Suggested recipes</span>
           </div>
           
-          <!-- Dynamic Scroll Container -->
           <div class="recipe-grid-container">
             <div class="cards" id="dynamic-recipe-grid">
                <!-- Recipes injected here by JS -->
@@ -444,26 +442,25 @@
     </div>
   </div>
   
-  <!-- Frame 4 -->
+  <!-- Frame 4: Spinach Customization -->
   <div class="frame" id="frame-4">
-    <div class="ftitle"><span class="num">4</span><h2>Recipe Customization — Base State (Before Swap Trigger)</h2><span class="task">Task 3.1</span></div>
     <div class="device">
       <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-5" class="t">Pantry</a></div>
       <span class="acct">no account</span>
     </div>
       
       <div class="r-head-container">
-        <a href="#frame-3" class="r-back">← Back</a>
+        <a href="#frame-3" class="r-back">← Back to Search</a>
         <div class="r-head">
           <div class="r-info">
             <h3>Creamy Spinach Parmesan</h3>
             <div class="r-desc">A rich, savory blend of cream, aged parmesan, and fresh spinach. Customize ingredients below to fit your daily targets.</div>
-            <div class="r-tags"><span class="r-tag">15 mins</span><span class="r-tag">Vegetarian</span></div>
+            <div class="r-tags"><span class="r-tag">15 mins</span><span class="r-tag">Vegetarian</span><span class="r-tag">Pro 20g</span><span class="r-tag">Carb 40g</span><span class="r-tag">Fat 44g</span></div>
           </div>
           <div class="r-cal-box">
             <div class="r-cal-lbl">Total Calories</div>
-            <div class="r-cal-val">640 kcal</div>
+            <div class="r-cal-val" id="sp-total-cal-top">640 kcal</div>
           </div>
         </div>
       </div>
@@ -479,354 +476,125 @@
               </div>
             </div>
             <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
-              <div class="ing"><span class="nm">Heavy cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">200 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
-              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
-            </div>
-          </div>
-          <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2">640 kcal</div></div><div class="d">≈ 32% of your 2010 target</div></div>
-        </div>
-        <div class="col" style="flex:.85">
-          <div class="panel" style="border-width:2.5px; height:100%">
-            <div class="panel-h"><b>Alternatives</b><span class="s">waiting</span></div>
-            <div class="panel-b">
-              <div style="text-align:center; padding:40px 10px; color:var(--soft2); font-family:'Space Mono',monospace; font-size:11px;">Not a fan of an ingredient? Click 'Swap' to find the perfect substitute.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="show-full-recipe">Show Full Recipe +</div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Frame 5 -->
-  <div class="frame">
-    <div class="ftitle"><span class="num">5</span><h2>Recipe Customization — Alternatives Revealed (Confirm Disabled)</h2><span class="task">Task 3.2</span></div>
-    <div class="device">
-      <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
-      <span class="acct">no account</span>
-    </div>
-      
-      <div class="r-head-container">
-        <a href="#frame-3" class="r-back">← Back</a>
-        <div class="r-head">
-          <div class="r-info">
-            <h3>Creamy Spinach Parmesan</h3>
-            <div class="r-desc">A rich, savory blend of cream, aged parmesan, and fresh spinach. Customize ingredients below to fit your daily targets.</div>
-            <div class="r-tags"><span class="r-tag">15 mins</span><span class="r-tag">Vegetarian</span></div>
-          </div>
-          <div class="r-cal-box">
-            <div class="r-cal-lbl">Total Calories</div>
-            <div class="r-cal-val">640 kcal</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cols">
-        <div class="col">
-          <div class="panel">
-            <div class="panel-h">
-              <b>Ingredients</b>
-              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
-                <span class="on" data-target="us">US</span>
-                <span data-target="metric">Metric</span>
+              <!-- Dynamic Cream Slot -->
+              <div class="ing" id="sp-ing-creamSlot">
+                  <span class="nm" id="sp-active-cream-name">Heavy cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span>
+                  <span class="kc" id="sp-active-cream-cal">200 kcal</span>
+                  <span class="swap" id="sp-btn-cream"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span>
               </div>
-            </div>
-            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
-              <div class="ing" style="background:var(--paper)"><span class="nm">Heavy cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">200 kcal</span><span class="swap selected-active"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
-              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
+              
+              <!-- Minor Complete Ingredients -->
+              <div class="ing"><span class="nm">Aged Parmesan<small class="unit-val" data-us="1/4 cup" data-metric="25 g">1/4 cup</small></span><span class="kc">90 kcal</span></div>
+              <div class="ing"><span class="nm">Fresh Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
+              <div class="ing"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
+              <div class="ing"><span class="nm">Olive Oil<small class="unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</small></span><span class="kc">120 kcal</span><span class="swap inactive"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing"><span class="nm">Salt<small class="unit-val" data-us="1/2 tsp" data-metric="3 g">1/2 tsp</small></span><span class="kc">0 kcal</span><span class="swap inactive"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing" style="border:none"><span class="nm">Black Pepper<small class="unit-val" data-us="1/4 tsp" data-metric="1 g">1/4 tsp</small></span><span class="kc">0 kcal</span></div>
             </div>
           </div>
-          <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2">640 kcal</div></div><div class="d">≈ 32% of your 2010 target</div></div>
+          <div class="totalbar" id="sp-total-bar"><div><div class="t1">Recipe total</div><div class="t2" id="sp-total-cal-bot">640 kcal</div></div><div class="d">≈ <span id="sp-percent">32</span>% of your 2010 target</div></div>
         </div>
+        
         <div class="col" style="flex:.85">
           <div class="panel" style="border-width:2.5px; height:100%; display:flex; flex-direction:column">
-            <div class="panel-h"><b>Swap "Heavy cream"</b><span class="s">select alternative</span></div>
-            <div class="panel-b scroll-panel" style="flex-grow:1; max-height:165px; padding-bottom:16px;">
+            <div class="panel-h"><b>Alternatives</b><span class="s" id="sp-alt-status">waiting</span></div>
+            <div class="panel-b scroll-panel" style="flex-grow:1; max-height:285px; padding-bottom:16px;">
               
-              <div class="alt">
-                <span class="bullet"></span>
-                <div class="nm" style="display:flex; flex-direction:column">
-                  <span>Coconut cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
-                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">98% TASTE MATCH</span>
-                </div>
-                <span class="d" style="color:#1f7a4d">▼ 60 kcal</span>
-              </div>
+              <!-- Empty State -->
+              <div id="sp-alt-empty" style="text-align:center; padding:40px 10px; color:var(--soft2); font-family:'Space Mono',monospace; font-size:12px;">Not a fan of an ingredient? Click 'Swap' to find the perfect substitute.</div>
               
-              <div class="alt">
-                <span class="bullet"></span>
-                <div class="nm" style="display:flex; flex-direction:column">
-                  <span>Cashew cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
-                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">95% TASTE MATCH</span>
-                </div>
-                <span class="d" style="color:#1f7a4d">▼ 80 kcal</span>
-              </div>
-              
-              <div class="alt" style="margin:0">
-                <span class="bullet"></span>
-                <div class="nm" style="display:flex; flex-direction:column">
-                  <span>Oat cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
-                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">85% TASTE MATCH</span>
-                </div>
-                <span class="d" style="color:#1f7a4d">▼ 110 kcal</span>
+              <!-- Alternatives Container -->
+              <div id="sp-alt-list" style="display:none;">
+                  <div class="alt" data-val="heavy">
+                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Heavy cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">100% TASTE MATCH</span></div><span class="d" id="sp-diff-heavy">-- kcal</span>
+                  </div>
+                  <div class="alt" data-val="coco">
+                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Coconut cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">98% TASTE MATCH</span></div><span class="d" id="sp-diff-coco">- 60 kcal</span>
+                  </div>
+                  <div class="alt" data-val="cash">
+                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Cashew cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">95% TASTE MATCH</span></div><span class="d" id="sp-diff-cash">- 80 kcal</span>
+                  </div>
+                  <div class="alt" data-val="oat" style="margin:0">
+                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Oat cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">85% TASTE MATCH</span></div><span class="d" id="sp-diff-oat">- 110 kcal</span>
+                  </div>
               </div>
 
             </div>
-            <div style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2">
-              <button class="btnsk fill" disabled>Confirm Swap</button>
+            
+            <div id="sp-confirm-box" style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2; display:none;">
+              <button class="btnsk fill" id="sp-btn-confirm" disabled>Confirm Swap</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="show-full-recipe">Show Full Recipe +</div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Frame 6 -->
-  <div class="frame">
-    <div class="ftitle"><span class="num">6</span><h2>Recipe Customization — Alternative Selected (Action Accessible)</h2><span class="task">Task 3.3</span></div>
-    <div class="device">
-      <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
-    <span class="acct">no account</span>
-  </div>
       
-      <div class="r-head-container">
-        <a href="#frame-3" class="r-back">← Back</a>
-        <div class="r-head">
-          <div class="r-info">
-            <h3>Creamy Spinach Parmesan</h3>
-            <div class="r-desc">A rich, savory blend of cream, aged parmesan, and fresh spinach. Customize ingredients below to fit your daily targets.</div>
-            <div class="r-tags"><span class="r-tag">15 mins</span><span class="r-tag">Vegetarian</span></div>
+      <a href="#!" id="sp-trigger-recipe" class="show-full-recipe">Show Full Recipe +</a>
+
+      <!-- Expanded Full Recipe View (Inline Stacked) -->
+      <div id="sp-expanded-recipe" class="expanded-recipe-container">
+          <div class="imgph" style="height: 200px; border-radius:var(--w1); border:2px solid var(--ink); background:#ece8de; display:grid; place-items:center; color:var(--soft2); font-family:'Space Mono', monospace; font-size:12px; margin-bottom:24px;">
+            [ Creamy Spinach Image Placeholder ]
           </div>
-          <div class="r-cal-box">
-            <div class="r-cal-lbl">Total Calories</div>
-            <div class="r-cal-val">640 kcal</div>
+          
+          <h3 style="font-family:'Fraunces',serif; font-weight:800; font-size:28px; line-height:1; margin-bottom:8px;">Recipe Cooking Instructions</h3>
+          <div style="display:flex; gap:10px; font-family:'Space Mono',monospace; font-size:13px; color:var(--soft); margin-bottom: 24px;">
+            <span><b style="color:var(--ink)">Prep:</b> 5 mins</span> | <span><b style="color:var(--ink)">Cook:</b> 10 mins</span>
           </div>
-        </div>
+
+          <h4 class="recipe-section-title">Ingredients</h4>
+          <div id="sp-view-ing" style="margin-bottom: 32px;">
+             <div class="fr-ing">
+               <span class="fr-nm" id="sp-final-cream-name">Heavy cream</span>
+               <span class="fr-amt unit-val" id="sp-final-cream-amt" data-us="1/2 cup" data-metric="120 ml">1/2 cup</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm">Aged Parmesan</span>
+               <span class="fr-amt unit-val" data-us="1/4 cup" data-metric="25 g">1/4 cup</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm">Fresh Spinach</span>
+               <span class="fr-amt unit-val" data-us="2 cups" data-metric="60 g">2 cups</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm">Garlic</span>
+               <span class="fr-amt unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm">Olive Oil</span>
+               <span class="fr-amt unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm">Salt</span>
+               <span class="fr-amt unit-val" data-us="1/2 tsp" data-metric="3 g">1/2 tsp</span>
+             </div>
+             <div class="fr-ing" style="border:none">
+               <span class="fr-nm">Black Pepper</span>
+               <span class="fr-amt unit-val" data-us="1/4 tsp" data-metric="1 g">1/4 tsp</span>
+             </div>
+          </div>
+          
+          <h4 class="recipe-section-title">Instructions</h4>
+          <div id="sp-view-ins">
+             <div class="step"><b>1.</b> <p>Mince the garlic and thoroughly wash the spinach.</p></div>
+             <div class="step"><b>2.</b> <p>Heat olive oil in a skillet over medium heat. Sauté garlic for 1 minute until fragrant.</p></div>
+             <div class="step"><b>3.</b> <p>Add spinach and cook until wilted, about 2-3 minutes.</p></div>
+             <div class="step"><b>4.</b> <p>Lower the heat. Stir in your <span id="sp-step-cream-text" style="font-weight:700; color:var(--ink);">heavy cream</span> and simmer for 2 minutes to thicken slightly.</p></div>
+             <div class="step" style="border:none"><b>5.</b> <p>Remove from heat, fold in parmesan until melted, and season with salt and pepper.</p></div>
+          </div>
       </div>
 
-      <div class="cols">
-        <div class="col">
-          <div class="panel">
-            <div class="panel-h">
-              <b>Ingredients</b>
-              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
-                <span class="on" data-target="us">US</span>
-                <span data-target="metric">Metric</span>
-              </div>
-            </div>
-            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
-              <div class="ing" style="background:var(--paper)"><span class="nm">Heavy cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">200 kcal</span><span class="swap selected-active"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
-              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
-            </div>
-          </div>
-          <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2" style="color:var(--green)">530 kcal</div></div><div class="d">≈ 26% of your 2010 target</div></div>
-        </div>
-        <div class="col" style="flex:.85">
-          <div class="panel" style="border-width:2.5px; height:100%; display:flex; flex-direction:column">
-            <div class="panel-h"><b>Swap "Heavy cream"</b><span class="s"></span></div>
-            <div class="panel-b scroll-panel" style="flex-grow:1; max-height:165px; padding-bottom:16px;">
-              
-              <div class="alt">
-                <span class="bullet"></span>
-                <div class="nm" style="display:flex; flex-direction:column">
-                  <span>Coconut cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
-                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">98% TASTE MATCH</span>
-                </div>
-                <span class="d" style="color:#1f7a4d">▼ 60 kcal</span>
-              </div>
-              
-              <div class="alt">
-                <span class="bullet"></span>
-                <div class="nm" style="display:flex; flex-direction:column">
-                  <span>Cashew cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
-                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">95% TASTE MATCH</span>
-                </div>
-                <span class="d" style="color:#1f7a4d">▼ 80 kcal</span>
-              </div>
-              
-              <div class="alt highlighted-choice" style="margin:0">
-                <span class="bullet"></span>
-                <div class="nm" style="display:flex; flex-direction:column">
-                  <span>Oat cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
-                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">85% TASTE MATCH</span>
-                </div>
-                <span class="d" style="color:#1f7a4d">▼ 110 kcal</span>
-              </div>
-
-            </div>
-            <div style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2">
-              <button class="btnsk fill">Confirm Swap</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="show-full-recipe">Show Full Recipe +</div>
       </div>
     </div>
   </div>
   
-  <!-- Frame 7 -->
-  <div class="frame">
-    <div class="ftitle"><span class="num">7</span><h2>Recipe Customization — Mutation Resolved &amp; Recalculated</h2><span class="task">Task 3.4</span></div>
+  <!-- Frame 5: Pantry Empty -->
+  <div class="frame" id="frame-5">
     <div class="device">
       <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-5" class="t on">Pantry</a></div>
     <span class="acct">no account</span>
   </div>
-      
-      <div class="r-head-container">
-        <a href="#frame-3" class="r-back">← Back</a>
-        <div class="r-head">
-          <div class="r-info">
-            <h3>Creamy Spinach Parmesan</h3>
-            <div class="r-desc">A rich, savory blend of cream, aged parmesan, and fresh spinach. Customize ingredients below to fit your daily targets.</div>
-            <div class="r-tags"><span class="r-tag">15 mins</span><span class="r-tag">Vegetarian</span></div>
-          </div>
-          <div class="r-cal-box">
-            <div class="r-cal-lbl">Total Calories</div>
-            <div class="r-cal-val" style="color:var(--green)">530 kcal</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cols">
-        <div class="col">
-          <div class="panel">
-            <div class="panel-h">
-              <b>Ingredients</b>
-              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
-                <span class="on" data-target="us">US</span>
-                <span data-target="metric">Metric</span>
-              </div>
-            </div>
-            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
-              <div class="ing flash-animate" style="border-radius:4px; padding-left:4px; padding-right:4px;"><span class="nm">Oat cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
-              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
-            </div>
-          </div>
-          <div class="totalbar flash-animate"><div><div class="t1">Recipe total</div><div class="t2" style="color:var(--green)">530 kcal</div></div><div class="d">≈ 26% of your 2010 target</div></div>
-        </div>
-        <div class="col" style="flex:.85">
-          <div class="panel" style="border-width:2.5px; height:100%">
-            <div class="panel-h"><b>Alternatives</b><span class="s">waiting</span></div>
-            <div class="panel-b">
-              <div style="text-align:center; padding:40px 10px; color:var(--soft2); font-family:'Space Mono',monospace; font-size:11px;">Swap complete. Select another swappable item to swap.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="show-full-recipe">Show Full Recipe +</div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Frame 8 -->
-  <div class="frame">
-    <div class="ftitle"><span class="num">8</span><h2>Recipe Customization — Reversibility &amp; Undo (Menu Re-opened)</h2><span class="task">Task 3.5</span></div>
-    <div class="device">
-      <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-9" class="t">Pantry</a></div>
-    <span class="acct">no account</span>
-  </div>
-      
-      <div class="r-head-container">
-        <a href="#frame-3" class="r-back">← Back</a>
-        <div class="r-head">
-          <div class="r-info">
-            <h3>Creamy Spinach Parmesan</h3>
-            <div class="r-desc">A rich, savory blend of cream, aged parmesan, and fresh spinach. Customize ingredients below to fit your daily targets.</div>
-            <div class="r-tags"><span class="r-tag">15 mins</span><span class="r-tag">Vegetarian</span></div>
-          </div>
-          <div class="r-cal-box">
-            <div class="r-cal-lbl">Total Calories</div>
-            <div class="r-cal-val" style="color:var(--green)">530 kcal</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cols">
-        <div class="col">
-          <div class="panel">
-            <div class="panel-h">
-              <b>Ingredients</b>
-              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
-                <span class="on" data-target="us">US</span>
-                <span data-target="metric">Metric</span>
-              </div>
-            </div>
-            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
-              <div class="ing" style="background:var(--paper)"><span class="nm">Oat cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span><span class="kc">90 kcal</span><span class="swap selected-active"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Parmesan<small class="unit-val" data-us="¼ cup" data-metric="25 g">¼ cup</small></span><span class="kc">90 kcal</span><span class="swap"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
-              <div class="ing" style="border:none"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
-            </div>
-          </div>
-          <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2" style="color:var(--green)">530 kcal</div></div><div class="d">≈ 26% of your 2010 target</div></div>
-        </div>
-        <div class="col" style="flex:.85">
-          <div class="panel" style="border-width:2.5px; height:100%; display:flex; flex-direction:column">
-            <div class="panel-h"><b>Swap "Oat cream"</b><span class="s">select alternative</span></div>
-            <div class="panel-b scroll-panel" style="flex-grow:1; max-height:165px; padding-bottom:16px;">
-              
-              <div class="alt">
-                <span class="bullet"></span>
-                <div class="nm" style="display:flex; flex-direction:column">
-                  <span>Heavy cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
-                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">100% TASTE MATCH</span>
-                </div>
-                <span class="d" style="color:var(--red)">▲ 110 kcal</span>
-              </div>
-              
-              <div class="alt">
-                <span class="bullet"></span>
-                <div class="nm" style="display:flex; flex-direction:column">
-                  <span>Coconut cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
-                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">98% TASTE MATCH</span>
-                </div>
-                <span class="d" style="color:var(--red)">▲ 50 kcal</span>
-              </div>
-              
-              <div class="alt" style="margin:0">
-                <span class="bullet"></span>
-                <div class="nm" style="display:flex; flex-direction:column">
-                  <span>Cashew cream<small class="unit-val" data-us="½ cup" data-metric="120 ml">½ cup</small></span>
-                  <span style="font-size:9px; color:var(--soft2); font-family:'Space Mono'; margin-top:2px">95% TASTE MATCH</span>
-                </div>
-                <span class="d" style="color:var(--red)">▲ 30 kcal</span>
-              </div>
-
-            </div>
-            <div style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2">
-              <button class="btnsk fill" disabled>Confirm Swap</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="show-full-recipe">Show Full Recipe +</div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Frame 9 -->
-  <div class="frame" id="frame-9">
-    <div class="ftitle"><span class="num">9</span><h2>The Digital Pantry — Bare Workspace (Generation Guarded)</h2><span class="task">Task 4.1</span></div>
-    <div class="device">
-      <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-9" class="t on">Pantry</a></div>
-    <span class="acct">no account</span>
-  </div>
+      <div class="r-head-container"><a href="#frame-1" class="r-back">← Back to Homepage</a></div>
       <div class="cols">
         <div class="col" style="flex:1.3">
           <div class="searchbar" style="margin-bottom:11px"><span class="mono" style="font-size:11px">🔍 What ingredients do you have?</span></div>
@@ -860,6 +628,230 @@
     </div>
   </div>
 
+  <!-- Frame 6: Pantry Constructive -->
+  <div class="frame" id="frame-6">
+    <div class="device">
+      <div class="pad">
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-5" class="t on">Pantry</a></div>
+    <span class="acct">no account</span>
+  </div>
+      <div class="r-head-container"><a href="#frame-1" class="r-back">← Back to Homepage</a></div>
+      <div class="cols">
+        <div class="col" style="flex:1.3">
+          <div class="searchbar" style="margin-bottom:11px"><span class="mono" style="font-size:11px">🔍 What ingredients do you have?</span></div>
+          
+          <div class="shelf">
+            <h4 onclick="this.parentElement.classList.toggle('collapsed')">Produce <span class="chevron">▾</span></h4>
+            <div class="items">
+              <span class="item">Spinach <span class="p">+</span></span><span class="item">Tomato <span class="p">+</span></span><span class="item on">Broccoli <span class="p">✓</span></span>
+            </div>
+          </div>
+          
+          <div class="shelf" style="margin:0">
+            <h4 onclick="this.parentElement.classList.toggle('collapsed')">Proteins <span class="chevron">▾</span></h4>
+            <div class="items">
+              <span class="item on">Tofu <span class="p">✓</span></span><span class="item">Eggs <span class="p">+</span></span><span class="item">Salmon<span class="p">+</span></span>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col">
+          <div class="basket"><div class="bh">Your basket <span class="c">2 items</span></div>
+            <div style="flex-grow:1; padding-top:10px">
+              <span class="bchip">Tofu ×</span><span class="bchip">Broccoli ×</span>
+            </div>
+            <div class="gen-btn-container">
+              <a href="#frame-7" id="generate-tofu-btn" class="btnsk fill" style="width:100%; display:block; text-decoration:none;">Generate recipes</a>
+            </div>
+          </div>
+          <div class="ph-note" style="color:var(--green); font-weight:700">Constraint satisfied ✓</div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Frame 7: Rec Engine -->
+  <div class="frame" id="frame-7">
+    <div class="device">
+      <div class="pad">
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-5" class="t on">Pantry</a></div>
+    <span class="acct">no account</span>
+  </div>
+      <div class="r-head-container"><a href="#frame-6" class="r-back">← Back to Pantry</a></div>
+      <div class="match">
+        
+        <a href="#frame-8" class="btnsk fill" style="position:absolute; top:14px; right:14px; margin:0; padding:6px 12px; font-size:11.5px; text-decoration:none;">Jump to Recipe</a>
+        
+        <div class="mi imgph"></div>
+        <div style="flex:1">
+          <div class="h">Crispy Tofu Power Bowl</div>
+          <div style="margin:5px 0">
+            <span class="chip on" style="font-size:10px;padding:3px 8px">520 kcal</span>
+            <span class="chip" style="font-size:10px;padding:3px 8px">20 min</span>
+            <span class="chip" style="font-size:10px;padding:3px 8px">Vegan</span>
+            <span class="chip" style="font-size:10px;padding:3px 8px">Pro 32g</span>
+            <span class="chip" style="font-size:10px;padding:3px 8px">Carb 45g</span>
+            <span class="chip" style="font-size:10px;padding:3px 8px">Fat 24g</span>
+          </div>
+          <div class="mono" style="font-size:11px">You already have <b>83%</b> of the ingredients</div>
+          <div class="meter"><i></i></div>
+          <span class="have y">✓ Tofu</span><span class="have y">✓ Broccoli</span><span class="have n">+ buy Rice</span>
+          
+          <div class="discovery-badge">✨ New Recipe Discovered! Added to your Search database.</div>
+        </div>
+      </div>
+      <div style="margin-top:11px"><div class="mono" style="font-size:11px;color:var(--soft);margin-bottom:6px">ALTERNATIVE CALCULATED OPTIONS</div>
+        <div class="cards"><div class="card"><div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)"></div><div class="cc"><div class="ln w80"></div><div class="k">440 kcal</div></div></div><div class="card"><div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)"></div><div class="cc"><div class="ln w80"></div><div class="k">330 kcal</div></div></div><div class="card"><div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)"></div><div class="cc"><div class="ln w80"></div><div class="k">290 kcal</div></div></div></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Frame 8: Tofu Customization -->
+  <div class="frame" id="frame-8">
+    <div class="device">
+      <div class="pad">
+      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t">Search</a><a href="#frame-5" class="t on">Pantry</a></div>
+      <span class="acct">no account</span>
+    </div>
+      
+      <div class="r-head-container">
+        <a href="#frame-7" class="r-back">← Back to Recommendation</a>
+        <div class="r-head">
+          <div class="r-info">
+            <h3>Crispy Tofu Power Bowl</h3>
+            <div class="r-desc">A protein-packed vegan bowl featuring pan-fried tofu, fresh broccoli, and a savory soy glaze. Customize ingredients below.</div>
+            <div class="r-tags"><span class="r-tag">20 mins</span><span class="r-tag">Vegan</span><span class="r-tag">Pro 32g</span><span class="r-tag">Carb 45g</span><span class="r-tag">Fat 24g</span></div>
+          </div>
+          <div class="r-cal-box">
+            <div class="r-cal-lbl">Total Calories</div>
+            <div class="r-cal-val" id="tf-total-cal-top">520 kcal</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols">
+        <div class="col">
+          <div class="panel">
+            <div class="panel-h">
+              <b>Ingredients</b>
+              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
+                <span class="on" data-target="us">US</span>
+                <span data-target="metric">Metric</span>
+              </div>
+            </div>
+            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
+              
+              <div class="ing"><span class="nm">Firm Tofu<small class="unit-val" data-us="14 oz" data-metric="400 g">14 oz</small></span><span class="kc">350 kcal</span><span class="swap inactive"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              
+              <!-- Dynamic Rice Slot -->
+              <div class="ing" id="tf-ing-riceSlot">
+                  <span class="nm" id="tf-active-rice-name">Brown Rice<small class="unit-val" data-us="1/2 cup" data-metric="100 g">1/2 cup</small></span>
+                  <span class="kc" id="tf-active-rice-cal">110 kcal</span>
+                  <span class="swap" id="tf-btn-rice"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span>
+              </div>
+              
+              <!-- Minor Complete Ingredients -->
+              <div class="ing"><span class="nm">Fresh Broccoli<small class="unit-val" data-us="1 cup" data-metric="90 g">1 cup</small></span><span class="kc">30 kcal</span></div>
+              <div class="ing"><span class="nm">Soy Sauce<small class="unit-val" data-us="2 tbsp" data-metric="30 ml">2 tbsp</small></span><span class="kc">30 kcal</span><span class="swap inactive"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+              <div class="ing"><span class="nm">Sesame Oil<small class="unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</small></span><span class="kc">120 kcal</span></div>
+              <div class="ing"><span class="nm">Fresh Ginger<small class="unit-val" data-us="1 tsp" data-metric="5 g">1 tsp</small></span><span class="kc">0 kcal</span></div>
+              <div class="ing" style="border:none"><span class="nm">Fresh Garlic<small class="unit-val" data-us="1 tsp" data-metric="5 g">1 tsp</small></span><span class="kc">0 kcal</span></div>
+            </div>
+          </div>
+          <div class="totalbar" id="tf-total-bar"><div><div class="t1">Recipe total</div><div class="t2" id="tf-total-cal-bot">520 kcal</div></div><div class="d">≈ <span id="tf-percent">25</span>% of your 2010 target</div></div>
+        </div>
+        
+        <div class="col" style="flex:.85">
+          <div class="panel" style="border-width:2.5px; height:100%; display:flex; flex-direction:column">
+            <div class="panel-h"><b>Alternatives</b><span class="s" id="tf-alt-status">waiting</span></div>
+            <div class="panel-b scroll-panel" style="flex-grow:1; max-height:285px; padding-bottom:16px;">
+              
+              <!-- Empty State -->
+              <div id="tf-alt-empty" style="text-align:center; padding:40px 10px; color:var(--soft2); font-family:'Space Mono',monospace; font-size:12px;">Not a fan of an ingredient? Click 'Swap' to find the perfect substitute.</div>
+              
+              <!-- Alternatives Container -->
+              <div id="tf-alt-list" style="display:none;">
+                  <div class="alt" data-val="rice">
+                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Brown Rice<small class="unit-val" data-us="1/2 cup" data-metric="100 g">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">100% TEXTURE MATCH</span></div><span class="d" id="tf-diff-rice">-- kcal</span>
+                  </div>
+                  <div class="alt" data-val="quinoa">
+                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Quinoa<small class="unit-val" data-us="1/2 cup" data-metric="90 g">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">90% TEXTURE MATCH</span></div><span class="d" id="tf-diff-quinoa">+ 10 kcal</span>
+                  </div>
+                  <div class="alt" data-val="cauli" style="margin:0">
+                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Cauliflower Rice<small class="unit-val" data-us="1 cup" data-metric="110 g">1 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">80% TEXTURE MATCH</span></div><span class="d" id="tf-diff-cauli">- 85 kcal</span>
+                  </div>
+              </div>
+
+            </div>
+            
+            <div id="tf-confirm-box" style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2; display:none;">
+              <button class="btnsk fill" id="tf-btn-confirm" disabled>Confirm Swap</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <a href="#!" id="tf-trigger-recipe" class="show-full-recipe">Show Full Recipe +</a>
+
+      <!-- Expanded Full Recipe View (Inline Stacked) -->
+      <div id="tf-expanded-recipe" class="expanded-recipe-container">
+          <div class="imgph" style="height: 200px; border-radius:var(--w1); border:2px solid var(--ink); background:#ece8de; display:grid; place-items:center; color:var(--soft2); font-family:'Space Mono', monospace; font-size:12px; margin-bottom:24px;">
+            [ Tofu Bowl Image Placeholder ]
+          </div>
+          
+          <h3 style="font-family:'Fraunces',serif; font-weight:800; font-size:28px; line-height:1; margin-bottom:8px;">Recipe Cooking Instructions</h3>
+          <div style="display:flex; gap:10px; font-family:'Space Mono',monospace; font-size:13px; color:var(--soft); margin-bottom: 24px;">
+            <span><b style="color:var(--ink)">Prep:</b> 10 mins</span> | <span><b style="color:var(--ink)">Cook:</b> 10 mins</span>
+          </div>
+
+          <h4 class="recipe-section-title">Ingredients</h4>
+          <div id="tf-view-ing" style="margin-bottom: 32px;">
+             <div class="fr-ing">
+               <span class="fr-nm">Firm Tofu</span>
+               <span class="fr-amt unit-val" data-us="14 oz" data-metric="400 g">14 oz</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm" id="tf-final-rice-name">Brown Rice</span>
+               <span class="fr-amt unit-val" id="tf-final-rice-amt" data-us="1/2 cup" data-metric="100 g">1/2 cup</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm">Fresh Broccoli</span>
+               <span class="fr-amt unit-val" data-us="1 cup" data-metric="90 g">1 cup</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm">Soy Sauce</span>
+               <span class="fr-amt unit-val" data-us="2 tbsp" data-metric="30 ml">2 tbsp</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm">Sesame Oil</span>
+               <span class="fr-amt unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</span>
+             </div>
+             <div class="fr-ing">
+               <span class="fr-nm">Fresh Ginger</span>
+               <span class="fr-amt unit-val" data-us="1 tsp" data-metric="5 g">1 tsp</span>
+             </div>
+             <div class="fr-ing" style="border:none">
+               <span class="fr-nm">Fresh Garlic</span>
+               <span class="fr-amt unit-val" data-us="1 tsp" data-metric="5 g">1 tsp</span>
+             </div>
+          </div>
+          
+          <h4 class="recipe-section-title">Instructions</h4>
+          <div id="tf-view-ins">
+             <div class="step"><b>1.</b> <p>Press and drain the tofu, then cut into 1-inch cubes.</p></div>
+             <div class="step"><b>2.</b> <p>Chop broccoli into bite-sized florets and mince garlic and ginger.</p></div>
+             <div class="step"><b>3.</b> <p>Heat sesame oil in a wok. Fry tofu for 6-8 mins until crispy on all sides. Remove from pan.</p></div>
+             <div class="step"><b>4.</b> <p>Sauté broccoli, garlic, and ginger until tender-crisp. Whisk soy sauce and pour over.</p></div>
+             <div class="step" style="border:none"><b>5.</b> <p>Add tofu back to the pan, toss to coat, and serve hot over your <span id="tf-step-rice-text" style="font-weight:700; color:var(--ink);">brown rice</span>.</p></div>
+          </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- Interactive UI Controller -->
@@ -871,10 +863,14 @@
     recipeToggles.forEach(toggle => {
       toggle.addEventListener('click', (e) => {
         const selectedSystem = e.target.getAttribute('data-target');
-        recipeToggles.forEach(t => {
+        
+        // Update all toggle groups to match
+        document.querySelectorAll('.global-unit-toggle span').forEach(t => {
           if (t.getAttribute('data-target') === selectedSystem) t.classList.add('on');
           else t.classList.remove('on');
         });
+        
+        // Update ALL text fields simultaneously
         document.querySelectorAll('.unit-val').forEach(val => {
             val.innerText = val.getAttribute('data-' + selectedSystem);
         });
@@ -963,7 +959,6 @@
       let min = parseFloat(input.getAttribute('min'));
       let max = parseFloat(input.getAttribute('max'));
 
-      // Dynamic constraints for US Height dependencies
       if (input.id === 'val-in') {
           let ft = parseFloat(document.getElementById('val-ft').value) || 0;
           if (ft >= 10) max = 0;
@@ -971,7 +966,6 @@
           if (ft === 0) min = 4;
       }
 
-      // Check Real-Time Conditions ONLY if not empty
       if (rawVal !== '') {
           if (val < min) {
             if (input.id === 'val-cm') errMsg = `Minimum is 10.2 cm.`;
@@ -1009,18 +1003,12 @@
         return false;
       } else {
         container.classList.remove('has-error');
-        
-        // Wait to clear shared error text if the sibling input is still failing
         if (input.id === 'val-ft') {
             const inContainer = document.getElementById('val-in').closest('.stepper');
-            if (!inContainer.classList.contains('has-error') && errEl) {
-                errEl.innerText = ''; errEl.style.display = 'none';
-            }
+            if (!inContainer.classList.contains('has-error') && errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
         } else if (input.id === 'val-in') {
             const ftContainer = document.getElementById('val-ft').closest('.stepper');
-            if (!ftContainer.classList.contains('has-error') && errEl) {
-                errEl.innerText = ''; errEl.style.display = 'none';
-            }
+            if (!ftContainer.classList.contains('has-error') && errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
         } else {
             if(errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
         }
@@ -1038,7 +1026,6 @@
       
       const updateVal = (direction) => {
         let val = parseFloat(input.value);
-        
         let currentMin = min;
         let currentMax = max;
         
@@ -1048,13 +1035,9 @@
             if (ft === 0) currentMin = 4;
         }
 
-        if(isNaN(val)) {
-            val = (direction > 0) ? currentMin : currentMax;
-        } else {
-            val += (direction * step);
-        }
+        if(isNaN(val)) val = (direction > 0) ? currentMin : currentMax;
+        else val += (direction * step);
         
-        // --- HCI Fix: Silent button clamping ---
         if (val < currentMin) val = currentMin;
         if (val > currentMax) val = currentMax;
 
@@ -1063,13 +1046,9 @@
             validateInput(document.getElementById('val-in'));
         }
         
-        if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') {
-            input.value = Math.round(val);
-        } else if (input.id === 'val-in') {
-            input.value = (Math.round(val * 2) / 2).toFixed(1);
-        } else {
-            input.value = val.toFixed(1);
-        }
+        if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') input.value = Math.round(val);
+        else if (input.id === 'val-in') input.value = (Math.round(val * 2) / 2).toFixed(1);
+        else input.value = val.toFixed(1);
         
         validateInput(input);
         if (input.id === 'val-in') validateInput(document.getElementById('val-ft'), true);
@@ -1087,29 +1066,20 @@
       minus.addEventListener('click', () => updateVal(-1));
       plus.addEventListener('click', () => updateVal(1));
       
-      // Real-time Input Poka-Yoke & Validation
       input.addEventListener('input', () => {
-        
-        // Strip out non-numeric characters instantly
         let cleanVal = input.value;
-        if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') {
-            cleanVal = cleanVal.replace(/[^0-9]/g, ''); // Integers only
-        } else {
-            cleanVal = cleanVal.replace(/[^0-9.]/g, ''); // Decimals allowed
-            // Prevent multiple decimals
+        if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') cleanVal = cleanVal.replace(/[^0-9]/g, '');
+        else {
+            cleanVal = cleanVal.replace(/[^0-9.]/g, '');
             let parts = cleanVal.split('.');
             if (parts.length > 2) cleanVal = parts[0] + '.' + parts.slice(1).join('');
         }
-        
-        if (input.value !== cleanVal) {
-            input.value = cleanVal;
-        }
+        if (input.value !== cleanVal) input.value = cleanVal;
 
         validateInput(input);
         if (input.id === 'val-in') validateInput(document.getElementById('val-ft'), true);
         if (input.id === 'val-ft') validateInput(document.getElementById('val-in'), true);
 
-        // Check for empty visible inputs
         let anyEmpty = false;
         document.querySelectorAll('input[type="text"]').forEach(inp => {
             if (inp.offsetParent !== null && inp.value === '') anyEmpty = true;
@@ -1124,7 +1094,6 @@
         }
       });
       
-      // Default to exact minimum boundaries on empty box blur
       input.addEventListener('blur', () => {
         let rawVal = input.value;
         let currentMin = min;
@@ -1141,20 +1110,13 @@
         }
 
         if (rawVal === '' || isNaN(parseFloat(rawVal))) {
-            if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') {
-                input.value = Math.round(defaultVal);
-            } else {
-                input.value = defaultVal.toFixed(1);
-            }
+            if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') input.value = Math.round(defaultVal);
+            else input.value = defaultVal.toFixed(1);
         } else {
             let val = parseFloat(rawVal);
-            if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') {
-                input.value = Math.round(val);
-            } else if (input.id === 'val-in') {
-                input.value = (Math.round(val * 2) / 2).toFixed(1);
-            } else {
-                input.value = val.toFixed(1);
-            }
+            if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') input.value = Math.round(val);
+            else if (input.id === 'val-in') input.value = (Math.round(val * 2) / 2).toFixed(1);
+            else input.value = val.toFixed(1);
         }
         
         validateInput(input);
@@ -1169,7 +1131,6 @@
       });
     });
 
-    // --- 5. Two-Way Slider Bindings ---
     document.querySelectorAll('.interactive-slider').forEach(slider => {
       slider.addEventListener('input', (e) => {
         const matchingInput = document.querySelector(`input[data-sync="${e.target.id}"]`);
@@ -1182,16 +1143,13 @@
       });
     });
 
-    // --- 6. Hard Stop UI Function ---
     function displayHardStop() {
-      // Ensure we only wipe Frame 2 data
       document.querySelectorAll('#frame-2 .sync-cals').forEach(el => el.innerHTML = `---<sup>kcal</sup>`);
       document.querySelectorAll('#frame-2 .sync-p-val').forEach(el => el.innerHTML = `--- g`);
       document.querySelectorAll('#frame-2 .sync-c-val').forEach(el => el.innerHTML = `--- g`);
       document.querySelectorAll('#frame-2 .sync-f-val').forEach(el => el.innerHTML = `--- g`);
     }
 
-    // --- 7. The Mifflin-St Jeor Calculation Engine ---
     function calculateMacros() {
       if(document.querySelectorAll('#frame-2 .has-error').length > 0) return;
 
@@ -1199,18 +1157,10 @@
       let isFemale = document.querySelector('#frame-2 .logic-group[data-target="sex"] .on').dataset.val === 'f';
       let age = parseFloat(document.getElementById('val-age').value) || 22;
       
-      let weightKg = isMetric ? 
-        parseFloat(document.getElementById('val-kg').value) : 
-        parseFloat(document.getElementById('val-lbs').value) / 2.20462;
-        
-      let heightCm = isMetric ? 
-        parseFloat(document.getElementById('val-cm').value) : 
-        ((parseFloat(document.getElementById('val-ft').value) * 12) + parseFloat(document.getElementById('val-in').value)) * 2.54;
+      let weightKg = isMetric ? parseFloat(document.getElementById('val-kg').value) : parseFloat(document.getElementById('val-lbs').value) / 2.20462;
+      let heightCm = isMetric ? parseFloat(document.getElementById('val-cm').value) : ((parseFloat(document.getElementById('val-ft').value) * 12) + parseFloat(document.getElementById('val-in').value)) * 2.54;
 
-      if(isNaN(weightKg) || isNaN(heightCm) || isNaN(age)) {
-        displayHardStop();
-        return;
-      }
+      if(isNaN(weightKg) || isNaN(heightCm) || isNaN(age)) { displayHardStop(); return; }
 
       let bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + (isFemale ? -161 : 5);
       let actMult = parseFloat(document.querySelector('#frame-2 .logic-group[data-target="activity"] .on').dataset.val);
@@ -1218,7 +1168,6 @@
       
       let goalMod = parseFloat(document.querySelector('#frame-2 .logic-group[data-target="goal"] .on').dataset.val);
       let targetCals = Math.round(tdee + goalMod);
-      
       if(targetCals < 0) targetCals = 0;
       
       let proteinGrams = Math.round((targetCals * 0.25) / 4);
@@ -1235,18 +1184,16 @@
     calculateMacros();
 
     // ---------------------------------------------------------
-    // --- FRAME 3: RECIPE FILTERING & LIVE SEARCH ENGINE ---
+    // --- RECIPE FILTERING & LIVE SEARCH ENGINE ---
     // ---------------------------------------------------------
-    
-    // The "Dummy Database"
     const recipes = [
-      { name: "Creamy Spinach Parmesan", cal: 640, time: "Under 15m", diet: ["Vegetarian"], meal: ["Dinner"] },
-      { name: "Crispy Tofu Power Bowl", cal: 520, time: "Under 30m", diet: ["Vegan", "Vegetarian"], meal: ["Lunch", "Dinner"] },
-      { name: "Protein Oat Pancakes", cal: 430, time: "Under 15m", diet: ["Vegetarian", "High-protein"], meal: ["Breakfast"] },
-      { name: "Spicy Lentil Pasta", cal: 550, time: "Under 30m", diet: ["Vegan", "Vegetarian", "High-protein"], meal: ["Dinner"] },
-      { name: "Avocado Egg Toast", cal: 350, time: "Under 15m", diet: ["Vegetarian"], meal: ["Breakfast"] },
-      { name: "Grilled Salmon Asparagus", cal: 600, time: "Under 60m", diet: ["High-protein"], meal: ["Dinner"] },
-      { name: "Slow Roast Chicken", cal: 850, time: "60m +", diet: ["High-protein"], meal: ["Dinner"] }
+      { name: "Creamy Spinach Parmesan", cal: 640, time: "Under 15m", diet: ["Vegetarian"], meal: ["Dinner"], link: "#frame-4" },
+      { name: "Mushroom Risotto", cal: 520, time: "Under 30m", diet: ["Vegan", "Vegetarian"], meal: ["Lunch", "Dinner"], link: "" },
+      { name: "Protein Oat Pancakes", cal: 430, time: "Under 15m", diet: ["Vegetarian", "High-protein"], meal: ["Breakfast"], link: "" },
+      { name: "Spicy Lentil Pasta", cal: 550, time: "Under 30m", diet: ["Vegan", "Vegetarian", "High-protein"], meal: ["Dinner"], link: "" },
+      { name: "Avocado Egg Toast", cal: 350, time: "Under 15m", diet: ["Vegetarian"], meal: ["Breakfast"], link: "" },
+      { name: "Grilled Salmon Asparagus", cal: 600, time: "Under 60m", diet: ["High-protein"], meal: ["Dinner"], link: "" },
+      { name: "Slow Roast Chicken", cal: 850, time: "60m +", diet: ["High-protein"], meal: ["Dinner"], link: "" }
     ];
 
     const filterChips = document.querySelectorAll('#frame-3 .filter-group .chip');
@@ -1256,81 +1203,54 @@
     const activeTagsContainer = document.getElementById('active-filter-tags');
     const searchTitle = document.getElementById('search-results-title');
 
-    // Toggle Filter Chips
     filterChips.forEach(chip => {
       chip.addEventListener('click', (e) => {
         e.target.classList.toggle('on');
-        
-        // UI Polish: Add/Remove the "×" visually
-        if (e.target.classList.contains('on')) {
-            if (!e.target.innerText.includes('×')) e.target.innerText += ' ×';
-        } else {
-            e.target.innerText = e.target.innerText.replace(' ×', '');
-        }
+        if (e.target.classList.contains('on')) { if (!e.target.innerText.includes('×')) e.target.innerText += ' ×'; } 
+        else { e.target.innerText = e.target.innerText.replace(' ×', ''); }
         renderRecipes();
       });
     });
 
-    // Search Input Listener
     searchInput.addEventListener('input', () => {
-        if (searchInput.value.trim().length > 0) {
-            searchTitle.innerText = "Search Results";
-        } else {
-            searchTitle.innerText = "Suggested recipes";
-        }
+        if (searchInput.value.trim().length > 0) searchTitle.innerText = "Search Results";
+        else searchTitle.innerText = "Suggested recipes";
         renderRecipes();
     });
 
-    // Render Engine
     function renderRecipes() {
-      // 1. Gather Active Filters
       const activeDiets = Array.from(document.querySelectorAll('.filter-group[data-filter="diet"] .chip.on')).map(c => c.getAttribute('data-val'));
       const activeMeals = Array.from(document.querySelectorAll('.filter-group[data-filter="meal"] .chip.on')).map(c => c.getAttribute('data-val'));
       const activeTimes = Array.from(document.querySelectorAll('.filter-group[data-filter="time"] .chip.on')).map(c => c.getAttribute('data-val'));
       const maxCal = parseFloat(maxCalInput.value) || 1000;
       const searchText = searchInput.value.toLowerCase().trim();
 
-      // 2. Update the "Active Tags" sub-bar (Visibility of System Status)
       let tagsHTML = '';
       [...activeDiets, ...activeMeals, ...activeTimes].forEach(tag => {
           tagsHTML += `<span class="chip on" style="font-size:10px;padding:3px 8px; margin-right:4px;">${tag} &times;</span>`;
       });
       activeTagsContainer.innerHTML = tagsHTML;
 
-      // 3. Filter the Data (AND logic between groups, OR logic within groups)
       const filtered = recipes.filter(r => {
-        // Calorie Check (AND)
         if (r.cal > maxCal) return false;
-        
-        // Search Check (AND)
         if (searchText && !r.name.toLowerCase().includes(searchText)) return false;
-
-        // Diet Check (OR)
         if (activeDiets.length > 0) {
             const hasDiet = activeDiets.some(diet => r.diet.includes(diet));
             if (!hasDiet) return false;
         }
-
-        // Meal Check (OR)
         if (activeMeals.length > 0) {
             const hasMeal = activeMeals.some(meal => r.meal.includes(meal));
             if (!hasMeal) return false;
         }
-
-        // Time Check (OR)
-        if (activeTimes.length > 0) {
-            if (!activeTimes.includes(r.time)) return false;
-        }
-
-        return true; // Passed all filters
+        if (activeTimes.length > 0) { if (!activeTimes.includes(r.time)) return false; }
+        return true; 
       });
 
-      // 4. Inject to DOM
       if (filtered.length === 0) {
           recipeGrid.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: var(--soft2); font-family: 'Space Mono', monospace; font-size: 11px;">0 recipes found. Try loosening your filters.</div>`;
       } else {
           recipeGrid.innerHTML = filtered.map(r => `
-            <a href="#frame-4" class="card">
+            <a href="${r.link || '#!'}" class="card" ${!r.link ? 'onclick="event.preventDefault()"' : ''}>
               <div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)">
                 <span>${r.time}</span>
               </div>
@@ -1342,9 +1262,232 @@
           `).join('');
       }
     }
-
-    // Initialize Frame 3
     renderRecipes();
+
+    // ---------------------------------------------------------
+    // --- SINGLE-PAGE SWAP LOGIC (SPINACH) ---
+    // ---------------------------------------------------------
+    const spBtnCream = document.getElementById('sp-btn-cream');
+    const spAltEmpty = document.getElementById('sp-alt-empty');
+    const spAltList = document.getElementById('sp-alt-list');
+    const spConfirmBox = document.getElementById('sp-confirm-box');
+    const spBtnConfirm = document.getElementById('sp-btn-confirm');
+    
+    // Base State
+    let spConfirmedState = 'heavy';
+    let spPreviewState = 'heavy';
+
+    const spData = {
+      heavy: { name: 'Heavy cream', cal: 200, unitUs: '1/2 cup', unitMet: '120 ml', total: 640, pct: 32 },
+      coco: { name: 'Coconut cream', cal: 140, unitUs: '1/2 cup', unitMet: '120 ml', total: 580, pct: 29 },
+      cash: { name: 'Cashew cream', cal: 120, unitUs: '1/2 cup', unitMet: '120 ml', total: 560, pct: 28 },
+      oat: { name: 'Oat cream', cal: 90, unitUs: '1/2 cup', unitMet: '120 ml', total: 530, pct: 26 }
+    };
+
+    if(spBtnCream) {
+        spBtnCream.addEventListener('click', () => {
+            spBtnCream.classList.add('selected-active');
+            spAltEmpty.style.display = 'none';
+            spAltList.style.display = 'block';
+            document.getElementById('sp-alt-status').innerText = "select alternative";
+            spConfirmBox.style.display = 'block';
+            spBtnConfirm.disabled = true;
+            
+            // Render the options
+            document.querySelectorAll('#sp-alt-list .alt').forEach(el => {
+                el.classList.remove('highlighted-choice');
+                if(el.dataset.val === spConfirmedState) el.style.display = 'none';
+                else el.style.display = 'flex';
+                
+                // Update Diff relative to currently confirmed state with Neutral Math
+                const diffCal = spData[el.dataset.val].cal - spData[spConfirmedState].cal;
+                const dSpan = el.querySelector('.d');
+                if (diffCal < 0) { dSpan.style.color = 'var(--ink)'; dSpan.innerText = `- ${Math.abs(diffCal)} kcal`; }
+                else if (diffCal > 0) { dSpan.style.color = 'var(--ink)'; dSpan.innerText = `+ ${Math.abs(diffCal)} kcal`; }
+                else { dSpan.style.color = 'var(--soft)'; dSpan.innerText = `-- kcal`; }
+            });
+            
+            spPreviewState = spConfirmedState;
+        });
+
+        document.querySelectorAll('#sp-alt-list .alt').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('#sp-alt-list .alt').forEach(el => el.classList.remove('highlighted-choice'));
+                opt.classList.add('highlighted-choice');
+                spBtnConfirm.disabled = false;
+                spPreviewState = opt.dataset.val;
+                
+                // Update ONLY the bottom bar (Preview) - Color stays black
+                document.getElementById('sp-total-cal-bot').innerHTML = `${spData[spPreviewState].total} kcal`;
+                document.getElementById('sp-percent').innerHTML = `${spData[spPreviewState].pct}`;
+                
+                // Trigger animation on bottom bar
+                const botBar = document.getElementById('sp-total-bar');
+                botBar.classList.remove('flash-animate');
+                void botBar.offsetWidth; // Trigger reflow to restart animation
+                botBar.classList.add('flash-animate');
+            });
+        });
+
+        spBtnConfirm.addEventListener('click', () => {
+            spConfirmedState = spPreviewState;
+            const data = spData[spConfirmedState];
+            
+            // Update Top Bar (Confirmed) - Always black
+            document.getElementById('sp-total-cal-top').innerHTML = `${data.total} kcal`;
+
+            // Update Active Ingredient Slot
+            const isUs = document.body.classList.contains('mode-us');
+            document.getElementById('sp-active-cream-name').innerHTML = `${data.name}<small class="unit-val" data-us="${data.unitUs}" data-metric="${data.unitMet}">${isUs ? data.unitUs : data.unitMet}</small>`;
+            document.getElementById('sp-active-cream-cal').innerHTML = `${data.cal} kcal`;
+
+            // Close Alt Panel
+            spBtnCream.classList.remove('selected-active');
+            spAltList.style.display = 'none';
+            spConfirmBox.style.display = 'none';
+            spAltEmpty.style.display = 'block';
+            document.getElementById('sp-alt-status').innerText = "waiting";
+            
+            // Sync with Full Recipe
+            document.getElementById('sp-final-cream-name').innerText = data.name;
+            const finalAmt = document.getElementById('sp-final-cream-amt');
+            finalAmt.setAttribute('data-us', data.unitUs);
+            finalAmt.setAttribute('data-metric', data.unitMet);
+            finalAmt.innerText = isUs ? data.unitUs : data.unitMet;
+
+            document.getElementById('sp-step-cream-text').innerText = data.name.toLowerCase();
+        });
+    }
+
+    // ---------------------------------------------------------
+    // --- SINGLE-PAGE SWAP LOGIC (TOFU BOWL) ---
+    // ---------------------------------------------------------
+    const tfBtnRice = document.getElementById('tf-btn-rice');
+    const tfAltEmpty = document.getElementById('tf-alt-empty');
+    const tfAltList = document.getElementById('tf-alt-list');
+    const tfConfirmBox = document.getElementById('tf-confirm-box');
+    const tfBtnConfirm = document.getElementById('tf-btn-confirm');
+    
+    let tfConfirmedState = 'rice';
+    let tfPreviewState = 'rice';
+
+    const tfData = {
+      rice: { name: 'Brown Rice', cal: 110, unitUs: '1/2 cup', unitMet: '100 g', total: 520, pct: 25 },
+      quinoa: { name: 'Quinoa', cal: 120, unitUs: '1/2 cup', unitMet: '90 g', total: 530, pct: 26 },
+      cauli: { name: 'Cauliflower Rice', cal: 25, unitUs: '1 cup', unitMet: '110 g', total: 435, pct: 21 }
+    };
+
+    if(tfBtnRice) {
+        tfBtnRice.addEventListener('click', () => {
+            tfBtnRice.classList.add('selected-active');
+            tfAltEmpty.style.display = 'none';
+            tfAltList.style.display = 'block';
+            document.getElementById('tf-alt-status').innerText = "select alternative";
+            tfConfirmBox.style.display = 'block';
+            tfBtnConfirm.disabled = true;
+            
+            document.querySelectorAll('#tf-alt-list .alt').forEach(el => {
+                el.classList.remove('highlighted-choice');
+                if(el.dataset.val === tfConfirmedState) el.style.display = 'none';
+                else el.style.display = 'flex';
+                
+                const diffCal = tfData[el.dataset.val].cal - tfData[tfConfirmedState].cal;
+                const dSpan = el.querySelector('.d');
+                if (diffCal < 0) { dSpan.style.color = 'var(--ink)'; dSpan.innerText = `- ${Math.abs(diffCal)} kcal`; }
+                else if (diffCal > 0) { dSpan.style.color = 'var(--ink)'; dSpan.innerText = `+ ${Math.abs(diffCal)} kcal`; }
+                else { dSpan.style.color = 'var(--soft)'; dSpan.innerText = `-- kcal`; }
+            });
+            
+            tfPreviewState = tfConfirmedState;
+        });
+
+        document.querySelectorAll('#tf-alt-list .alt').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('#tf-alt-list .alt').forEach(el => el.classList.remove('highlighted-choice'));
+                opt.classList.add('highlighted-choice');
+                tfBtnConfirm.disabled = false;
+                tfPreviewState = opt.dataset.val;
+                
+                // Update ONLY the bottom bar (Preview) - Color stays black
+                document.getElementById('tf-total-cal-bot').innerHTML = `${tfData[tfPreviewState].total} kcal`;
+                document.getElementById('tf-percent').innerHTML = `${tfData[tfPreviewState].pct}`;
+                
+                // Trigger animation on bottom bar
+                const botBar = document.getElementById('tf-total-bar');
+                botBar.classList.remove('flash-animate');
+                void botBar.offsetWidth; // Trigger reflow to restart animation
+                botBar.classList.add('flash-animate');
+            });
+        });
+
+        tfBtnConfirm.addEventListener('click', () => {
+            tfConfirmedState = tfPreviewState;
+            const data = tfData[tfConfirmedState];
+            
+            // Update Top Bar (Confirmed) - Always black
+            document.getElementById('tf-total-cal-top').innerHTML = `${data.total} kcal`;
+
+            const isUs = document.body.classList.contains('mode-us');
+            document.getElementById('tf-active-rice-name').innerHTML = `${data.name}<small class="unit-val" data-us="${data.unitUs}" data-metric="${data.unitMet}">${isUs ? data.unitUs : data.unitMet}</small>`;
+            document.getElementById('tf-active-rice-cal').innerHTML = `${data.cal} kcal`;
+
+            tfBtnRice.classList.remove('selected-active');
+            tfAltList.style.display = 'none';
+            tfConfirmBox.style.display = 'none';
+            tfAltEmpty.style.display = 'block';
+            document.getElementById('tf-alt-status').innerText = "waiting";
+            
+            // Sync with Full Recipe
+            document.getElementById('tf-final-rice-name').innerText = data.name;
+            const unitEl = document.getElementById('tf-final-rice-amt');
+            unitEl.setAttribute('data-us', data.unitUs);
+            unitEl.setAttribute('data-metric', data.unitMet);
+            unitEl.innerText = isUs ? data.unitUs : data.unitMet;
+            
+            document.getElementById('tf-step-rice-text').innerText = data.name.toLowerCase();
+        });
+    }
+
+    // ---------------------------------------------------------
+    // --- INLINE FULL RECIPE EXPANSION ---
+    // ---------------------------------------------------------
+    const spTrigger = document.getElementById('sp-trigger-recipe');
+    if(spTrigger) {
+        spTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            const box = document.getElementById('sp-expanded-recipe');
+            box.style.display = 'block';
+            box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            spTrigger.style.display = 'none'; 
+        });
+    }
+
+    const tfTrigger = document.getElementById('tf-trigger-recipe');
+    if(tfTrigger) {
+        tfTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            const box = document.getElementById('tf-expanded-recipe');
+            box.style.display = 'block';
+            box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            tfTrigger.style.display = 'none';
+        });
+    }
+
+    // ---------------------------------------------------------
+    // --- DISCOVERY ENGINE LOGIC ---
+    // ---------------------------------------------------------
+    const generateTofuBtn = document.getElementById('generate-tofu-btn');
+    if (generateTofuBtn) {
+        let tofuDiscovered = false;
+        generateTofuBtn.addEventListener('click', () => {
+            if (!tofuDiscovered) {
+                tofuDiscovered = true;
+                // Inject the Tofu Bowl silently into the Search array routing to Frame 8
+                recipes.splice(1, 0, { name: "Crispy Tofu Power Bowl", cal: 520, time: "Under 30m", diet: ["Vegan", "Vegetarian"], meal: ["Lunch", "Dinner"], link: "#frame-8" });
+                renderRecipes();
+            }
+        });
+    }
 
   });
 </script>
