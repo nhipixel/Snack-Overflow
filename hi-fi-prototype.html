@@ -162,7 +162,7 @@
   .ing{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1.5px solid var(--hair);font-size:15px}
   .ing .nm{flex:1;font-weight:700;}
   .ing .nm small{display:block;font-weight:600;color:var(--soft);font-size:14.5px; margin-top:4px;}
-  .ing .kc{font-family:'Space Mono',monospace;font-size:14.5px;font-weight:600;color:var(--soft)}
+  .ing .kc{font-family:'Space Mono',monospace;font-size:12.5px;font-weight:600;color:var(--soft)}
   
   .swap{font-size:11.5px;font-weight:700;border:1.8px solid var(--ink);border-radius:9px 7px 9px 7px/7px 9px 7px 9px;padding:5px 10px;background:#fff;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px}
   .swap.selected-active{background:var(--ink);color:#fff}
@@ -378,209 +378,202 @@
     </div>
   </div>
   
-  <!-- Frame 3: Search -->
+  <!-- Frame 3: Merged Search Engine & Recipe Customization (SPA) -->
   <div class="frame" id="frame-3">
     <div class="device">
       <div class="pad">
       <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div>
-      <div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-5" class="t">Pantry</a></div>
-      <span class="acct">no account</span>
-    </div>
-      <div class="r-head-container"><a href="#frame-1" class="r-back">← Back to Homepage</a></div>
-      <div class="cols">
-        <div class="col" style="flex:.6">
-          <div class="facet">
-            <h4>Diet</h4>
-            <div class="chips filter-group" data-filter="diet">
-              <span class="chip" data-val="Vegan">Vegan</span><span class="chip on" data-val="Vegetarian">Vegetarian ×</span><span class="chip" data-val="High-protein">High-protein</span>
-            </div>
-          </div>
-          <div class="facet">
-            <h4>Meal</h4>
-            <div class="chips filter-group" data-filter="meal">
-              <span class="chip" data-val="Breakfast">Breakfast</span><span class="chip" data-val="Lunch">Lunch</span><span class="chip on" data-val="Dinner">Dinner ×</span>
-            </div>
-          </div>
-          <div class="facet">
-            <h4>Time</h4>
-            <div class="chips filter-group" data-filter="time">
-              <span class="chip" data-val="Under 15m">Under 15m</span><span class="chip" data-val="Under 30m">Under 30m</span><span class="chip" data-val="Under 60m">Under 60m</span><span class="chip" data-val="60m +">60m +</span>
-            </div>
-          </div>
-          
-          <div class="field" style="margin:0">
-            <h4 style="font-family:'Space Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--soft);margin-bottom:7px">Max calories</h4>
-            <div class="slider-row">
-              <input type="range" class="interactive-slider" id="sld-cal" min="50" max="1000" step="10" value="700">
-              <div class="stepper" data-min="50" data-max="1000" data-step="10" style="transform: scale(0.9); transform-origin: left center;">
-                <i class="minus">–</i><input type="text" inputmode="numeric" id="val-cal" value="700" min="50" max="1000" step="10" data-sync="sld-cal"><i class="plus">+</i>
-              </div>
-            </div>
-            <div class="err-msg"></div>
-          </div>
-          
-        </div>
-        <div class="col" style="flex:1.35; display:flex; flex-direction:column;">
-          <div class="searchbar">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="vertical-align:-2px;flex:none"><circle cx="11" cy="11" r="7"></circle><line x1="20.5" y1="20.5" x2="16.5" y2="16.5"></line></svg> 
-            <input type="text" id="recipe-search-input" placeholder="Search e.g. pasta, tofu...">
-          </div>
-          
-          <div class="resbar">
-            <span id="active-filter-tags"><span class="chip on" style="font-size:10px;padding:3px 8px">Vegetarian ×</span> <span class="chip on" style="font-size:10px;padding:3px 8px">Dinner ×</span></span>
-            <span id="search-results-title">Suggested recipes</span>
-          </div>
-          
-          <div class="recipe-grid-container">
-            <div class="cards" id="dynamic-recipe-grid">
-               <!-- Recipes injected here by JS -->
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Frame 4: Spinach Customization -->
-  <div class="frame" id="frame-4">
-    <div class="device">
-      <div class="pad">
-      <div class="nav"><div class="logo"><span class="mark">{}</span>SnackOverflow</div><div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on">Search</a><a href="#frame-5" class="t">Pantry</a></div>
+      <div class="tabs"><a href="#frame-2" class="t">Daily Targets</a><a href="#frame-3" class="t on" onclick="if(window.hideSpinachRecipe) hideSpinachRecipe();">Search</a><a href="#frame-5" class="t">Pantry</a></div>
       <span class="acct">no account</span>
     </div>
       
-      <div class="r-head-container">
-        <a href="#frame-3" class="r-back">← Back to Search</a>
-        <div class="r-head">
-          <div class="r-info">
-            <h3>Creamy Spinach Parmesan</h3>
-            <div class="r-desc">A rich, savory blend of cream, aged parmesan, and fresh spinach. Customize ingredients below to fit your daily targets.</div>
-            <div class="r-tags"><span class="r-tag">15 mins</span><span class="r-tag">Vegetarian</span><span class="r-tag">Pro 20g</span><span class="r-tag">Carb 40g</span><span class="r-tag">Fat 44g</span></div>
-          </div>
-          <div class="r-cal-box">
-            <div class="r-cal-lbl">Total Calories</div>
-            <div class="r-cal-val" id="sp-total-cal-top">640 kcal</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cols">
-        <div class="col">
-          <div class="panel">
-            <div class="panel-h">
-              <b>Ingredients</b>
-              <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
-                <span class="on" data-target="us">US</span>
-                <span data-target="metric">Metric</span>
+      <!-- ================= SEARCH INDEX VIEW ================= -->
+      <div id="search-index">
+        <div class="r-head-container"><a href="#frame-1" class="r-back">← Back to Homepage</a></div>
+        <div class="cols">
+          <div class="col" style="flex:.6">
+            <div class="facet">
+              <h4>Diet</h4>
+              <div class="chips filter-group" data-filter="diet">
+                <span class="chip" data-val="Vegan">Vegan</span><span class="chip on" data-val="Vegetarian">Vegetarian ×</span><span class="chip" data-val="High-protein">High-protein</span>
               </div>
             </div>
-            <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
-              <!-- Dynamic Cream Slot -->
-              <div class="ing" id="sp-ing-creamSlot">
-                  <span class="nm" id="sp-active-cream-name">Heavy cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span>
-                  <span class="kc" id="sp-active-cream-cal">200 kcal</span>
-                  <span class="swap" id="sp-btn-cream"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span>
+            <div class="facet">
+              <h4>Meal</h4>
+              <div class="chips filter-group" data-filter="meal">
+                <span class="chip" data-val="Breakfast">Breakfast</span><span class="chip" data-val="Lunch">Lunch</span><span class="chip on" data-val="Dinner">Dinner ×</span>
               </div>
-              
-              <!-- Minor Complete Ingredients -->
-              <div class="ing"><span class="nm">Aged Parmesan<small class="unit-val" data-us="1/4 cup" data-metric="25 g">1/4 cup</small></span><span class="kc">90 kcal</span></div>
-              <div class="ing"><span class="nm">Fresh Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
-              <div class="ing"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
-              <div class="ing"><span class="nm">Olive Oil<small class="unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</small></span><span class="kc">120 kcal</span><span class="swap inactive"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing"><span class="nm">Salt<small class="unit-val" data-us="1/2 tsp" data-metric="3 g">1/2 tsp</small></span><span class="kc">0 kcal</span><span class="swap inactive"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
-              <div class="ing" style="border:none"><span class="nm">Black Pepper<small class="unit-val" data-us="1/4 tsp" data-metric="1 g">1/4 tsp</small></span><span class="kc">0 kcal</span></div>
             </div>
-          </div>
-          <div class="totalbar" id="sp-total-bar"><div><div class="t1">Recipe total</div><div class="t2" id="sp-total-cal-bot">640 kcal</div></div><div class="d">≈ <span id="sp-percent">32</span>% of your 2010 target</div></div>
-        </div>
-        
-        <div class="col" style="flex:.85">
-          <div class="panel" style="border-width:2.5px; height:100%; display:flex; flex-direction:column">
-            <div class="panel-h"><b>Alternatives</b><span class="s" id="sp-alt-status">waiting</span></div>
-            <div class="panel-b scroll-panel" style="flex-grow:1; max-height:285px; padding-bottom:16px;">
-              
-              <!-- Empty State -->
-              <div id="sp-alt-empty" style="text-align:center; padding:40px 10px; color:var(--soft2); font-family:'Space Mono',monospace; font-size:12px;">Not a fan of an ingredient? Click 'Swap' to find the perfect substitute.</div>
-              
-              <!-- Alternatives Container -->
-              <div id="sp-alt-list" style="display:none;">
-                  <div class="alt" data-val="heavy">
-                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Heavy cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">100% TASTE MATCH</span></div><span class="d" id="sp-diff-heavy">-- kcal</span>
-                  </div>
-                  <div class="alt" data-val="coco">
-                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Coconut cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">98% TASTE MATCH</span></div><span class="d" id="sp-diff-coco">- 60 kcal</span>
-                  </div>
-                  <div class="alt" data-val="cash">
-                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Cashew cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">95% TASTE MATCH</span></div><span class="d" id="sp-diff-cash">- 80 kcal</span>
-                  </div>
-                  <div class="alt" data-val="oat" style="margin:0">
-                    <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Oat cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">85% TASTE MATCH</span></div><span class="d" id="sp-diff-oat">- 110 kcal</span>
-                  </div>
+            <div class="facet">
+              <h4>Time</h4>
+              <div class="chips filter-group" data-filter="time">
+                <span class="chip" data-val="Under 15m">Under 15m</span><span class="chip" data-val="Under 30m">Under 30m</span><span class="chip" data-val="Under 60m">Under 60m</span><span class="chip" data-val="60m +">60m +</span>
               </div>
-
             </div>
             
-            <div id="sp-confirm-box" style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2; display:none;">
-              <button class="btnsk fill" id="sp-btn-confirm" disabled>Confirm Swap</button>
+            <div class="field" style="margin:0">
+              <h4 style="font-family:'Space Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--soft);margin-bottom:7px">Max calories</h4>
+              <div class="slider-row">
+                <input type="range" class="interactive-slider" id="sld-cal" min="50" max="1000" step="10" value="700">
+                <div class="stepper" data-min="50" data-max="1000" data-step="10" style="transform: scale(0.9); transform-origin: left center;">
+                  <i class="minus">–</i><input type="text" inputmode="numeric" id="val-cal" value="700" min="50" max="1000" step="10" data-sync="sld-cal"><i class="plus">+</i>
+                </div>
+              </div>
+              <div class="err-msg"></div>
+            </div>
+            
+          </div>
+          <div class="col" style="flex:1.35; display:flex; flex-direction:column;">
+            <div class="searchbar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="vertical-align:-2px;flex:none"><circle cx="11" cy="11" r="7"></circle><line x1="20.5" y1="20.5" x2="16.5" y2="16.5"></line></svg> 
+              <input type="text" id="recipe-search-input" placeholder="Search e.g. pasta, tofu...">
+            </div>
+            
+            <div class="resbar">
+              <span id="active-filter-tags"><span class="chip on" style="font-size:10px;padding:3px 8px">Vegetarian ×</span> <span class="chip on" style="font-size:10px;padding:3px 8px">Dinner ×</span></span>
+              <span id="search-results-title">Suggested recipes</span>
+            </div>
+            
+            <div class="recipe-grid-container">
+              <div class="cards" id="dynamic-recipe-grid">
+                 <!-- Recipes injected here by JS -->
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
-      <a href="#!" id="sp-trigger-recipe" class="show-full-recipe">Show Full Recipe +</a>
 
-      <!-- Expanded Full Recipe View (Inline Stacked) -->
-      <div id="sp-expanded-recipe" class="expanded-recipe-container">
-          <div class="imgph" style="height: 200px; border-radius:var(--w1); border:2px solid var(--ink); background:#ece8de; display:grid; place-items:center; color:var(--soft2); font-family:'Space Mono', monospace; font-size:12px; margin-bottom:24px;">
-            [ Creamy Spinach Image Placeholder ]
+      <!-- ================= SPINACH CUSTOMIZATION VIEW ================= -->
+      <div id="spinach-detail" style="display:none;">
+        <div class="r-head-container">
+          <a href="#!" onclick="hideSpinachRecipe(); return false;" class="r-back">← Back to Search</a>
+          <div class="r-head">
+            <div class="r-info">
+              <h3>Creamy Spinach Parmesan</h3>
+              <div class="r-desc">A rich, savory blend of cream, aged parmesan, and fresh spinach. Customize ingredients below to fit your daily targets.</div>
+              <div class="r-tags"><span class="r-tag">15 mins</span><span class="r-tag">Vegetarian</span><span class="r-tag">Pro 20g</span><span class="r-tag">Carb 40g</span><span class="r-tag">Fat 44g</span></div>
+            </div>
+            <div class="r-cal-box">
+              <div class="r-cal-lbl">Total Calories</div>
+              <div class="r-cal-val" id="sp-total-cal-top">640 kcal</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cols">
+          <div class="col">
+            <div class="panel">
+              <div class="panel-h">
+                <b>Ingredients</b>
+                <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
+                  <span class="on" data-target="us">US</span>
+                  <span data-target="metric">Metric</span>
+                </div>
+              </div>
+              <div class="panel-b scroll-panel" style="padding:6px 12px 16px;">
+                <!-- Dynamic Cream Slot -->
+                <div class="ing" id="sp-ing-creamSlot">
+                    <span class="nm" id="sp-active-cream-name">Heavy cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span>
+                    <span class="kc" id="sp-active-cream-cal">200 kcal</span>
+                    <span class="swap" id="sp-btn-cream"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span>
+                </div>
+                
+                <!-- Minor Complete Ingredients -->
+                <div class="ing"><span class="nm">Aged Parmesan<small class="unit-val" data-us="1/4 cup" data-metric="25 g">1/4 cup</small></span><span class="kc">90 kcal</span></div>
+                <div class="ing"><span class="nm">Fresh Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></span><span class="kc">15 kcal</span></div>
+                <div class="ing"><span class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></span><span class="kc">10 kcal</span></div>
+                <div class="ing"><span class="nm">Olive Oil<small class="unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</small></span><span class="kc">120 kcal</span><span class="swap inactive"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+                <div class="ing"><span class="nm">Salt<small class="unit-val" data-us="1/2 tsp" data-metric="3 g">1/2 tsp</small></span><span class="kc">0 kcal</span><span class="swap inactive"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span></div>
+                <div class="ing" style="border:none"><span class="nm">Black Pepper<small class="unit-val" data-us="1/4 tsp" data-metric="1 g">1/4 tsp</small></span><span class="kc">0 kcal</span></div>
+              </div>
+            </div>
+            <div class="totalbar" id="sp-total-bar"><div><div class="t1">Recipe total</div><div class="t2" id="sp-total-cal-bot">640 kcal</div></div><div class="d">≈ <span id="sp-percent">32</span>% of your 2010 target</div></div>
           </div>
           
-          <h3 style="font-family:'Fraunces',serif; font-weight:800; font-size:28px; line-height:1; margin-bottom:8px;">Recipe Cooking Instructions</h3>
-          <div style="display:flex; gap:10px; font-family:'Space Mono',monospace; font-size:13px; color:var(--soft); margin-bottom: 24px;">
-            <span><b style="color:var(--ink)">Prep:</b> 5 mins</span> | <span><b style="color:var(--ink)">Cook:</b> 10 mins</span>
-          </div>
+          <div class="col" style="flex:.85">
+            <div class="panel" style="border-width:2.5px; height:100%; display:flex; flex-direction:column">
+              <div class="panel-h"><b>Alternatives</b><span class="s" id="sp-alt-status">waiting</span></div>
+              <div class="panel-b scroll-panel" style="flex-grow:1; max-height:285px; padding-bottom:16px;">
+                
+                <div id="sp-alt-empty" style="text-align:center; padding:40px 10px; color:var(--soft2); font-family:'Space Mono',monospace; font-size:12px;">Not a fan of an ingredient? Click 'Swap' to find the perfect substitute.</div>
+                
+                <div id="sp-alt-list" style="display:none;">
+                    <div class="alt" data-val="heavy">
+                      <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Heavy cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">100% TASTE MATCH</span></div><span class="d" id="sp-diff-heavy">-- kcal</span>
+                    </div>
+                    <div class="alt" data-val="coco">
+                      <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Coconut cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">98% TASTE MATCH</span></div><span class="d" id="sp-diff-coco">- 60 kcal</span>
+                    </div>
+                    <div class="alt" data-val="cash">
+                      <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Cashew cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">95% TASTE MATCH</span></div><span class="d" id="sp-diff-cash">- 80 kcal</span>
+                    </div>
+                    <div class="alt" data-val="oat" style="margin:0">
+                      <span class="bullet"></span><div class="nm" style="display:flex; flex-direction:column"><span>Oat cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></span><span style="font-size:10px; color:var(--soft2); font-family:'Space Mono'; margin-top:3px">85% TASTE MATCH</span></div><span class="d" id="sp-diff-oat">- 110 kcal</span>
+                    </div>
+                </div>
 
-          <h4 class="recipe-section-title">Ingredients</h4>
-          <div id="sp-view-ing" style="margin-bottom: 32px;">
-             <div class="fr-ing">
-               <span class="fr-nm" id="sp-final-cream-name">Heavy cream</span>
-               <span class="fr-amt unit-val" id="sp-final-cream-amt" data-us="1/2 cup" data-metric="120 ml">1/2 cup</span>
-             </div>
-             <div class="fr-ing">
-               <span class="fr-nm">Aged Parmesan</span>
-               <span class="fr-amt unit-val" data-us="1/4 cup" data-metric="25 g">1/4 cup</span>
-             </div>
-             <div class="fr-ing">
-               <span class="fr-nm">Fresh Spinach</span>
-               <span class="fr-amt unit-val" data-us="2 cups" data-metric="60 g">2 cups</span>
-             </div>
-             <div class="fr-ing">
-               <span class="fr-nm">Garlic</span>
-               <span class="fr-amt unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</span>
-             </div>
-             <div class="fr-ing">
-               <span class="fr-nm">Olive Oil</span>
-               <span class="fr-amt unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</span>
-             </div>
-             <div class="fr-ing">
-               <span class="fr-nm">Salt</span>
-               <span class="fr-amt unit-val" data-us="1/2 tsp" data-metric="3 g">1/2 tsp</span>
-             </div>
-             <div class="fr-ing" style="border:none">
-               <span class="fr-nm">Black Pepper</span>
-               <span class="fr-amt unit-val" data-us="1/4 tsp" data-metric="1 g">1/4 tsp</span>
-             </div>
+              </div>
+              
+              <div id="sp-confirm-box" style="padding:12px; border-top:2px dashed var(--hair); text-align:right; background:var(--paper); z-index:2; display:none;">
+                <button class="btnsk fill" id="sp-btn-confirm" disabled>Confirm Swap</button>
+              </div>
+            </div>
           </div>
-          
-          <h4 class="recipe-section-title">Instructions</h4>
-          <div id="sp-view-ins">
-             <div class="step"><b>1.</b> <p>Mince the garlic and thoroughly wash the spinach.</p></div>
-             <div class="step"><b>2.</b> <p>Heat olive oil in a skillet over medium heat. Sauté garlic for 1 minute until fragrant.</p></div>
-             <div class="step"><b>3.</b> <p>Add spinach and cook until wilted, about 2-3 minutes.</p></div>
-             <div class="step"><b>4.</b> <p>Lower the heat. Stir in your <span id="sp-step-cream-text" style="font-weight:700; color:var(--ink);">heavy cream</span> and simmer for 2 minutes to thicken slightly.</p></div>
-             <div class="step" style="border:none"><b>5.</b> <p>Remove from heat, fold in parmesan until melted, and season with salt and pepper.</p></div>
-          </div>
+        </div>
+        
+        <a href="#!" id="sp-trigger-recipe" class="show-full-recipe">Show Full Recipe +</a>
+
+        <div id="sp-expanded-recipe" class="expanded-recipe-container">
+            <div class="imgph" style="height: 200px; border-radius:var(--w1); border:2px solid var(--ink); background:#ece8de; display:grid; place-items:center; color:var(--soft2); font-family:'Space Mono', monospace; font-size:12px; margin-bottom:24px;">
+              [ Creamy Spinach Image Placeholder ]
+            </div>
+            
+            <h3 style="font-family:'Fraunces',serif; font-weight:800; font-size:28px; line-height:1; margin-bottom:8px;">Recipe Cooking Instructions</h3>
+            <div style="display:flex; gap:10px; font-family:'Space Mono',monospace; font-size:13px; color:var(--soft); margin-bottom: 24px;">
+              <span><b style="color:var(--ink)">Prep:</b> 5 mins</span> | <span><b style="color:var(--ink)">Cook:</b> 10 mins</span>
+            </div>
+
+            <h4 class="recipe-section-title">Ingredients</h4>
+            <div id="sp-view-ing" style="margin-bottom: 32px;">
+               <div class="fr-ing">
+                 <span class="fr-nm" id="sp-final-cream-name">Heavy cream</span>
+                 <span class="fr-amt unit-val" id="sp-final-cream-amt" data-us="1/2 cup" data-metric="120 ml">1/2 cup</span>
+               </div>
+               <div class="fr-ing">
+                 <span class="fr-nm">Aged Parmesan</span>
+                 <span class="fr-amt unit-val" data-us="1/4 cup" data-metric="25 g">1/4 cup</span>
+               </div>
+               <div class="fr-ing">
+                 <span class="fr-nm">Fresh Spinach</span>
+                 <span class="fr-amt unit-val" data-us="2 cups" data-metric="60 g">2 cups</span>
+               </div>
+               <div class="fr-ing">
+                 <span class="fr-nm">Garlic</span>
+                 <span class="fr-amt unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</span>
+               </div>
+               <div class="fr-ing">
+                 <span class="fr-nm">Olive Oil</span>
+                 <span class="fr-amt unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</span>
+               </div>
+               <div class="fr-ing">
+                 <span class="fr-nm">Salt</span>
+                 <span class="fr-amt unit-val" data-us="1/2 tsp" data-metric="3 g">1/2 tsp</span>
+               </div>
+               <div class="fr-ing" style="border:none">
+                 <span class="fr-nm">Black Pepper</span>
+                 <span class="fr-amt unit-val" data-us="1/4 tsp" data-metric="1 g">1/4 tsp</span>
+               </div>
+            </div>
+            
+            <h4 class="recipe-section-title">Instructions</h4>
+            <div id="sp-view-ins">
+               <div class="step"><b>1.</b> <p>Mince the garlic and thoroughly wash the spinach.</p></div>
+               <div class="step"><b>2.</b> <p>Heat olive oil in a skillet over medium heat. Sauté garlic for 1 minute until fragrant.</p></div>
+               <div class="step"><b>3.</b> <p>Add spinach and cook until wilted, about 2-3 minutes.</p></div>
+               <div class="step"><b>4.</b> <p>Lower the heat. Stir in your <span id="sp-step-cream-text" style="font-weight:700; color:var(--ink);">heavy cream</span> and simmer for 2 minutes to thicken slightly.</p></div>
+               <div class="step" style="border:none"><b>5.</b> <p>Remove from heat, fold in parmesan until melted, and season with salt and pepper.</p></div>
+            </div>
+        </div>
       </div>
 
       </div>
@@ -854,11 +847,11 @@
 
 </div>
 
-<!-- Interactive UI Controller -->
+<! Interactive UI Controller >
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. Global Scale Toggles (US/Metric for Recipes) ---
+    //1. Global Scale Toggles (US/Metric for Recipes)
     const recipeToggles = document.querySelectorAll('.global-unit-toggle span');
     recipeToggles.forEach(toggle => {
       toggle.addEventListener('click', (e) => {
@@ -877,7 +870,7 @@
       });
     });
 
-    // --- 2. System Settings Toggle (US/Metric for Stats Panel) & Snapping Logic ---
+    // 2. System Settings Toggle (US/Metric for Stats Panel) & Snapping Logic
     const sysToggles = document.querySelectorAll('.system-toggle-btn span');
     sysToggles.forEach(toggle => {
       toggle.addEventListener('click', (e) => {
@@ -927,7 +920,7 @@
       });
     });
 
-    // --- 3. Segmented Logic Groups (Sex, Activity, Goal) ---
+    //3. Segmented Logic Groups (Sex, Activity, Goal)
     document.querySelectorAll('.logic-group span').forEach(btn => {
       btn.addEventListener('click', (e) => {
         let parent = e.target.closest('.logic-group');
@@ -937,7 +930,7 @@
       });
     });
 
-    // --- 4. Custom Steppers, Input Poka-Yoke & Inline Validation ---
+    //4. Custom Steppers, Input Poka-Yoke & Inline Validation
     function validateInput(input, isCrossCheck = false) {
       if (!input) return true;
       const container = input.closest('.stepper');
@@ -1183,11 +1176,9 @@
     document.querySelectorAll('input[type="text"]').forEach(input => validateInput(input));
     calculateMacros();
 
-    // ---------------------------------------------------------
-    // --- RECIPE FILTERING & LIVE SEARCH ENGINE ---
-    // ---------------------------------------------------------
+    //RECIPE FILTERING & LIVE SEARCH ENGINE
     const recipes = [
-      { name: "Creamy Spinach Parmesan", cal: 640, time: "Under 15m", diet: ["Vegetarian"], meal: ["Dinner"], link: "#frame-4" },
+      { name: "Creamy Spinach Parmesan", cal: 640, time: "Under 15m", diet: ["Vegetarian"], meal: ["Dinner"], link: "#!", action: "showSpinachRecipe()" },
       { name: "Mushroom Risotto", cal: 520, time: "Under 30m", diet: ["Vegan", "Vegetarian"], meal: ["Lunch", "Dinner"], link: "" },
       { name: "Protein Oat Pancakes", cal: 430, time: "Under 15m", diet: ["Vegetarian", "High-protein"], meal: ["Breakfast"], link: "" },
       { name: "Spicy Lentil Pasta", cal: 550, time: "Under 30m", diet: ["Vegan", "Vegetarian", "High-protein"], meal: ["Dinner"], link: "" },
@@ -1250,7 +1241,7 @@
           recipeGrid.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: var(--soft2); font-family: 'Space Mono', monospace; font-size: 11px;">0 recipes found. Try loosening your filters.</div>`;
       } else {
           recipeGrid.innerHTML = filtered.map(r => `
-            <a href="${r.link || '#!'}" class="card" ${!r.link ? 'onclick="event.preventDefault()"' : ''}>
+            <a href="${r.link || '#!'}" class="card" ${r.action ? `onclick="${r.action}; return false;"` : 'onclick="event.preventDefault()"'}>
               <div class="im imgph" style="border-radius:0;border:none;border-bottom:2px solid var(--ink)">
                 <span>${r.time}</span>
               </div>
@@ -1264,9 +1255,20 @@
     }
     renderRecipes();
 
-    // ---------------------------------------------------------
-    // --- SINGLE-PAGE SWAP LOGIC (SPINACH) ---
-    // ---------------------------------------------------------
+    //SINGLE-PAGE SWAP LOGIC (SPINACH)
+    
+    // SPA ROUTING
+    window.showSpinachRecipe = function() {
+        document.getElementById('search-index').style.display = 'none';
+        document.getElementById('spinach-detail').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('frame-3').offsetTop, behavior: 'smooth' });
+    };
+    window.hideSpinachRecipe = function() {
+        document.getElementById('spinach-detail').style.display = 'none';
+        document.getElementById('search-index').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('frame-3').offsetTop, behavior: 'smooth' });
+    };
+
     const spBtnCream = document.getElementById('sp-btn-cream');
     const spAltEmpty = document.getElementById('sp-alt-empty');
     const spAltList = document.getElementById('sp-alt-list');
@@ -1358,10 +1360,7 @@
             document.getElementById('sp-step-cream-text').innerText = data.name.toLowerCase();
         });
     }
-
-    // ---------------------------------------------------------
-    // --- SINGLE-PAGE SWAP LOGIC (TOFU BOWL) ---
-    // ---------------------------------------------------------
+    //SINGLE-PAGE SWAP LOGIC (TOFU BOWL)
     const tfBtnRice = document.getElementById('tf-btn-rice');
     const tfAltEmpty = document.getElementById('tf-alt-empty');
     const tfAltList = document.getElementById('tf-alt-list');
@@ -1448,9 +1447,7 @@
         });
     }
 
-    // ---------------------------------------------------------
-    // --- INLINE FULL RECIPE EXPANSION ---
-    // ---------------------------------------------------------
+    //INLINE FULL RECIPE EXPANSION
     const spTrigger = document.getElementById('sp-trigger-recipe');
     if(spTrigger) {
         spTrigger.addEventListener('click', (e) => {
@@ -1473,9 +1470,7 @@
         });
     }
 
-    // ---------------------------------------------------------
-    // --- DISCOVERY ENGINE LOGIC ---
-    // ---------------------------------------------------------
+    // DISCOVERY ENGINE LOGIC
     const generateTofuBtn = document.getElementById('generate-tofu-btn');
     if (generateTofuBtn) {
         let tofuDiscovered = false;
