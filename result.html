@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Matches — Snack Overflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="pantry">
+<a class="skip" href="#main">Skip to content</a>
+<nav id="nav"></nav>
+
+<div class="wrap">
+<main id="main">
+  <div class="loadwrap" id="loadwrap"><div class="spinner" aria-hidden="true"></div><p id="loadmsg">Matching recipes to your basket…</p></div>
+
+  <div id="resultbody" style="display:none">
+    <div class="pagehead">
+      <a class="btn ghost" style="font-size:13px;padding:8px 14px" href="pantry.html">← Edit basket</a>
+    </div>
+    <div class="matchhead">
+      <span class="eyebrow" style="margin:0">Your Matches</span>
+      <span class="badge2" id="matchbadge">Best match</span>
+    </div>
+
+    <div class="bigmatch">
+      <div class="mimg" id="matchImg" aria-hidden="true">🥗</div>
+      <div class="mbody">
+        <h2 id="matchName">Crispy Tofu Power Bowl</h2>
+        <div class="pills" style="margin-top:8px" id="matchPills"></div>
+        <div class="mmeter">
+          <div class="lab"><span>You already have</span><span id="matchpct">83%</span></div>
+          <div class="track"><i id="matchbar" style="width:83%"></i></div>
+          <div class="mono" style="font-size:11px;color:var(--ink-soft);margin-top:6px">of the ingredients</div>
+        </div>
+        <div class="haves" id="haves"></div>
+        <div style="display:flex;gap:12px;margin-top:6px">
+          <a class="btn persim" href="recipe.html">View recipe</a>
+          <a class="btn ghost" href="pantry.html">Try other items</a>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="font-size:22px;margin:32px 0 14px">More you can make</h2>
+    <div class="cards" id="altcards"></div>
+  </div>
+</main>
+</div>
+
+<footer id="foot"></footer>
+<script src="assets/app.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/result.js"></script>
+</body>
+</html>
