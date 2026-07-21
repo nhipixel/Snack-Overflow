@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pantry — Snack Overflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="pantry">
+<a class="skip" href="#main">Skip to content</a>
+<nav id="nav"></nav>
+
+<div class="wrap">
+<main id="main">
+  <div class="pagehead">
+    <span class="eyebrow">Cook From Your Pantry</span>
+    <h1 class="sectit">What's in your <em>fridge</em>?</h1>
+    <p class="sub">Add the ingredients you have on hand — drag them into your basket or tap any item. We'll find recipes you can make right now.</p>
+  </div>
+
+  <div class="pantry">
+    <div>
+      <div class="preview" id="preview" aria-live="polite">
+        <span class="pv-ic" aria-hidden="true">🍳</span>
+        <span class="pv-tx" id="previewTx"><span class="muted">Add ingredients to see what you can cook.</span></span>
+      </div>
+
+      <label class="sr-only" for="pantryq">Search your kitchen</label>
+      <div class="searchbar" style="margin-bottom:18px"><span class="ico" aria-hidden="true">🔎</span><input id="pantryq" placeholder="Search your kitchen e.g. tofu…" oninput="filterPantry()"></div>
+
+      <div id="shelves"></div>
+    </div>
+
+    <div class="basket" id="basket" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropItem(event)">
+      <h3>Your basket <span class="ct" id="bcount">0 items</span></h3>
+      <div class="basket-tools"><button class="clear-btn" id="clearbtn" onclick="clearBasket()" disabled>Clear all</button></div>
+      <div class="basketitems" id="basketitems" aria-live="polite"></div>
+      <div class="ph" id="basketph"><div><span class="ic" aria-hidden="true">🧺</span>Drag ingredients here<br>or tap any item to add</div></div>
+      <div class="basket-foot">
+        <button class="btn persim" id="genbtn" style="width:100%;justify-content:center" disabled onclick="generate()">Generate recipes</button>
+        <div class="gen-note" id="gennote">Add at least 1 ingredient to generate.</div>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+
+<footer id="foot"></footer>
+<script src="assets/app.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/pantry.js"></script>
+</body>
+</html>
