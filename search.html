@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Recipes — Snack Overflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="search">
+<a class="skip" href="#main">Skip to content</a>
+<nav id="nav"></nav>
+
+<div class="wrap">
+<main id="main">
+  <div class="pagehead">
+    <span class="eyebrow">Find Recipes</span>
+    <h1 class="sectit">Search recipes that <em>fit your targets</em>.</h1>
+  </div>
+  <div class="searchlayout">
+    <aside class="facets" aria-label="Filters">
+      <div class="facet"><h4>Diet</h4><div class="chips" data-facet="diet">
+        <button class="chip" onclick="toggleChip(this)" data-v="vegan">Vegan <span class="x">×</span></button>
+        <button class="chip" onclick="toggleChip(this)" data-v="vegetarian">Vegetarian <span class="x">×</span></button>
+        <button class="chip" onclick="toggleChip(this)" data-v="high-protein">High-protein <span class="x">×</span></button>
+        <button class="chip" onclick="toggleChip(this)" data-v="gluten-free">Gluten-free <span class="x">×</span></button>
+      </div></div>
+      <div class="facet"><h4>Meal</h4><div class="chips" data-facet="meal">
+        <button class="chip" onclick="toggleChip(this)" data-v="breakfast">Breakfast <span class="x">×</span></button>
+        <button class="chip" onclick="toggleChip(this)" data-v="lunch">Lunch <span class="x">×</span></button>
+        <button class="chip" onclick="toggleChip(this)" data-v="dinner">Dinner <span class="x">×</span></button>
+      </div></div>
+      <div class="facet"><h4>Time</h4><div class="chips" data-facet="time">
+        <button class="chip" onclick="toggleChip(this)" data-v="under15">Under 15 min <span class="x">×</span></button>
+        <button class="chip" onclick="toggleChip(this)" data-v="under30">Under 30 min <span class="x">×</span></button>
+      </div></div>
+      <div class="facet"><h4>Max calories <span class="val mono" id="calmax" style="color:var(--persimmon)">900</span></h4>
+        <input type="range" id="calslider" min="200" max="900" value="900" step="50" oninput="renderCards()" aria-label="Maximum calories"></div>
+    </aside>
+    <div>
+      <div class="searchbar"><span class="ico" aria-hidden="true">🔎</span><input id="searchq" placeholder="Search e.g. pasta, bowl, tofu…" oninput="renderCards()" aria-label="Search recipes"></div>
+      <div class="resbar">
+        <div class="activechips" id="activechips"><span class="lbl">No filters — showing all</span></div>
+        <span class="count" aria-live="polite"><b id="rescount">6</b> recipes</span>
+      </div>
+      <div class="cards" id="cards"></div>
+      <div class="empty" id="emptystate" style="display:none">
+        <div class="ic" aria-hidden="true">🍽️</div><h3>No recipes match those filters</h3>
+        <p>Try removing a filter or raising the calorie limit.</p>
+        <button class="btn ghost" onclick="clearFilters()">Clear all filters</button>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+
+<footer id="foot"></footer>
+<script src="assets/app.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/search.js"></script>
+</body>
+</html>

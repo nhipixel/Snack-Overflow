@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snack Overflow — Diet Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="landing">
+<a class="skip" href="#main">Skip to content</a>
+<nav id="nav"></nav>
+
+<div class="wrap">
+<main id="main">
+  <section class="hero">
+    <div>
+      <span class="eyebrow">Plan meals around your numbers</span>
+      <h1>Cook to your <em>targets</em>, not someone else's diet.</h1>
+      <p>Set your daily calories and macros, find recipes that fit, swap ingredients on the fly, and turn whatever's in your fridge into dinner.</p>
+      <div class="hero-cta">
+        <a class="btn persim" href="targets.html">Set my targets →</a>
+        <a class="btn ghost" href="pantry.html">I'll cook from my fridge</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="demo-badge">DEMO</div>
+      <div class="lab">Your daily target</div>
+      <div class="kcal" id="heroKcal">2,210<small>kcal</small></div>
+      <div class="hero-rule"></div>
+      <div class="hmac"><span>Protein</span><b id="heroP">117 g</b></div>
+      <div class="hmac"><span>Carbs</span><b id="heroC">298 g</b></div>
+      <div class="hmac"><span>Fat</span><b id="heroF">61 g</b></div>
+    </div>
+  </section>
+
+  <div class="tasks">
+    <a class="task" href="targets.html"><div class="ic" aria-hidden="true">🎯</div><h3>Set targets</h3><p>Calorie &amp; macro calculator from your stats and goal.</p></a>
+    <a class="task" href="search.html"><div class="ic" aria-hidden="true">🔎</div><h3>Find recipes</h3><p>Filter by diet, meal, time and calories with chips.</p></a>
+    <a class="task" href="recipe.html"><div class="ic" aria-hidden="true">🔄</div><h3>Swap ingredients</h3><p>Trade items and watch calories recalculate live.</p></a>
+    <a class="task" href="pantry.html"><div class="ic" aria-hidden="true">🧺</div><h3>Cook from pantry</h3><p>Drag in what you have, get recipes you can make now.</p></a>
+  </div>
+</main>
+</div>
+
+<footer id="foot"></footer>
+<script src="assets/app.js"></script>
+<script>
+  /* reflect any saved target in the hero card */
+  (function(){
+    var t = STORE.target;
+    document.getElementById('heroKcal').innerHTML = t.kcal.toLocaleString()+'<small>kcal</small>';
+    document.getElementById('heroP').textContent = t.protein+' g';
+    document.getElementById('heroC').textContent = t.carbs+' g';
+    document.getElementById('heroF').textContent = t.fat+' g';
+  })();
+</script>
+</body>
+</html>

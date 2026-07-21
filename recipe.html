@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recipe — Snack Overflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="recipe">
+<a class="skip" href="#main">Skip to content</a>
+<nav id="nav"></nav>
+
+<div class="wrap">
+<main id="main">
+  <div class="pagehead">
+    <a class="btn ghost" style="font-size:13px;padding:8px 14px" href="search.html">← Back to results</a>
+  </div>
+  <div class="rd-head">
+    <div class="rd-img" aria-hidden="true">🍝</div>
+    <div>
+      <span class="eyebrow">Adapt a Recipe</span>
+      <h1>Creamy Tuscan Pasta</h1>
+      <div class="pills">
+        <span class="pill kc" id="rdkcal">640 kcal</span>
+        <span class="pill">⏱ 25 min</span>
+        <span class="pill">Dinner</span>
+        <span class="pill">Vegetarian</span>
+      </div>
+    </div>
+  </div>
+  <div class="rd-grid">
+    <div class="panel">
+      <div class="panel-h"><h2>Ingredients</h2><span class="step">tap Swap to substitute</span></div>
+      <div class="panel-b" id="inglist"></div>
+      <div style="padding:0 20px 20px">
+        <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2" id="rdtotal">640 kcal</div></div><div class="delta" id="rddelta" style="color:#cfc8b8">≈ 32% of your 2,010 target</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h2>Directions</h2><span class="step">4 steps</span></div>
+      <div class="panel-b steps">
+        <div class="step-i"><div class="num" aria-hidden="true"></div><p>Cook pasta until al dente; reserve a cup of pasta water.</p></div>
+        <div class="step-i"><div class="num" aria-hidden="true"></div><p>Sauté garlic and sun-dried tomatoes, then add spinach until wilted.</p></div>
+        <div class="step-i"><div class="num" aria-hidden="true"></div><p>Stir in the cream base and parmesan to form the sauce.</p></div>
+        <div class="step-i"><div class="num" aria-hidden="true"></div><p>Toss pasta in the sauce, loosen with pasta water, and serve.</p></div>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+
+<footer id="foot"></footer>
+
+<!-- SWAP MODAL -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="swaptitle">
+  <div class="modal">
+    <div class="modal-h"><h3 id="swaptitle">Swap <span id="swaptarget">cream</span></h3><button aria-label="Close" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <p class="lede">Pick an alternative — the recipe's total calories update instantly. Only valid substitutes are shown.</p>
+      <div id="altlist"></div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/recipe.js"></script>
+</body>
+</html>

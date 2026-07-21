@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Targets — Snack Overflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="targets">
+<a class="skip" href="#main">Skip to content</a>
+<nav id="nav"></nav>
+
+<div class="wrap">
+<main id="main">
+  <div class="pagehead">
+    <span class="eyebrow">Daily Targets</span>
+    <h1 class="sectit">Dial in your <em>numbers</em>.</h1>
+    <p class="sub">Change anything and your calorie + macro targets recalculate instantly — no submit button.</p>
+  </div>
+  <div class="dash">
+    <div class="panel">
+      <div class="panel-h"><h2>Your stats</h2><span class="step">live · auto-saves</span></div>
+      <div class="panel-b">
+        <div class="field">
+          <label id="lab-sex">Biological sex <span class="hint">affects BMR</span></label>
+          <div class="seg sex" role="group" aria-labelledby="lab-sex">
+            <button class="active" data-sex="female" onclick="pick(this,'sex')">Female</button>
+            <button data-sex="male" onclick="pick(this,'sex')">Male</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="age">Age <span class="hint">allowed 0–120</span></label>
+          <div class="numrow">
+            <div class="stepper">
+              <button type="button" aria-label="decrease age" onclick="bump('age',-1)">–</button>
+              <input id="age" type="number" value="22" min="0" max="120" oninput="calc()">
+              <button type="button" aria-label="increase age" onclick="bump('age',1)">+</button>
+            </div>
+            <span class="unit">years</span>
+          </div>
+        </div>
+        <div class="field"><label for="weight">Weight <span class="val" id="wv">65 kg</span></label><input type="range" id="weight" min="35" max="160" value="65" oninput="calc()"></div>
+        <div class="field"><label for="height">Height <span class="val" id="hv">168 cm</span></label><input type="range" id="height" min="130" max="215" value="168" oninput="calc()"></div>
+        <div class="field"><label id="lab-act">Activity level</label>
+          <div class="seg" id="activity" role="group" aria-labelledby="lab-act"><button data-f="1.2" onclick="pick(this,'act')">Sedentary</button><button data-f="1.375" onclick="pick(this,'act')">Light</button><button data-f="1.55" class="active" onclick="pick(this,'act')">Moderate</button><button data-f="1.725" onclick="pick(this,'act')">Very active</button><button data-f="1.9" onclick="pick(this,'act')">Athlete</button></div>
+        </div>
+        <div class="field" style="margin-bottom:0"><label id="lab-goal">Goal</label>
+          <div class="seg" id="goal" role="group" aria-labelledby="lab-goal"><button data-d="-500" onclick="pick(this,'goal')">Lose fat</button><button data-d="-300" onclick="pick(this,'goal')">Lose weight</button><button data-d="0" class="active" onclick="pick(this,'goal')">Maintain</button><button data-d="250" onclick="pick(this,'goal')">Build muscle</button><button data-d="500" onclick="pick(this,'goal')">Bulk</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="nf" aria-live="polite">
+      <div class="nf-top"><div class="nf-title">Nutrition Targets</div><div class="nf-meta">per day · recalculated just now</div></div>
+      <div class="rule-xl"></div>
+      <div class="nf-cal"><span class="lab">Calories</span><span class="big" id="kcal">2010<small>kcal</small></span></div>
+      <div class="rule-l"></div>
+      <div class="nf-rows">
+        <div class="nf-row"><span class="name"><span class="dot" style="background:var(--protein)"></span>Protein</span><span class="g" id="pg">117 g</span><span class="pct" id="pp">23%</span></div>
+        <div class="bar"><i id="pbar" style="background:var(--protein);width:23%"></i></div>
+        <div class="nf-row" style="margin-top:6px"><span class="name"><span class="dot" style="background:var(--carbs)"></span>Carbs</span><span class="g" id="cg">226 g</span><span class="pct" id="cp">45%</span></div>
+        <div class="bar"><i id="cbar" style="background:var(--carbs);width:45%"></i></div>
+        <div class="nf-row" style="margin-top:6px"><span class="name"><span class="dot" style="background:var(--fat)"></span>Fat</span><span class="g" id="fg">56 g</span><span class="pct" id="fp">25%</span></div>
+        <div class="bar"><i id="fbar" style="background:var(--fat);width:25%"></i></div>
+      </div>
+      <div class="nf-foot"><span class="chk" aria-hidden="true">✓</span><p>Balanced for your goal.</p><a href="search.html">Find recipes →</a></div>
+    </div>
+  </div>
+</main>
+</div>
+
+<footer id="foot"></footer>
+<script src="assets/app.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/targets.js"></script>
+</body>
+</html>
