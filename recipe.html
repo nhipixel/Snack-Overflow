@@ -31,6 +31,9 @@
       </div>
     </div>
   </div>
+  <div class="rd-actions" id="rdActions">
+    <button class="btn persim" id="startBtn" onclick="startCooking()">Start Cooking →</button>
+  </div>
   <div class="rd-grid">
     <div class="panel">
       <div class="panel-h"><h2>Ingredients</h2><span class="step">tap Swap to substitute</span></div>
@@ -40,13 +43,35 @@
       </div>
     </div>
     <div class="panel">
-      <div class="panel-h"><h2>Directions</h2><span class="step">4 steps</span></div>
+      <div class="panel-h"><h2>Directions</h2><span class="step" id="stepProgress">4 steps</span></div>
       <div class="panel-b steps">
-        <div class="step-i"><div class="num" aria-hidden="true"></div><p>Cook pasta until al dente; reserve a cup of pasta water.</p></div>
-        <div class="step-i"><div class="num" aria-hidden="true"></div><p>Sauté garlic and sun-dried tomatoes, then add spinach until wilted.</p></div>
-        <div class="step-i"><div class="num" aria-hidden="true"></div><p>Stir in the cream base and parmesan to form the sauce.</p></div>
-        <div class="step-i"><div class="num" aria-hidden="true"></div><p>Toss pasta in the sauce, loosen with pasta water, and serve.</p></div>
+        <button class="step-i" type="button" data-step="1" onclick="toggleStep(1)" disabled><div class="num" aria-hidden="true"></div><p>Cook pasta until al dente; reserve a cup of pasta water.</p></button>
+        <button class="step-i" type="button" data-step="2" onclick="toggleStep(2)" disabled><div class="num" aria-hidden="true"></div><p>Sauté garlic and sun-dried tomatoes, then add spinach until wilted.</p></button>
+        <button class="step-i" type="button" data-step="3" onclick="toggleStep(3)" disabled><div class="num" aria-hidden="true"></div><p>Stir in the cream base and parmesan to form the sauce.</p></button>
+        <button class="step-i" type="button" data-step="4" onclick="toggleStep(4)" disabled><div class="num" aria-hidden="true"></div><p>Toss pasta in the sauce, loosen with pasta water, and serve.</p></button>
       </div>
+    </div>
+  </div>
+
+  <div class="panel" id="finishPanel" style="display:none;margin-top:24px">
+    <div class="panel-h"><h2>How'd it go?</h2><span class="step">30 seconds</span></div>
+    <div class="panel-b" id="finishBody">
+      <p class="sub" style="margin-bottom:16px">A couple quick questions help us suggest better recipes next time.</p>
+      <div class="field">
+        <label id="lab-rating">Rate this recipe</label>
+        <div class="stars" id="starRow" role="radiogroup" aria-labelledby="lab-rating">
+          <button type="button" data-r="1" onclick="pickRating(1)" aria-label="1 star">★</button>
+          <button type="button" data-r="2" onclick="pickRating(2)" aria-label="2 stars">★</button>
+          <button type="button" data-r="3" onclick="pickRating(3)" aria-label="3 stars">★</button>
+          <button type="button" data-r="4" onclick="pickRating(4)" aria-label="4 stars">★</button>
+          <button type="button" data-r="5" onclick="pickRating(5)" aria-label="5 stars">★</button>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label for="feedbackTx">What would have made this easier? <span class="hint">optional</span></label>
+        <textarea id="feedbackTx" class="txarea" rows="3" placeholder="e.g. clearer step for the sauce consistency…"></textarea>
+      </div>
+      <button class="btn persim" style="margin-top:14px" onclick="submitFeedback()">Submit feedback</button>
     </div>
   </div>
 </main>

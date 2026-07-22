@@ -176,6 +176,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .pill{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;padding:6px 11px;border-radius:30px;border:1.5px solid var(--ink)}
 .pill.kc{background:var(--persimmon);color:#fff;border-color:var(--persimmon)}
+.rd-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .rd-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;padding:22px 0 60px;align-items:start}
 @media(max-width:860px){.rd-grid{grid-template-columns:1fr}}
 .ing{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--hair)}
@@ -191,10 +192,22 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .totalbar .t2{font-family:'Fraunces',serif;font-weight:900;font-size:30px}
 .totalbar .delta{font-family:'Space Mono',monospace;font-size:12px;font-weight:700}
 .steps{counter-reset:s}
-.step-i{display:flex;gap:13px;padding:12px 0;border-bottom:1px solid var(--hair)}
-.step-i .num{counter-increment:s;width:28px;height:28px;border-radius:50%;background:var(--persimmon);color:#fff;font-family:'Space Mono',monospace;font-weight:700;font-size:13px;display:grid;place-items:center;flex:none}
+.step-i{display:flex;gap:13px;padding:12px 8px;margin:0 -8px;border-bottom:1px solid var(--hair);width:calc(100% + 16px);background:none;border-left:none;border-right:none;border-top:none;border-radius:8px;text-align:left;font:inherit;color:inherit;cursor:default}
+.step-i:not(:disabled){cursor:pointer}
+.step-i:not(:disabled):hover{background:var(--soft-bg)}
+.step-i:disabled{opacity:.65}
+.step-i .num{counter-increment:s;width:28px;height:28px;border-radius:50%;background:var(--persimmon);color:#fff;font-family:'Space Mono',monospace;font-weight:700;font-size:13px;display:grid;place-items:center;flex:none;transition:background .12s ease}
 .step-i .num::before{content:counter(s)}
+.step-i.done .num{background:var(--herb)}
+.step-i.done .num::before{content:'✓'}
+.step-i.done p{color:var(--ink-soft);text-decoration:line-through}
 .step-i p{font-size:14px;padding-top:2px}
+
+.stars{display:flex;gap:4px}
+.stars button{background:none;border:none;font-size:26px;line-height:1;cursor:pointer;color:var(--hair);padding:2px;transition:color .1s ease}
+.stars button.on{color:var(--carbs)}
+.txarea{width:100%;font-family:inherit;font-size:14px;padding:11px 13px;border:1.5px solid var(--hair);border-radius:10px;resize:vertical;color:var(--ink)}
+.txarea:focus{outline:none;border-color:var(--ink)}
 
 /* ===================== PANTRY (Task 4) — enhanced ===================== */
 .pantry{display:grid;grid-template-columns:1fr 360px;gap:24px;padding-bottom:60px;align-items:start}
