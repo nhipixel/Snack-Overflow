@@ -8,6 +8,8 @@ const STORE = {
   set target(v){ localStorage.setItem('so_target', JSON.stringify(v)); },
   get basket(){ try{ return JSON.parse(localStorage.getItem('so_basket')) || []; }catch(e){ return []; } },
   set basket(v){ localStorage.setItem('so_basket', JSON.stringify(v)); },
+  get basketQty(){ try{ return JSON.parse(localStorage.getItem('so_basket_qty')) || {}; }catch(e){ return {}; } },
+  set basketQty(v){ localStorage.setItem('so_basket_qty', JSON.stringify(v)); },
 };
 
 const NAV_TABS = [
@@ -38,19 +40,23 @@ function renderChrome(){
   }
 }
 
-/* ---- toast ------------------------------------------------- */
+/* ---- toast (optional {actionLabel, onAction} shows an undo button) ---- */
 let _toastT;
-function toast(msg){
+function toast(msg, opts){
   let t = document.getElementById('toast');
-  if(!t){
-    t = document.createElement('div'); t.id='toast';
-    t.innerHTML = '<span class="ic" aria-hidden="true">✓</span><span id="toastmsg"></span>';
-    document.body.appendChild(t);
-  }
+  if(!t){ t = document.createElement('div'); t.id='toast'; document.body.appendChild(t); }
+  t.innerHTML = `<span class="ic" aria-hidden="true">✓</span><span id="toastmsg"></span>`;
   document.getElementById('toastmsg').textContent = msg;
+  if(opts && opts.actionLabel){
+    const b = document.createElement('button');
+    b.className = 'toast-action';
+    b.textContent = opts.actionLabel;
+    b.onclick = () => { opts.onAction(); t.classList.remove('show'); };
+    t.appendChild(b);
+  }
   t.classList.add('show');
   clearTimeout(_toastT);
-  _toastT = setTimeout(()=>t.classList.remove('show'), 2600);
+  _toastT = setTimeout(()=>t.classList.remove('show'), opts && opts.actionLabel ? 4500 : 2600);
 }
 
 document.addEventListener('DOMContentLoaded', renderChrome);

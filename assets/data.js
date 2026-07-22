@@ -31,12 +31,15 @@ const ALTS = {
   cheese:[{e:'🌱',n:'Nutritional yeast',sub:'2 tbsp',kc:40},{e:'🧀',n:'Vegan parmesan',sub:'¼ cup',kc:70}],
 };
 
-/* Pantry shelves organized by category. Items marked `soon` cannot be added. */
+/* Pantry shelves, ordered the way you'd actually scan a fridge:
+   produce (crisper) → protein (mid shelf) → dairy (door) → dry
+   goods last, since grains live in the cupboard, not the fridge.
+   Items marked `soon` cannot be added. */
 const PANTRY = {
   'Produce':      [{n:'Spinach',e:'🥬'},{n:'Tomato',e:'🍅'},{n:'Broccoli',e:'🥦'},{n:'Bell pepper',e:'🫑'},{n:'Avocado',e:'🥑'},{n:'Mushroom',e:'🍄'}],
   'Proteins':     [{n:'Tofu',e:'🧊'},{n:'Eggs',e:'🥚'},{n:'Chicken',e:'🍗'},{n:'Chickpeas',e:'🫘'},{n:'Salmon',e:'🐟',soon:true}],
-  'Grains':       [{n:'Rice',e:'🍚'},{n:'Pasta',e:'🍝'},{n:'Quinoa',e:'🌾'},{n:'Bread',e:'🍞'}],
   'Dairy & alt':  [{n:'Greek yogurt',e:'🥛'},{n:'Parmesan',e:'🧀'},{n:'Oat milk',e:'🥥'}],
+  'Grains':       [{n:'Rice',e:'🍚'},{n:'Pasta',e:'🍝'},{n:'Quinoa',e:'🌾'},{n:'Bread',e:'🍞'}],
 };
 
 /* look up an ingredient's emoji by name (used by basket chips + results) */
