@@ -42,8 +42,8 @@
         <div class="totalbar"><div><div class="t1">Recipe total</div><div class="t2" id="rdtotal">640 kcal</div></div><div class="delta" id="rddelta" style="color:#cfc8b8">≈ 32% of your 2,010 target</div></div>
       </div>
     </div>
-    <div class="panel">
-      <div class="panel-h"><h2>Directions</h2><span class="step" id="stepProgress">4 steps</span></div>
+    <div class="panel" id="directionsPanel">
+      <div class="panel-h"><h2>Directions <span class="cook-badge" id="cookingBadge" style="display:none">🍳 Cooking</span></h2><span class="step" id="stepProgress">4 steps</span></div>
       <div class="panel-b steps">
         <button class="step-i" type="button" data-step="1" onclick="toggleStep(1)" disabled><div class="num" aria-hidden="true"></div><p>Cook pasta until al dente; reserve a cup of pasta water.</p></button>
         <button class="step-i" type="button" data-step="2" onclick="toggleStep(2)" disabled><div class="num" aria-hidden="true"></div><p>Sauté garlic and sun-dried tomatoes, then add spinach until wilted.</p></button>

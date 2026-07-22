@@ -51,6 +51,8 @@ let recipeRating = 0;
 function startCooking(){
   cookingStarted = true;
   document.querySelectorAll('.step-i').forEach(b=>b.disabled=false);
+  document.getElementById('directionsPanel').classList.add('cooking');
+  document.getElementById('cookingBadge').style.display = 'inline-flex';
   const btn = document.getElementById('startBtn');
   btn.textContent = "I'm done cooking →";
   btn.onclick = showFinish;

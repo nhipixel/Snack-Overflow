@@ -194,14 +194,18 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .steps{counter-reset:s}
 .step-i{display:flex;gap:13px;padding:12px 8px;margin:0 -8px;border-bottom:1px solid var(--hair);width:calc(100% + 16px);background:none;border-left:none;border-right:none;border-top:none;border-radius:8px;text-align:left;font:inherit;color:inherit;cursor:default}
 .step-i:not(:disabled){cursor:pointer}
-.step-i:not(:disabled):hover{background:var(--soft-bg)}
-.step-i:disabled{opacity:.65}
+.step-i:not(:disabled):hover{background:#fff}
 .step-i .num{counter-increment:s;width:28px;height:28px;border-radius:50%;background:var(--persimmon);color:#fff;font-family:'Space Mono',monospace;font-weight:700;font-size:13px;display:grid;place-items:center;flex:none;transition:background .12s ease}
 .step-i .num::before{content:counter(s)}
 .step-i.done .num{background:var(--herb)}
 .step-i.done .num::before{content:'✓'}
-.step-i.done p{color:var(--ink-soft);text-decoration:line-through}
-.step-i p{font-size:14px;padding-top:2px}
+.step-i.done p{color:var(--ink-soft);text-decoration:line-through;font-weight:400}
+.step-i p{font-size:14px;font-weight:600;padding-top:2px}
+
+/* cooking mode — the Directions panel gets an unmistakable active look */
+.panel.cooking{border-color:var(--persimmon);box-shadow:6px 6px 0 var(--persimmon);background:#FBF7EC}
+.panel.cooking .panel-h{border-color:#EBDFC4}
+.cook-badge{display:inline-flex;align-items:center;gap:4px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;background:var(--persimmon);color:#fff;padding:3px 9px;border-radius:20px;margin-left:8px;vertical-align:middle;animation:pop .18s ease}
 
 .stars{display:flex;gap:4px}
 .stars button{background:none;border:none;font-size:26px;line-height:1;cursor:pointer;color:var(--hair);padding:2px;transition:color .1s ease}
