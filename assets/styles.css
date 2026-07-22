@@ -200,8 +200,17 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .pantry{display:grid;grid-template-columns:1fr 360px;gap:24px;padding-bottom:60px;align-items:start}
 @media(max-width:880px){.pantry{grid-template-columns:1fr}}
 .shelf{margin-bottom:18px}
-.shelf h4{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px;display:flex;align-items:baseline;gap:8px}
+.shelf summary{list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:4px 8px;margin:-4px -8px 9px;border-radius:8px;transition:background-color .12s ease}
+.shelf summary::-webkit-details-marker{display:none}
+.shelf summary:hover{background-color:var(--soft-bg)}
+.shelf summary:hover h4{color:var(--ink)}
+.shelf summary:hover h4::after{border-color:var(--ink)}
+.shelf summary:focus-visible{outline:3px solid var(--protein);outline-offset:2px}
+.shelf:not([open]) summary{margin-bottom:-4px}
+.shelf h4{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);display:flex;align-items:center;gap:8px;transition:color .12s ease}
 .shelf h4 .cnt{letter-spacing:0;text-transform:none;color:var(--ink-soft);font-weight:400}
+.shelf h4::after{content:'';width:7px;height:7px;margin-left:auto;border-right:1.5px solid var(--ink-soft);border-bottom:1.5px solid var(--ink-soft);transform:rotate(45deg);transition:transform .15s ease,border-color .12s ease;flex:none}
+.shelf:not([open]) h4::after{transform:rotate(-45deg)}
 .items{display:flex;gap:8px;flex-wrap:wrap}
 .item{font-size:13.5px;font-weight:600;background:#fff;border:1.5px solid var(--hair);color:var(--ink);padding:8px 13px;border-radius:30px;cursor:grab;display:inline-flex;align-items:center;gap:7px;transition:.12s;user-select:none}
 .item:hover:not(:disabled){border-color:var(--ink);transform:translateY(-1px)}

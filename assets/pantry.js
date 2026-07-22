@@ -4,14 +4,15 @@
    Basket persists to localStorage for the Results page. */
 
 const QTY_CYCLE = ['low','medium','high'];
-let lastAddedName = null;   // drives the one-time "just added" flash
+let lastAddedName = null;    // drives the one-time "just added" flash
+let collapsedShelves = {};   // shelf category -> true when the user has collapsed it
 
-/* ---- render the shelves ----------------------------------- */
+/* ---- render the shelves ------------------------------------ */
 function renderShelves(){
   const basket = STORE.basket;
   document.getElementById('shelves').innerHTML = Object.entries(PANTRY).map(([cat,items])=>`
-    <div class="shelf" data-cat="${cat}">
-      <h4>${cat} <span class="cnt">${items.filter(i=>!i.soon).length} items</span></h4>
+    <details class="shelf" data-cat="${cat}" ${collapsedShelves[cat]?'':'open'}>
+      <summary onclick="toggleShelfState('${cat}')"><h4>${cat} <span class="cnt">${items.filter(i=>!i.soon).length} items</span></h4></summary>
       <div class="items">
       ${items.map(it=>{
         if(it.soon){
@@ -25,8 +26,15 @@ function renderShelves(){
             ${it.e} ${it.n}${added?'':' <span class="plus" aria-hidden="true">+</span>'}</button>`;
       }).join('')}
       </div>
-    </div>`).join('');
+    </details>`).join('');
   applyFilter();   // keep any active search after a re-render
+}
+function toggleShelfState(cat){
+  /* infer the upcoming state from what we tracked, rather than reading
+     el.open — this runs before the browser applies its default toggle,
+     and stays independent of the native `toggle` event entirely so
+     applyFilter()'s programmatic open/close (below) can never pollute it */
+  if(collapsedShelves[cat]) delete collapsedShelves[cat]; else collapsedShelves[cat] = true;
 }
 
 /* ---- basket ------------------------------------------------ */
@@ -128,6 +136,7 @@ function applyFilter(){
   document.querySelectorAll('#shelves .shelf').forEach(sh=>{
     const any = [...sh.querySelectorAll('.item')].some(i=>i.style.display!=='none');
     sh.style.display = any ? '' : 'none';
+    sh.open = q ? any : !collapsedShelves[sh.dataset.cat];   // auto-expand matches while searching, else respect manual state
   });
 }
 function filterPantry(){ applyFilter(); }
