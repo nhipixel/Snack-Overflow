@@ -36,7 +36,7 @@
 
     <div class="basket" id="basket" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropItem(event)">
       <h3>Your basket <span class="ct" id="bcount">0 items</span></h3>
-      <div class="basket-tools"><button class="clear-btn" id="clearbtn" onclick="clearBasket()" disabled>Clear all</button></div>
+      <div class="basket-tools"><button class="clear-btn" id="clearbtn" onclick="confirmClear()" disabled>Clear all</button></div>
       <div class="basketitems" id="basketitems" aria-live="polite"></div>
       <div class="ph" id="basketph"><div><span class="ic" aria-hidden="true">🧺</span>Drag ingredients here<br>or tap any item to add</div></div>
       <div class="basket-foot">
@@ -49,6 +49,21 @@
 </div>
 
 <footer id="foot"></footer>
+
+<!-- CLEAR BASKET CONFIRM — blocking forcing function before a destructive action -->
+<div class="overlay" id="clearOverlay" role="dialog" aria-modal="true" aria-labelledby="cleartitle">
+  <div class="modal">
+    <div class="modal-h"><h3 id="cleartitle">Clear your basket?</h3><button aria-label="Close" onclick="closeClearModal()">×</button></div>
+    <div class="modal-b">
+      <p class="lede" id="clearlede">This removes every ingredient from your basket. You'll need to re-add them from the shelves — this can't be undone.</p>
+      <div style="display:flex;gap:10px;margin-top:6px">
+        <button class="btn ghost" style="flex:1;justify-content:center" onclick="closeClearModal()">Cancel</button>
+        <button class="btn persim" style="flex:1;justify-content:center" onclick="doClear()">Clear basket</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="assets/app.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/pantry.js"></script>

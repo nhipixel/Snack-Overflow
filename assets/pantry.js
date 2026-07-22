@@ -1,10 +1,8 @@
 /* Pantry — add ingredients by dragging or tapping to build a basket.
    Provides real-time recipe matching and enforces constraints
-   (Generate disabled until >=1 item; basket capped at MAX_BASKET;
-   "coming soon" items un-addable). Basket persists to localStorage
-   for the Results page. */
+   (Generate disabled until >=1 item; "coming soon" items un-addable).
+   Basket persists to localStorage for the Results page. */
 
-const MAX_BASKET = 12;
 const QTY_CYCLE = ['low','medium','high'];
 let lastAddedName = null;   // drives the one-time "just added" flash
 
@@ -35,7 +33,7 @@ function renderShelves(){
 function renderBasket(){
   const basket = STORE.basket;
   const qty = STORE.basketQty;
-  document.getElementById('bcount').textContent = `${basket.length}/${MAX_BASKET} items`;
+  document.getElementById('bcount').textContent = basket.length + (basket.length===1?' item':' items');
   document.getElementById('basketph').style.display = basket.length ? 'none' : 'grid';
   document.getElementById('basketitems').innerHTML = basket.map(n=>{
     const amt = qty[n] || 'medium';
@@ -51,9 +49,6 @@ function renderBasket(){
   if(basket.length===0){
     note.textContent = 'Add at least 1 ingredient to generate.';
     note.classList.remove('ok');
-  } else if(basket.length>=MAX_BASKET){
-    note.textContent = `Basket full (max ${MAX_BASKET}) — ready to generate.`;
-    note.classList.add('ok');
   } else {
     note.textContent = `Ready — ${basket.length} ingredient${basket.length===1?'':'s'} in your basket.`;
     note.classList.add('ok');
@@ -87,7 +82,6 @@ function updatePreview(){
 function addItem(n){
   const b = STORE.basket;
   if(b.includes(n)) return;
-  if(b.length>=MAX_BASKET){ toast(`Basket is full — remove something first (max ${MAX_BASKET}).`); return; }
   b.push(n); STORE.basket = b;
   const q = STORE.basketQty; q[n] = 'medium'; STORE.basketQty = q;
   lastAddedName = n;
@@ -106,15 +100,21 @@ function cycleQty(n){
   STORE.basketQty = q;
   renderBasket();
 }
-function clearBasket(){
-  const basket = STORE.basket, qty = STORE.basketQty;
+function confirmClear(){
+  const basket = STORE.basket;
   if(!basket.length) return;
+  if(basket.length===1){ doClear(); return; }   // trivial to undo (re-add one item) — skip the interruption
+  document.getElementById('clearlede').textContent =
+    `This removes all ${basket.length} ingredients from your basket. You'll need to re-add them from the shelves — this can't be undone.`;
+  document.getElementById('clearOverlay').classList.add('on');
+}
+function closeClearModal(){ document.getElementById('clearOverlay').classList.remove('on'); }
+function doClear(){
+  const count = STORE.basket.length;
   STORE.basket = []; STORE.basketQty = {};
+  closeClearModal();
   refresh();
-  toast(`Cleared ${basket.length} ingredient${basket.length===1?'':'s'}`, {
-    actionLabel:'Undo',
-    onAction:()=>{ STORE.basket = basket; STORE.basketQty = qty; refresh(); }
-  });
+  toast(`Cleared ${count} ingredient${count===1?'':'s'}`);
 }
 function soonInfo(n){ toast(`${n} is coming soon — not available to add yet.`); }
 function refresh(){ renderShelves(); renderBasket(); updatePreview(); }
@@ -147,5 +147,9 @@ function generate(){
   btn.innerHTML = '<span class="btn-spinner" aria-hidden="true"></span>Generating…';
   setTimeout(()=>{ location.href = 'result.html'; }, 450);   // acknowledge the click before navigating
 }
+
+/* ---- clear-confirm modal dismissal ------------------------- */
+document.getElementById('clearOverlay').addEventListener('click', e=>{ if(e.target.id==='clearOverlay') closeClearModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeClearModal(); });
 
 refresh();
