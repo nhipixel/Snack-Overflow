@@ -49,7 +49,7 @@ function renderCards(){
   if(!list.length){ wrap.style.display='none'; empty.style.display='block'; return; }
   wrap.style.display='grid'; empty.style.display='none';
   wrap.innerHTML=list.map(r=>`<a class="rcard" href="recipe.html">
-    <div class="img" aria-hidden="true">${r.e}</div><div class="cb"><h3>${r.n}</h3>
+    <div class="img"><img src="${r.img}" alt="" loading="lazy"></div><div class="cb"><h3>${r.n}</h3>
     <div class="kc">${r.kc} kcal</div>
     <div class="tags">${r.diet.map(d=>`<span class="tg">${d}</span>`).join('')}<span class="tg">${r.meal}</span><span class="tg">${r.time}m</span></div>
     </div></a>`).join('');

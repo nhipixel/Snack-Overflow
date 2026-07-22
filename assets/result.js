@@ -12,7 +12,7 @@ function fillResult(){
   document.getElementById('loadwrap').style.display='none';
   document.getElementById('resultbody').style.display='block';
 
-  document.getElementById('matchImg').textContent = best.e;
+  document.getElementById('matchImg').innerHTML = `<img src="${best.img}" alt="" loading="lazy">`;
   document.getElementById('matchName').innerHTML = best.n;
   document.getElementById('matchPills').innerHTML =
     `<span class="pill kc">${best.kc} kcal</span>`
@@ -29,7 +29,7 @@ function fillResult(){
     + best.missing.map(n=>`<span class="have n">+ buy ${n}</span>`).join('');
 
   document.getElementById('altcards').innerHTML = matches.slice(1,4).map(r=>
-    `<a class="rcard" href="recipe.html"><div class="img" aria-hidden="true">${r.e}</div>
+    `<a class="rcard" href="recipe.html"><div class="img"><img src="${r.img}" alt="" loading="lazy"></div>
       <div class="cb"><h3>${r.n}</h3><div class="kc">${r.kc} kcal</div>
       <div class="tags"><span class="tg">have ${r.have.length}/${r.needs.length}</span></div></div></a>`
   ).join('');
