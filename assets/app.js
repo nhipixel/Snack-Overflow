@@ -32,8 +32,8 @@ function renderChrome(){
   const foot = document.getElementById('foot');
   if(foot){
     foot.innerHTML = `<div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
-      <span>SNACK OVERFLOW · diet manager</span>
-      <span>Plan meals around your numbers</span>
+      <span>SNACK OVERFLOW · Diet Manager</span>
+      <span class="foot-r">Plan meals around your numbers</span>
     </div>`;
   }
 }
