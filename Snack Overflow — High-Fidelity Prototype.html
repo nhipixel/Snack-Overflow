@@ -1,0 +1,2761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snack Overflow — High-Fidelity Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Modern Forest Green & Cream Palette */
+    --paper: #FAF7F2; 
+    --ink: #2D2926; 
+    --soft: #716A60; 
+    --soft2: #B3AEA5;
+    --hair: #E8E5DF; 
+    --fill: #F1ECE1; 
+    --fill2: #E3DED5;
+    --red: #C55342; 
+    --green: #2F7C31;
+    --green-light: #E6EFE6;
+    
+    --w1: 16px;
+    --w2: 12px;
+    --wp: 24px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  
+ /* UPDATED: Removed the 80px bottom padding */
+  body { font-family: 'Hanken Grotesk', sans-serif; color: var(--ink); background: var(--paper); line-height: 1.45; padding: 24px 0 0; scroll-behavior: smooth; }
+  
+  /* --- Edge-to-Edge Web App Layout --- */
+  .wrap { width: 92%; max-width: 1440px; margin: 0 auto; padding: 0 26px; transition: width 0.3s ease; }
+  
+  /* --- Strict SPA Frame Logic --- */
+  .frame { margin: 0; display: none !important; }
+  .frame.active { display: block !important; animation: fadeIn 0.2s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* --- Remove Fake Mockup Borders --- */
+  .device { position: relative; background: transparent; border: none; border-radius: 0; box-shadow: none; }
+  .pad { padding: 0; min-height: calc(100vh - 100px); display: flex; flex-direction: column; }
+  
+  /* ONLY apply vertical centering to the Homepage hero block */
+  #frame-1 .pad > .nav + * { margin-top: auto; }
+  #frame-1 .pad > :last-child { margin-bottom: auto; }
+
+  .imgph{position:relative;background:#fff;border:2px solid var(--ink);border-radius:var(--w2)}
+  .imgph::before,.imgph::after{content:"";position:absolute;inset:5px}
+  .imgph::before{background:linear-gradient(to top right,transparent calc(50% - 1px),var(--fill2) 50%,transparent calc(50% + 1px))}
+  .imgph::after{background:linear-gradient(to bottom right,transparent calc(50% - 1px),var(--fill2) 50%,transparent calc(50% + 1px))}
+
+  /* Updated Navigation Bar Hierarchy */
+  .nav { display: flex; align-items: center; gap: 18px; padding: 12px 20px; border: 2.5px solid var(--ink); border-radius: var(--w1); background: #fff; margin-bottom: 12px; }
+  .nav .logo { font-family: 'Fraunces', serif; font-weight: 900; font-size: 28px; display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); cursor: pointer; }
+  .nav .mark { width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 14px; }
+  .nav .tabs { display: flex; gap: 6px; }
+  .nav .t { font-size: 16px; font-weight: 700; color: var(--soft); padding: 8px 14px; border-radius: 10px; text-decoration: none; transition: 0.2s; cursor: pointer; }
+  .nav .t.on { background: var(--fill); color: var(--green); }
+  
+  .nav-tracker {margin-left:auto; font-size:14px; font-weight:600; background:var(--green-light); color:var(--soft); padding:6px 14px; border-radius:20px; display:flex; align-items:center; gap:8px;}
+  .nav-tracker .icon { font-size:12px; color:var(--green); }
+  .nav-tracker span { font-weight:700; color:var(--soft); }
+
+  .r-head-container { margin-bottom:14px; }
+  .r-back { font-family:'Space Mono',monospace; font-size:14px; font-weight:700; color:var(--soft); cursor:pointer; display:inline-block; margin-bottom:16px; text-decoration:none; padding:4px 0; transition:0.2s;}
+  .r-back:hover { color:var(--ink); }
+  
+  /* Modern Hero Header Style */
+  .r-head-hero { border-radius: 16px; min-height: 280px; display: flex; align-items: flex-end; padding: 24px 30px; margin-bottom: 20px; background-size: cover; background-position: center; border: none; overflow: hidden; position: relative;}
+  .hero-tags { display: flex; gap: 8px; margin-bottom: 12px; }
+  .hero-tag { background: rgba(255,255,255,0.25); backdrop-filter: blur(8px); padding: 5px 14px; border-radius: 20px; font-size: 11.5px; font-weight: 600; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+  .hero-title { font-family: 'Hanken Grotesk', sans-serif; font-size: 34px; font-weight: 800; line-height: 1.1; margin-bottom: 12px; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.5); letter-spacing: -0.5px;}
+  .hero-stats { display: flex; gap: 18px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.4); flex-wrap:wrap; align-items: center;}
+  .hero-stats span { display: flex; align-items: center; gap: 6px; }
+
+  .cols{display:flex;gap:12px}.col{flex:1}
+  .panel{border:2px solid var(--ink);border-radius:var(--w1);background:#fff;overflow:hidden; display:flex; flex-direction:column}
+  .panel-h{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:2px solid var(--ink)}
+  .panel-h b{font-family:'Fraunces',serif;font-weight:800;font-size:18px}
+  .panel-b{padding:16px; flex-grow:1}
+
+  .lab{font-size:12px;font-weight:700;display:flex;justify-content:space-between;margin-bottom:6px; align-items:flex-end}
+  .lab .v{font-family:'Space Mono',monospace;color:var(--soft)}
+  
+  .field{margin-bottom:16px; position:relative;}
+  .err-msg { display:none; color:var(--red); font-family:'Space Mono',monospace; font-size:10px; margin-top:4px; position:absolute; bottom:-14px; left:0;}
+  .has-error .stepper { border-color:var(--red) !important; background-color:#FEF2F2 !important;}
+  .has-error input { color:var(--red) !important; }
+  .has-error .err-msg { display:block; }
+  
+  .seg{display:flex;gap:5px;flex-wrap:wrap}
+  .seg span{font-size:12px;font-weight:600;border:1.8px solid var(--ink);border-radius:8px;padding:6px 12px;background:#fff; cursor:pointer; user-select:none; transition:0.1s}
+  .seg span.on{background:var(--ink);color:#fff; border-color:var(--ink);}
+  
+  .sys-us { display: none !important; }
+  .sys-metric { display: flex !important; }
+  body.mode-us .sys-us { display: flex !important; }
+  body.mode-us .sys-metric { display: none !important; }
+  body.mode-us .lbl-metric { display: none; }
+  body.mode-us .lbl-us { display: inline; }
+  body:not(.mode-us) .lbl-metric { display: inline; }
+  body:not(.mode-us) .lbl-us { display: none; }
+
+  .stepper{display:inline-flex;align-items:center;border:1.8px solid var(--ink);border-radius:8px;overflow:hidden; background:#fff; transition:0.2s}
+  .stepper input { width:64px; text-align:center; border:none; outline:none; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; color:var(--ink); -moz-appearance: textfield; background:transparent}
+  .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .stepper i{width:28px;height:28px;display:grid;place-items:center;font-style:normal;font-weight:900; border-left:1.8px solid var(--ink);border-right:1.8px solid var(--ink);color:var(--ink); cursor:pointer; user-select:none; background:var(--paper)}
+  .stepper i:active { background:var(--fill2) }
+  .stepper i.minus { border-left:none; }
+  .stepper i.plus { border-right:none; }
+  
+  .slider-row { display:flex; gap:10px; align-items:center; position:relative;}
+  .interactive-slider { -webkit-appearance:none; width:100%; height:6px; background:var(--hair); border-radius:4px; outline:none; }
+  .interactive-slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:18px; height:18px; border:2.2px solid var(--ink); border-radius:50%; background:#fff; cursor:pointer; box-shadow:0 0 0 2px var(--paper) }
+  .interactive-slider:active::-webkit-slider-thumb { background:var(--fill2); }
+
+  .nf{border:2.5px solid var(--ink);border-radius:var(--w1);overflow:hidden;background:#fff}
+  .nf .t{padding:12px 16px 10px}
+  .nf .t .ti{font-family:'Fraunces',serif;font-weight:900;font-size:20px;line-height:1}
+  .nf .t .me{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--soft); margin-top:2px;}
+  .nf .rxl{height:9px;background:var(--ink)}.nf .rl{height:4px;background:var(--ink)}
+  .nf .cal{display:flex;justify-content:space-between;align-items:flex-end;padding:12px 16px}
+  .nf .cal .l{font-size:13px;font-weight:800}
+  .nf .cal .big{font-family:'Fraunces',serif;font-weight:900;font-size:48px;line-height:.85}
+  .nf .cal .big sup{font-family:'Space Mono',monospace;font-size:11px;color:var(--soft)}
+  .nf .rows{padding:6px 16px 16px}
+  
+  .nf .row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1.5px solid var(--hair)}
+  .nf .row .nm{font-size:15px; font-weight:700;}
+  .nf .row .nm span { color:var(--soft2); font-weight:500; font-size:12px; margin-left:6px; font-family:'Space Mono',monospace; }
+  .nf .g{font-family:'Space Mono',monospace; font-size:18px; font-weight:800;}
+
+  .split-row { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1.5px solid var(--hair); font-size:14px; font-weight:500; color:var(--soft);}
+  .split-row:last-child { border:none; padding-bottom:0;}
+  .split-row b { font-family:'Space Mono',monospace; color:var(--ink); font-size:16px; font-weight:700;}
+
+  .hero{display:flex;gap:16px;align-items:center}
+  .hero .l{flex:1.1}
+  .hero h3{font-family:'Fraunces',serif;font-weight:600;font-size:28px;line-height:1.02;margin:4px 0 8px}
+  .hero .ey{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+  .hero p { color:var(--soft); font-size:15px; margin: 12px 0 24px; max-width: 85%; line-height:1.5;}
+  
+  .btnsk{display:inline-block;border:2px solid var(--ink);border-radius:12px;padding:10px 18px;font-size:13px;font-weight:700;background:#fff;margin:8px 6px 0 0;cursor:pointer;text-align:center; transition: all 0.1s; text-decoration:none; color:var(--ink)}
+  .btnsk:active:not(:disabled) { transform: scale(0.97); }
+  .btnsk.fill{background:var(--green);color:#fff; border-color:var(--green);}
+  .btnsk:disabled { opacity: 0.3; cursor: not-allowed; border-style: dashed; background: var(--fill2) !important; color: var(--soft) !important; border-color:var(--fill2) !important; }
+  
+  .herocard{flex:.9;border:2.5px solid var(--ink);border-radius:var(--w2);padding:16px;background:var(--green); color:#fff;}
+  .herocard .cap{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#E6EFE6; margin-bottom:4px;}
+  .herocard .big{font-family:'Fraunces',serif;font-weight:900;font-size:38px;line-height:1}
+  .herocard .big sup{font-family:'Space Mono',monospace;font-size:10px;color:#E6EFE6; font-weight:400;}
+  .herocard .hr{height:2px;background:rgba(255,255,255,0.2);margin:12px 0}
+  .herocard .mrow{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:12px;padding:4px 0; align-items:center}
+  
+  .facet{margin-bottom:14px}
+  .facet h4{font-family:'Space Mono',monospace;font-size:10.5px;text-transform:uppercase;color:var(--soft);margin-bottom:7px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-size:12px;font-weight:600;border:1.8px solid var(--ink);border-radius:var(--wp);padding:6px 12px;background:#fff;display:inline-flex;gap:5px;align-items:center; cursor:pointer; transition: 0.1s;}
+  .chip.on{background:var(--ink);color:#fff}
+  
+  .searchbar{display:flex;align-items:center;gap:10px;border:2px solid var(--ink);border-radius:12px;padding:12px 14px;background:#fff;font-size:14px;color:var(--soft2); flex:1;}
+  .searchbar input {border:none; outline:none; font-family:'Space Mono', monospace; font-size:14px; color:var(--ink); width:100%; background:transparent;}
+  .searchbar input::placeholder {color:var(--soft2);}
+
+  .resbar{display:flex;justify-content:space-between;align-items:center;margin:12px 2px;font-family:'Space Mono',monospace;font-size:11.5px;color:var(--soft)}
+  .resbar b{color:var(--ink)}
+
+  /* UPDATED: Removed max-height so recipes flow down the page */
+  .recipe-grid-container { padding-bottom:40px; }
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  
+  .card{border:2px solid var(--ink);border-radius:var(--w1);overflow:hidden;background:#fff; cursor:pointer; text-decoration:none; display:block; color:var(--ink); transition:0.2s;}
+  .card:active { transform: scale(0.98); }
+  .card .im{height:60px;border-bottom:2px solid var(--ink); position:relative;}
+  .card .im span { position:absolute; bottom:6px; right:6px; font-size:9.5px; background:var(--ink); color:#fff; font-family:'Space Mono', monospace; padding:3px 8px; border-radius:6px; font-weight:700;}
+  .card .cc{padding:10px}
+  .card .cc .name {font-size:13px; font-weight:700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height:1.2; margin-bottom:5px;}
+  .card .cc .k{font-family:'Space Mono',monospace;font-size:11px;color:var(--soft);}
+
+  .scroll-panel { max-height: 380px; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; padding-right:4px;}
+  .scroll-panel::-webkit-scrollbar { display: none; }
+
+  .ing-wrap { border-bottom: 1.5px solid var(--hair); padding: 14px 0;}
+  .ing { display:flex; align-items:center; gap:12px; font-size:15px; }
+  .ing .nm { flex:1; font-weight:700;}
+  .ing .nm small { display:block; font-weight:500; color:var(--soft); font-size:12.5px; margin-top:2px;}
+  .ing .kc { font-family:'Space Mono',monospace; font-size:14.5px; font-weight:600; color:var(--ink); text-align:right;}
+  
+  .swap{font-size:11.5px;font-weight:700;border:1.8px solid var(--ink);border-radius:8px;padding:6px 12px;background:#fff;cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px; transition:0.1s;}
+  .swap:hover { background:var(--fill); }
+  .swap.selected-active{background:var(--ink);color:#fff}
+  .swap.inactive { cursor: default; border-color:var(--m3); color:var(--m2); }
+  .swap.inactive:hover { background:#fff; }
+  
+  .swap-dropdown { display:none; border: 2px solid var(--green); border-radius: 12px; padding: 12px; margin-top: 12px; background: #fff; }
+  .inline-alt { display:flex; justify-content:space-between; align-items:center; padding:10px 12px; border-radius:8px; background:var(--fill); cursor:pointer; margin-bottom:6px; transition:0.1s; border: 2px solid transparent; }
+  .inline-alt:hover { border-color:var(--green); }
+  .inline-alt:last-child { margin-bottom:0; }
+  .inline-alt .nm b { font-size:13.5px; color:var(--ink); }
+  .inline-alt .nm span { font-family:'Space Mono',monospace; font-size:11.5px; color:var(--soft); margin-left:4px;}
+  .inline-alt .nm small { display:block; font-family:'Space Mono',monospace; font-size:9.5px; color:var(--soft2); margin-top:3px;}
+  .inline-alt .amt b { font-size:13px; font-family:'Space Mono',monospace; color:var(--ink);}
+  .inline-alt .amt small { display:block; font-family:'Space Mono',monospace; font-size:9.5px; color:var(--soft); margin-top:3px;}
+
+  .plan-card { border:1px solid var(--hair); border-radius:16px; padding:20px; margin-bottom:12px; background:#fff; box-shadow: 0 4px 12px rgba(0,0,0,0.03);}
+  .plan-card h4 { font-family:'Fraunces', serif; font-size:18px; font-weight:800; margin-bottom:4px;}
+  .plan-card p { font-size:12px; color:var(--soft); margin-bottom:14px; }
+  .meal-grid { display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:14px;}
+  .meal-slot { border:1.8px solid var(--hair); border-radius:10px; padding:10px 12px; cursor:pointer; transition:0.2s;}
+  .meal-slot b { font-size:13px; display:block; margin-bottom:2px;}
+  .meal-slot small { font-family:'Space Mono',monospace; font-size:10px; color:var(--soft);}
+  .meal-slot:hover { border-color:var(--m3); }
+  .meal-slot.active { border-color:var(--green); background:var(--green-light); }
+  .meal-slot.active b { color:var(--green); }
+  
+  .recipe-cal-pill { padding: 2px 6px; border-radius: 4px; font-weight: 700; transition: background-color 0.2s, color 0.2s; display:inline-block; font-family:'Space Mono', monospace; font-size: 10.5px;}
+  .recipe-cal-pill.safe { background: var(--green-light); color: var(--green); }
+  .recipe-cal-pill.over-budget { background: #FCE8E8; color: var(--red); }
+  
+  .side-meal-pill { background: var(--paper); border-radius: 12px; padding: 12px 16px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center; }
+  .side-meal-pill:last-child { margin-bottom: 0; }
+  
+  .target-banner { background: var(--green-light); border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border:1.5px solid var(--green);}
+  
+  .shelf{margin-bottom:11px}
+  .shelf h4{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--ink);margin-bottom:6px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; padding:4px; border-radius:4px;}
+  .shelf h4:hover { background: var(--fill); }
+  .shelf .chevron { transition: transform 0.2s; font-size:14px; }
+  .shelf.collapsed .items { display: none; }
+  .shelf.collapsed .chevron { transform: rotate(-90deg); }
+
+  .pantry-item-chip { font-size: 14px; font-weight: 700; border: 1.5px solid var(--hair); border-radius: 24px; padding: 8px 16px; background: #fff; display: inline-flex; gap: 6px; align-items: center; margin: 0 8px 12px 0; cursor: pointer; color: var(--ink); transition: 0.2s; user-select: none;}
+  .pantry-item-chip:hover { border-color: var(--soft2); }
+  .pantry-item-chip.on { border-color: var(--green); background: var(--green-light); color: var(--green); }
+  .pantry-item-chip .p { color: var(--soft2); font-weight: 400; display: inline-block; width: 12px; text-align: center; transition: none; }
+  .pantry-item-chip.on .p { color: var(--green); font-weight: 700; }
+
+  .basket-chip { font-size: 14px; font-weight: 700; background: transparent; border: 1.5px solid var(--ink); border-radius: 24px; padding: 6px 14px; display: inline-flex; gap: 6px; align-items: center; cursor: pointer; color: var(--ink); height: fit-content; user-select: none; transition: 0.1s;}
+  .basket-chip:hover { background: var(--red); color: #fff; border-color: var(--red); }
+  .basket-chip:hover span { color: #fff !important; }
+
+  .gen-btn-container{margin-top:auto}
+  .ph-note{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--soft2);text-align:center;margin-top:8px}
+
+  .match{position:relative;display:flex;gap:16px;align-items:center;border:2.5px solid var(--ink);border-radius:var(--w1);background:#fff;padding:16px}
+  .match .mi{width:90px;height:90px;flex:none}
+  .match .h{font-family:'Fraunces',serif;font-weight:800;font-size:22px;}
+  .meter{height:8px;background:var(--fill2);border-radius:5px;overflow:hidden;margin:10px 0 8px}
+  .meter i{display:block;height:100%;width:83%;background:var(--ink)}
+  .have{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;border:1.8px solid;border-radius:6px;padding:4px 8px;margin:0 5px 5px 0;display:inline-block}
+  .have.y{border-color:var(--green);color:var(--green)}.have.n{border-color:var(--soft2);color:var(--soft2)}
+  
+  .discovery-badge { background: #D1FAE5; color: var(--green); padding: 8px 12px; border-radius: 8px; border: 1.5px dashed var(--green); font-family: 'Space Mono', monospace; font-size: 10.5px; font-weight: 700; display: inline-block; margin-top: 14px; }
+  
+  .recipe-section-title { font-family:'Fraunces',serif; font-size: 22px; margin: 24px 0 16px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; font-weight:800; }
+  
+  .show-full-recipe{text-align:center;font-weight:800;font-size:15px;margin-top:20px;cursor:pointer;display:block;color:var(--ink); text-decoration:none;}
+
+  .step { padding: 18px 0; border-bottom: 1.5px solid var(--hair); display:flex; gap:18px; align-items:flex-start; font-size: 15.5px; line-height: 1.6; color:var(--ink);}
+  .step b { font-family: 'Space Mono', monospace; font-size: 16px; color: var(--ink); flex:none; margin-top:2px; }
+  .step p {margin:0;}
+
+  .btn-plan-action:disabled { background: var(--fill2) !important; color: var(--soft) !important; border-color: var(--fill2) !important; cursor: not-allowed; opacity: 1; }
+
+  .f9-header { font-family:'Fraunces',serif; font-size:34px; font-weight:900; line-height:1;}
+  .f9-date { font-size:14px; color:var(--soft); margin-top:6px; margin-bottom:24px;}
+  
+  .f9-empty-banner { background: var(--paper); border: 1.5px solid var(--hair); border-radius: var(--w1); padding:24px; display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;}
+  .f9-empty-banner p { color:var(--soft); font-size:14px; margin-top:4px;}
+  
+  .f9-filled-banner { background: var(--green); border-radius: var(--w1); padding:24px; color:#fff; display:none; justify-content:space-between; align-items:stretch; margin-bottom:24px;}
+  
+  .f9-grid { display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:24px;}
+  
+  .f9-slot { background: transparent; border: 2px dashed var(--soft2); border-radius: var(--w1); min-height: 140px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; overflow: hidden; }
+  .f9-slot-head { display: flex; justify-content: space-between; align-items: center; margin: 0; padding: 14px 20px; width: 100%; border-bottom: 2px dashed var(--soft2); background: transparent; }
+  .f9-slot-head b { font-size:15px; display:flex; align-items:center; gap:6px; color:var(--ink);}
+  .f9-slot-head small { font-family:'Space Mono', monospace; font-size:12px; color:var(--soft);}
+  .f9-add-btn { text-align:center; color:var(--soft); font-size:14px; font-weight:600; cursor:pointer; flex:1; display:flex; align-items:center; justify-content:center; width:100%; transition:0.2s;}
+  .f9-add-btn:hover { color:var(--ink); background:var(--fill); }
+
+  .f9-slot.filled { background:#fff; border:1px solid var(--hair); box-shadow: 0 4px 12px rgba(0,0,0,0.02);}
+  .f9-trash-btn { cursor:pointer; transition:0.2s; }
+  .f9-trash-btn:hover { transform:scale(1.1); }
+
+  .table { width:100%; border-collapse: collapse; font-size:14.5px; background:#fff; border:1px solid var(--hair); border-radius:12px; overflow:hidden;}
+  .table th { text-align:right; font-family:'Space Mono',monospace; font-size:11px; color:var(--soft); font-weight:600; padding:18px 18px 12px; border-bottom:1.5px solid var(--hair);}
+  .table th:first-child { text-align:left; }
+  .table td { text-align:right; font-family:'Space Mono',monospace; padding:18px; border-bottom:1.5px solid var(--hair); color:var(--soft);}
+  .table td:first-child { text-align:left; font-family:'Hanken Grotesk',sans-serif; color:var(--ink); font-weight:600;}
+
+  .spinner-anim { animation: spin 1.2s linear infinite; display:inline-block; } 
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+
+  /* ========================================= */
+  /* HOMEPAGE (FRAME 1) SPECIFIC UPSCALING     */
+  /* ========================================= */
+  
+  /* 1. Subtle Ambient Background Glow */
+  #frame-1 { position: relative; z-index: 1; }
+  #frame-1::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 70vw;
+      height: 70vw;
+      max-width: 1000px;
+      max-height: 1000px;
+      background: radial-gradient(circle, rgba(47, 124, 49, 0.04) 0%, rgba(241, 236, 225, 0) 70%);
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      animation: ambientPulse 8s infinite alternate ease-in-out;
+      pointer-events: none;
+  }
+  @keyframes ambientPulse {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+      100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  }
+
+  /* 2. Massive Typography Scaling */
+  #frame-1 .hero h3 { font-size: 68px; letter-spacing: -1.5px; margin-bottom: 20px; line-height: 1.05; }
+  #frame-1 .hero p { font-size: 18px; line-height: 1.6; margin-bottom: 36px; max-width: 90%; color: var(--soft); }
+  #frame-1 .ey { font-size: 13px; margin-bottom: 12px; font-weight: 700; color: var(--green); }
+  
+  /* Upscaled Buttons */
+  #frame-1 .btnsk { font-size: 16px; padding: 14px 28px; border-radius: 16px; }
+
+  /* 3. Upscaled Daily Target Card */
+  #frame-1 .herocard { padding: 32px; border-radius: 24px; box-shadow: 0 12px 32px rgba(47, 124, 49, 0.15); }
+  #frame-1 .herocard .cap { font-size: 12px; margin-bottom: 12px; font-weight: 700; }
+  #frame-1 .herocard .big { font-size: 72px; margin-bottom: 8px; }
+  #frame-1 .herocard .big sup { font-size: 16px; margin-left: 4px; }
+  #frame-1 .herocard .hr { margin: 20px 0; background: rgba(255,255,255,0.3); }
+  #frame-1 .herocard .mrow { font-size: 16px; padding: 6px 0; }
+  #frame-1 .herocard .mrow span { opacity: 0.9; }
+  #frame-1 .herocard .mrow b { font-size: 18px; }
+
+  /* ========================================= */
+  /* DAILY TARGETS (FRAME 2) REFINED SIZING    */
+  /* ========================================= */
+
+  /* 1. Tighter Form Panel & Reduced Spacing to prevent scroll */
+  #frame-2 .panel-b { padding: 20px 24px; }
+  #frame-2 .field { margin-bottom: 20px; }
+  
+  /* 2. Larger Labels & Headers */
+  #frame-2 .panel-h b { font-size: 24px; }
+  #frame-2 .lab { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+  #frame-2 .lab .v { font-size: 13px; font-weight: 600; }
+  
+  /* 3. Interactive Controls (Balanced) */
+  #frame-2 .stepper input { font-size: 18px; width: 80px; }
+  #frame-2 .stepper i { width: 36px; height: 36px; font-size: 20px; }
+  #frame-2 .seg span { font-size: 15px; padding: 8px 16px; }
+  #frame-2 .slider-row { gap: 16px; margin-top: 6px; }
+  #frame-2 .interactive-slider::-webkit-slider-thumb { width: 24px; height: 24px; }
+
+  /* 4. Nutrition Panel - Larger Headers, Smaller Calories, Tighter Rows */
+  #frame-2 .nf .t { padding-top: 16px; padding-bottom: 8px !important; margin-bottom: 4px !important; border-bottom-width: 4px !important; }
+  #frame-2 .nf .t .ti { font-size: 26px; }
+  #frame-2 .nf .t .me { font-size: 12px; }
+  
+  #frame-2 .nf .cal { padding: 8px 20px 4px !important; }
+  #frame-2 .nf .cal .l { font-size: 18px; font-weight: 800; color: var(--ink); }
+  #frame-2 .nf .cal .big { font-size: 48px !important; } /* Decreased Calorie Number */
+  #frame-2 .nf .cal .big sup { font-size: 14px; }
+  
+  #frame-2 .nf .rows { padding: 4px 20px 12px; }
+  #frame-2 .nf .row { padding: 12px 0; }
+  #frame-2 .nf .row .nm { font-size: 17px; font-weight: 800; color: var(--ink); }
+  #frame-2 .nf .row .nm span { font-size: 13px; font-weight: 600; }
+  #frame-2 .nf .g { font-size: 20px; }
+
+  /* 5. Suggested Meal Split - Larger Labels, Tighter Rows */
+  #frame-2 .panel-h { padding: 16px 20px; font-size: 20px; }
+  #frame-2 .split-row { padding: 12px 0; }
+  #frame-2 .split-row span { font-size: 16px; font-weight: 700; color: var(--ink); }
+  #frame-2 .split-row b { font-size: 18px; }
+  
+  /* 6. Action Buttons Container */
+  #frame-2 .btnsk.fill { font-size: 15px; padding: 12px; border-radius: 12px; margin-top: 0; }
+
+  /* ========================================= */
+  /* SEARCH (FRAME 3) UPSCALING                */
+  /* ========================================= */
+  
+  /* Target Banner */
+  #frame-3 .target-banner { padding: 20px 24px; border-radius: 16px; margin-bottom: 36px; }
+  #frame-3 .target-banner div { font-size: 18px; }
+  #frame-3 .target-banner span.sync-cals-str { font-size: 18px; }
+  #frame-3 .target-banner .btnsk { font-size: 14px; padding: 10px 18px; border-radius: 12px; }
+
+  /* Facets / Sidebar */
+  #frame-3 .facet { margin-bottom: 32px; }
+  #frame-3 .facet h4 { font-size: 14px; letter-spacing: 0.05em; margin-bottom: 14px; font-weight: 800; color: var(--ink); }
+  #frame-3 .chip { font-size: 14px; padding: 10px 18px; border-radius: 24px; }
+  
+  /* Max Calories Slider */
+  #frame-3 .stepper input { font-size: 18px; width: 70px; }
+  #frame-3 .stepper i { width: 34px; height: 34px; font-size: 20px; }
+  #frame-3 .interactive-slider::-webkit-slider-thumb { width: 24px; height: 24px; border-width: 2.5px; }
+  
+  /* Search Bar & Sorting */
+  #frame-3 .searchbar { padding: 18px 24px; border-radius: 16px; font-size: 16px; }
+  #frame-3 .searchbar svg { width: 20px; height: 20px; }
+  #frame-3 .searchbar input { font-size: 16px; }
+/* Upgraded Custom Sort Dropdown */
+  #recipe-sort { 
+      font-family: 'Space Mono', monospace; 
+      font-weight: 700; 
+      font-size: 15px; 
+      color: var(--ink);
+      background: #fff; 
+      padding: 0 20px; 
+      height: 64px; 
+      border-radius: 12px; 
+      border: 2px solid var(--ink); 
+      cursor: pointer; 
+      outline: none; 
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      flex: none;
+      width: 170px;
+  }
+  
+  #recipe-sort:hover { 
+      background: var(--paper); 
+      border-color: var(--green); 
+  }  
+  /* Results Bar */
+  #frame-3 .resbar { margin: 28px 2px 20px; font-size: 14px; }
+  #frame-3 .active-filter-chip { font-size: 12px !important; padding: 6px 12px !important; }
+
+  /* Recipe Cards (Fixing the squished 60px images!) */
+  #frame-3 .cards { gap: 24px; grid-template-columns: repeat(3, 1fr); }
+  #frame-3 .card { border-radius: 20px; border-width: 2px; }
+  #frame-3 .card .im { height: 180px; border-bottom-width: 2px; } 
+  #frame-3 .card .im span { font-size: 12px; padding: 6px 12px; bottom: 12px; right: 12px; border-radius: 8px; }
+  #frame-3 .card .cc { padding: 20px; }
+  #frame-3 .card .cc .name { font-size: 18px; margin-bottom: 8px; font-weight: 800; }
+  #frame-3 .card .cc .k { font-size: 15px; }
+
+  
+  /*  INDEPENDENT SCROLL PANES */
+
+  /* 1. Turn the Search Index into a locked, full-screen flex container */
+  #search-index {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 90px); /* Locks perfectly to viewport, leaving room for nav */
+      overflow: hidden;
+  }
+
+  /* Protect the top banner and back button from squishing */
+  #search-index .r-head-container,
+  #search-index .target-banner { 
+      flex: none; 
+  }
+
+  /* 2. Make columns fill the exact remaining space */
+  #search-index .cols {
+      display: flex;
+      flex: 1;
+      overflow: hidden; /* Prevents bleeding out the bottom */
+      gap: 40px;
+      align-items: stretch;
+  }
+
+  /* 3. Left Panel (Filters): Independent Scroll */
+  #search-index .cols > .col:first-child {
+      border-right: 2px solid var(--hair);
+      padding-right: 36px;
+      height: 100%;
+      overflow-y: auto;
+      padding-bottom: 80px; /* Breathing room at bottom */
+      
+      /* Hide ugly scrollbars */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+  #search-index .cols > .col:first-child::-webkit-scrollbar { display: none; }
+
+  /* 4. Right Panel (Recipes): Flex Container */
+  #search-index .cols > .col:last-child {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+  }
+
+  /* Protect Search Bar & Results Info from squishing */
+  #search-index .cols > .col:last-child > div:not(.recipe-grid-container) {
+      flex: none; 
+  }
+
+  /* 5. The Recipe Grid: Independent Scroll */
+  #search-index .recipe-grid-container {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 80px; /* Breathing room at bottom */
+      
+      /* Hide ugly scrollbars */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+  #search-index .recipe-grid-container::-webkit-scrollbar { display: none; }
+
+  /* ========================================= */
+  /* RECIPE DETAIL UPSCALING                   */
+  /* ========================================= */
+
+  /* 1. Massive Hero Banner */
+  .r-head-hero { min-height: 380px; padding: 32px 40px; border-radius: 24px; }
+  .hero-title { font-size: 46px; margin-bottom: 16px; letter-spacing: -1px; }
+  .hero-tags .hero-tag { font-size: 13px; padding: 6px 16px; border-radius: 24px; }
+  .hero-stats { font-size: 16px; gap: 24px; }
+  .hero-stats svg { width: 18px; height: 18px; }
+
+  /* 2. Upscaled Ingredients Panel */
+  #sp-unexpanded-layout .panel-h b, #tf-unexpanded-layout .panel-h b { font-size: 24px; }
+  #sp-unexpanded-layout .panel-h, #tf-unexpanded-layout .panel-h { padding: 20px 28px; }
+  #sp-unexpanded-layout .panel-b, #tf-unexpanded-layout .panel-b { padding: 0 28px; }
+  
+  .ing-wrap { padding: 20px 0; }
+  .ing { font-size: 16px; }
+  .ing .nm small { font-size: 14px; margin-top: 4px; }
+  .ing .kc { font-size: 15px; }
+  
+  /* Upscaled Swap Buttons */
+  .swap { font-size: 13px; padding: 8px 16px; border-radius: 10px; }
+  .swap svg { width: 14px; height: 14px; }
+  .show-full-recipe { font-size: 18px; margin-top: 24px; }
+
+  /* 3. Larger Instructions Typography */
+  .recipe-section-title { 
+      font-size: 28px; 
+      margin: 24px 0 16px !important; /* Tightened top and bottom margins */
+      padding-bottom: 12px; 
+  }  
+  .step { 
+      padding: 15px 0 !important; /* Decreased from 24px to 12px */
+      font-size: 18px; 
+      gap: 24px; 
+  }
+  .step b { font-size: 20px; }
+
+  /* 4. Upscaled Side Panels (Right Column) */
+  .plan-card { padding: 28px; border-radius: 20px; }
+  .plan-card h4 { font-size: 22px; margin-bottom: 8px; }
+  .plan-card p { font-size: 15px; margin-bottom: 24px; }
+  
+  /* Meal Slots */
+  .meal-grid { gap: 12px; margin-bottom: 24px; }
+  .meal-slot { padding: 16px; border-radius: 14px; }
+  .meal-slot b { font-size: 16px; margin-bottom: 4px; }
+  .meal-slot small { font-size: 12px; }
+  
+  /* Giant CTA Button */
+  .btn-plan-action { font-size: 16px !important; padding: 16px !important; border-radius: 14px; margin-top: 12px; }
+  
+  /* Today's Meal Plan Side Pills */
+  .side-meal-pill { padding: 18px 22px; border-radius: 16px; margin-bottom: 12px; }
+  .side-meal-pill span[style*="font-size:18px"] { font-size: 24px !important; }
+  .side-meal-name { font-size: 15px !important; }
+  .side-meal-time { font-size: 12px !important; margin-top: 4px !important; }
+  .side-meal-cal { font-size: 14px !important; }
+
+  /* 5. Force US/Metric Toggle to Upscale (Overriding inline styles) */
+  #sp-unexpanded-layout .global-unit-toggle,
+  #tf-unexpanded-layout .global-unit-toggle {
+      transform: scale(1) !important; 
+      margin: 0 !important;
+  }
+  #sp-unexpanded-layout .global-unit-toggle span,
+  #tf-unexpanded-layout .global-unit-toggle span {
+      font-size: 12px !important;
+      padding: 6px 14px !important;
+  }
+
+  /* 6. Ingredient Partial Cutoff (Shows the edge of the next item) */
+  .scroll-panel {
+      /* Adjusted height so it cleanly cuts off mid-item on the 4th ingredient */
+      max-height: 385px !important; 
+      overflow-y: auto !important;
+      /* Remove any leftover fade masks */
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+  }
+
+  /* Capped & Scrollable Instructions Section */
+  #sp-view-ins, #tf-view-ins {
+      max-height: 310px;
+      overflow-y: auto;
+      padding-right: 6px;
+      /* Hide scrollbar for a clean, app-like look */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+  #sp-view-ins::-webkit-scrollbar, 
+  #tf-view-ins::-webkit-scrollbar { 
+      display: none; 
+  }
+
+  /* ========================================= */
+  /* PANTRY (FRAME 5) UPSCALING & SPLIT-PANE   */
+  /* ========================================= */
+
+  .pantry-kicker { 
+      font-size: 14px !important; 
+      font-family: 'Space Mono', monospace; 
+      letter-spacing: 0.12em; 
+      text-transform: uppercase; 
+      color: var(--green); 
+      margin-bottom: 8px; 
+      font-weight: 700; 
+  }
+
+  /* 1. Lock Pantry Index to Viewport Height (App Layout) */
+  #pantry-index {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 90px);
+      overflow: hidden;
+  }
+  #pantry-index .r-head-container {
+      flex: none;
+  }
+
+  /* 2. Header Section Styling */
+  #pantry-index > div:nth-child(2) {
+      flex: none;
+      margin-bottom: 20px !important;
+  }
+  #pantry-index h2 { font-size: 38px !important; }
+  #pantry-index p { font-size: 16px !important; max-width: 80% !important; }
+  #pantry-index .searchbar { padding: 16px 24px !important; border-radius: 16px !important; font-size: 16px !important; }
+  #pantry-index .searchbar input { font-size: 16px !important; }
+
+  /* 3. Columns Layout & Independent Scrolling */
+  #pantry-index .cols {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      gap: 40px;
+      align-items: stretch;
+  }
+
+  /* Left Column (Shelves): Internal Scroll */
+  #pantry-index .cols > .col:first-child {
+      flex: 1.3;
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 20px;
+      padding-bottom: 60px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+  #pantry-index .cols > .col:first-child::-webkit-scrollbar { display: none; }
+
+  /* Upscaled Pantry Shelves & Chips */
+  .shelf h4.pantry-shelf-title { font-size: 13px !important; font-weight: 800 !important; padding: 8px 12px !important; border-radius: 8px !important; }
+  .pantry-item-chip { font-size: 15px !important; padding: 10px 18px !important; border-radius: 24px !important; border-width: 2px !important; }
+
+  /* 4. Right Column (Your Basket): Solid Border & Sticky Container */
+  #pantry-index .cols > .col:last-child {
+      flex: 0.9;
+      height: 100%;
+      overflow-y: auto;
+      padding-bottom: 60px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+  #pantry-index .cols > .col:last-child::-webkit-scrollbar { display: none; }
+
+  /* Convert dashed wireframe into a gorgeous solid panel */
+  .basket-box {
+      border: 2.5px solid var(--ink) !important; 
+      border-radius: 20px !important;
+      background: #fff !important; /* Solid clean background */
+      box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+      padding: 28px !important;
+      position: sticky;
+      top: 0;
+  }
+  .basket-box .bh { font-size: 22px !important; font-family: 'Fraunces', serif !important; font-weight: 800 !important; }
+  .basket-chip { font-size: 14px !important; padding: 8px 16px !important; border-radius: 20px !important; border-width: 2px !important; }
+  #pantry-generate-btn { font-size: 16px !important; padding: 16px !important; border-radius: 14px !important; }
+</style>
+</head>
+<body class="mode-us">
+<div class="wrap">
+  
+  <div class="frame" id="frame-1">
+    <div class="device">
+      <div class="pad">
+        <div class="nav">
+          <a href="#frame-1" class="logo nav-btn"><span class="mark">{}</span>SnackOverflow</a>
+          <div class="tabs"><a href="#frame-2" class="t nav-btn">Daily Targets</a><a href="#frame-3" class="t nav-btn" onclick="hideRecipeDetail();">Search</a><a href="#frame-5" class="t nav-btn">Pantry</a><a href="#frame-9" class="t nav-btn">Today's Plan</a></div>
+          <div class="nav-tracker"><span class="icon">📅</span> <span id="global-consumed-top">0</span> kcal / <span class="sync-cals-nav">2,678</span></div>
+        </div>
+        <div class="hero">
+          <div class="l">
+            <div class="ey">Plan meals around your numbers</div>
+            <h3>Cook to your targets,<br>not someone else's diet.</h3>
+            
+            <p>Stop guessing your macros. Snack Overflow dynamically scales every recipe's ingredients to perfectly match your personalized metabolic profile and daily nutritional goals.</p>
+            
+            <div><a href="#frame-2" class="btnsk fill nav-btn">Set my targets →</a><button class="btnsk" disabled>Cook from my fridge</button></div>
+          </div>
+          <div class="herocard">
+            <div class="cap">Your daily target</div>
+            <div class="big sync-cals">2,678<sup>kcal</sup></div>
+            <div class="hr"></div>
+            <div class="mrow"><span>Protein</span><b class="sync-p-val">138 g</b></div>
+            <div class="mrow"><span>Carbs</span><b class="sync-c-val">249 g</b></div>
+            <div class="mrow"><span>Fat</span><b class="sync-f-val">74 g</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="frame" id="frame-2">
+    <div class="device">
+      <div class="pad">
+        <div class="nav">
+          <a href="#frame-1" class="logo nav-btn"><span class="mark">{}</span>SnackOverflow</a>
+          <div class="tabs"><a href="#frame-2" class="t on nav-btn">Daily Targets</a><a href="#frame-3" class="t nav-btn" onclick="hideRecipeDetail();">Search</a><a href="#frame-5" class="t nav-btn">Pantry</a><a href="#frame-9" class="t nav-btn">Today's Plan</a></div>
+          <div class="nav-tracker"><span class="icon">📅</span> <span id="global-consumed-targets">0</span> kcal / <span class="sync-cals-nav">2,678</span></div>
+        </div>
+        <div class="r-head-container"><a href="#frame-1" class="r-back r-back-main">← Back to Homepage</a></div>
+        <div class="cols">
+          <div class="col">
+            <div class="panel">
+              <div class="panel-h">
+                <b>Your stats</b>
+                <div class="seg system-toggle-btn" style="transform: scale(0.85); margin:0;">
+                  <span class="on" data-sys="us">US</span>
+                  <span data-sys="metric">Metric</span>
+                </div>
+              </div>
+              <div class="panel-b">
+                
+                <div class="field"><div class="lab">Sex</div><div class="seg logic-group" data-target="sex"><span class="on" data-val="f">Female</span><span data-val="m">Male</span></div></div>
+                
+                <div class="field">
+                  <div class="lab">Age <span class="v">years</span></div>
+                  <div class="slider-row">
+                    <div class="stepper" data-min="1" data-max="130" data-step="1">
+                      <i class="minus">–</i><input type="text" inputmode="numeric" id="val-age" value="28" min="1" max="130" step="1"><i class="plus">+</i>
+                    </div>
+                  </div>
+                  <div class="err-msg"></div>
+                </div>
+                
+                <div class="field">
+                  <div class="lab">Weight <span class="v"><span class="lbl-metric">kg</span><span class="lbl-us">lbs</span></span></div>
+                  
+                  <div class="slider-row sys-metric">
+                    <input type="range" class="interactive-slider" id="sld-kg" min="0" max="635" step="0.1" value="75.0">
+                    <div class="stepper" data-min="0" data-max="635" data-step="0.1">
+                      <i class="minus">–</i><input type="text" inputmode="decimal" id="val-kg" value="75.0" min="0" max="635" step="0.1" data-sync="sld-kg"><i class="plus">+</i>
+                    </div>
+                  </div>
+                  <div class="err-msg sys-metric"></div>
+                  
+                  <div class="slider-row sys-us">
+                    <input type="range" class="interactive-slider" id="sld-lbs" min="0" max="1400" step="0.1" value="165.3">
+                    <div class="stepper" data-min="0" data-max="1400" data-step="0.1">
+                      <i class="minus">–</i><input type="text" inputmode="decimal" id="val-lbs" value="165.3" min="0" max="1400" step="0.1" data-sync="sld-lbs"><i class="plus">+</i>
+                    </div>
+                  </div>
+                  <div class="err-msg sys-us"></div>
+                </div>
+                
+                <div class="field">
+                  <div class="lab">Height <span class="v"><span class="lbl-metric">cm</span><span class="lbl-us">ft & in</span></span></div>
+                  
+                  <div class="slider-row sys-metric">
+                    <input type="range" class="interactive-slider" id="sld-cm" min="10.2" max="304.8" step="0.1" value="178.0">
+                    <div class="stepper" data-min="10.2" data-max="304.8" data-step="0.1">
+                      <i class="minus">–</i><input type="text" inputmode="decimal" id="val-cm" value="178.0" min="10.2" max="304.8" step="0.1" data-sync="sld-cm"><i class="plus">+</i>
+                    </div>
+                  </div>
+                  <div class="err-msg sys-metric"></div>
+                  
+                  <div class="slider-row sys-us" style="justify-content: flex-start; gap:16px;">
+                    <div style="display:flex; align-items:center; gap:8px">
+                      <div class="stepper" data-min="0" data-max="10" data-step="1">
+                        <i class="minus">–</i><input type="text" inputmode="numeric" id="val-ft" value="5" min="0" max="10" step="1"><i class="plus">+</i>
+                      </div> <span class="v" style="font-size:11px">ft</span>
+                    </div>
+                    
+                    <div style="display:flex; align-items:center; gap:8px">
+                      <div class="stepper" data-min="0" data-max="11.5" data-step="0.5">
+                        <i class="minus">–</i><input type="text" inputmode="decimal" id="val-in" value="10.0" min="0" max="11.5" step="0.5"><i class="plus">+</i>
+                      </div> <span class="v" style="font-size:11px">in</span>
+                    </div>
+                  </div>
+                  <div class="err-msg sys-us"></div>
+                </div>
+
+                <div class="field"><div class="lab">Activity</div><div class="seg logic-group" data-target="activity">
+                  <span data-val="1.2">Sed</span><span class="on" data-val="1.375">Light</span><span data-val="1.55">Moderate</span><span data-val="1.725">Very</span>
+                </div></div>
+                
+                <div class="field" style="margin:0"><div class="lab">Goal</div><div class="seg logic-group" data-target="goal">
+                  <span data-val="-500">Lose fat</span><span data-val="0">Maintain</span><span class="on" data-val="500">Build</span>
+                </div></div>
+                
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="nf" style="border-width:4px;">
+              <div class="t" style="border-bottom: 6px solid var(--ink); padding-bottom:12px; margin-bottom:12px;"><div class="ti" style="font-size:24px;">Nutrition Targets</div><div class="me">per day · recalculating live</div></div>
+              <div class="cal" style="padding-top:0;"><span class="l" style="font-size:15px;">Calories</span><span class="big sync-cals">2,678<sup>kcal</sup></span></div>
+              <div class="rl"></div>
+              <div class="rows">
+                <div class="row"><span class="nm">Protein <span>25%</span></span><span class="g sync-p-val">138 g</span></div>
+                <div class="row"><span class="nm">Carbs <span>45%</span></span><span class="g sync-c-val">249 g</span></div>
+                <div class="row" style="border:none"><span class="nm">Fat <span>30%</span></span><span class="g sync-f-val">74 g</span></div>
+              </div>
+            </div>
+            
+            <div style="display:flex; gap:12px; margin-top: 16px;">
+              <a href="#frame-3" class="btnsk fill nav-link-target" style="flex:1; margin:0; padding:14px; font-size:14px;" onclick="hideRecipeDetail();">Search Recipes</a>
+              <a href="#frame-5" class="btnsk fill nav-link-target" style="flex:1; margin:0; padding:14px; font-size:14px;">My Pantry</a>
+            </div>
+            
+            <div class="panel" style="margin-top:16px; border-color:var(--hair); box-shadow:none;">
+              <div class="panel-h" style="padding:16px 16px 8px; border:none;"><b>Suggested Meal Split</b></div>
+              <div class="panel-b" style="padding-top:0;">
+                <div class="split-row"><span>Breakfast</span><b><span class="sync-bk">670</span> kcal</b></div>
+                <div class="split-row"><span>Lunch</span><b><span class="sync-lunch">937</span> kcal</b></div>
+                <div class="split-row"><span>Dinner</span><b><span class="sync-dn">803</span> kcal</b></div>
+                <div class="split-row" style="border:none"><span>Snack</span><b><span class="sync-sn">268</span> kcal</b></div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="frame" id="frame-3">
+    <div class="device">
+      <div class="pad">
+      <div class="nav"><a href="#frame-1" class="logo nav-btn"><span class="mark">{}</span>SnackOverflow</a>
+      <div class="tabs"><a href="#frame-2" class="t nav-btn">Daily Targets</a><a href="#frame-3" class="t on nav-btn" onclick="hideRecipeDetail();">Search</a><a href="#frame-5" class="t nav-btn">Pantry</a><a href="#frame-9" class="t nav-btn">Today's Plan</a></div>
+      <div class="nav-tracker"><span class="icon">📅</span> <span id="global-consumed-search">0</span> kcal / <span class="sync-cals-nav">2,678</span></div>
+    </div>
+      
+      <div id="search-index">
+        <div class="r-head-container"><a href="#frame-1" class="r-back r-back-main">← Back to Homepage</a></div>
+        
+        <div class="target-banner">
+          <div style="font-weight:800; color:var(--green); font-size:15px; display:flex; align-items:center; gap:8px;">
+            <span style="display:grid; place-items:center; width:22px; height:22px; background:#fff; border-radius:50%; border:1.5px solid var(--green);">🎯</span>
+            Daily target: <span class="sync-cals-str" style="font-family:'Space Mono'; margin-left:4px;">2,678 kcal</span>
+          </div>
+          <a href="#frame-2" class="btnsk nav-btn" style="margin:0; background:#fff; border:1.5px solid var(--hair); color:var(--soft); border-radius:20px; font-size:12px; padding:6px 14px;">← Edit targets</a>
+        </div>
+
+        <div class="cols">
+          <div class="col" style="flex:.6">
+            <div class="facet">
+              <h4>Diet</h4>
+              <div class="chips filter-group" data-filter="diet">
+                <span class="chip" data-val="Vegan">Vegan</span>
+                <span class="chip on" data-val="Vegetarian">Vegetarian ×</span>
+                <span class="chip" data-val="High-protein">High-protein</span>
+                <span class="chip" data-val="Low Carb">Low Carb</span>
+                <span class="chip" data-val="Gluten-free">Gluten-free</span>
+                <span class="chip" data-val="Keto">Keto</span>
+                <span class="chip" data-val="Paleo">Paleo</span>
+                <span class="chip" data-val="Pescatarian">Pescatarian</span>
+                <span class="chip" data-val="Dairy-free">Dairy-free</span>
+              </div>
+            </div>
+            
+            <div class="facet">
+              <h4>Cuisine</h4>
+              <div class="chips filter-group" data-filter="cuisine">
+                <span class="chip" data-val="American">American</span>
+                <span class="chip" data-val="Mediterranean">Mediterranean</span>
+                <span class="chip" data-val="Mexican">Mexican</span>
+                <span class="chip" data-val="Asian">Asian</span>
+                <span class="chip" data-val="Italian">Italian</span>
+              </div>
+            </div>
+
+            <div class="facet">
+              <h4>Cooking Style</h4>
+              <div class="chips filter-group" data-filter="style">
+                <span class="chip" data-val="One-pot">One-pot</span>
+                <span class="chip" data-val="No-cook">No-cook</span>
+                <span class="chip" data-val="Meal Prep">Meal Prep</span>
+                <span class="chip" data-val="Air Fryer">Air Fryer</span>
+              </div>
+            </div>
+            
+            <div class="facet">
+              <h4>Time</h4>
+              <div class="chips filter-group" data-filter="time">
+                <span class="chip" data-val="Under 15m">Under 15m</span><span class="chip" data-val="Under 30m">Under 30m</span><span class="chip" data-val="Under 60m">Under 60m</span><span class="chip" data-val="60m +">60m +</span>
+              </div>
+            </div>
+            
+            <div class="field" style="margin:0">
+              <h4 style="font-family:'Space Mono',monospace;font-size:14px;text-transform:uppercase;color:var(--soft);margin-bottom:14px;font-weight:800;">Max calories</h4>
+              <div class="slider-row">
+                <input type="range" class="interactive-slider" id="sld-cal" min="50" max="1000" step="10" value="700">
+                <div class="stepper" data-min="50" data-max="1000" data-step="10" style="transform-origin: left center;">
+                  <i class="minus">–</i><input type="text" inputmode="numeric" id="val-cal" value="700" min="50" max="1000" step="10" data-sync="sld-cal"><i class="plus">+</i>
+                </div>
+              </div>
+              <div class="err-msg"></div>
+            </div>
+          </div>
+
+          <div class="col" style="flex:1.35; display:flex; flex-direction:column;">
+            <div style="display:flex; gap:10px;">
+              <div class="searchbar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="vertical-align:-2px;flex:none"><circle cx="11" cy="11" r="7"></circle><line x1="20.5" y1="20.5" x2="16.5" y2="16.5"></line></svg> 
+                <input type="text" id="recipe-search-input" placeholder="Search recipes or ingredients...">
+              </div>
+              <select id="recipe-sort" style="padding: 0 12px; border-radius: 12px; border: 2px solid var(--hair); font-family: 'Hanken Grotesk', sans-serif; font-weight: 600; font-size: 13px; background: #fff; cursor: pointer; outline: none; color:var(--ink); width: 140px; flex:none;">
+                <option value="default">Sort: Default</option>
+                <option value="cal-asc">Calories: Low → High</option>
+                <option value="cal-desc">Calories: High → Low</option>
+                <option value="time-asc">Quickest First</option>
+              </select>
+            </div>
+            
+            <div class="resbar">
+              <span id="active-filter-tags"></span>
+              <span id="search-results-title">Suggested recipes</span>
+            </div>
+            
+            <div class="recipe-grid-container">
+              <div class="cards" id="dynamic-recipe-grid">
+                 </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="spinach-detail" style="display:none;">
+        <div class="r-head-container">
+          <a href="#!" onclick="hideRecipeDetail(); return false;" class="r-back">← Back to Search</a>
+          <div class="r-head-hero" style="background-image: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 45%, rgba(0,0,0,0.1) 100%), url('CreamedSpinach-19.jpg');">
+            
+            <div style="width: 100%; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
+              <div class="hero-tags">
+                <span class="hero-tag">Vegetarian</span>
+              </div>
+              <h3 class="hero-title" style="margin-bottom: 12px; text-shadow: 0 2px 12px rgba(0,0,0,0.8);">Creamy Spinach Parmesan</h3>
+              <div class="hero-stats" style="text-shadow: 0 1px 6px rgba(0,0,0,0.8); display: flex; align-items: center; gap: 20px;">
+                
+                <span id="sp-total-cal-top" style="background: var(--green); color: #fff; padding: 10px 18px; border-radius: 16px; font-family: 'Fraunces', serif; font-size: 28px; font-weight: 900; line-height: 1; text-shadow: none; box-shadow: 0 6px 16px rgba(0,0,0,0.4);">640 kcal</span>
+                
+                <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+                  <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 15 mins</span>
+                  <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> 1 serving</span>
+                  <span id="sp-hero-p">Pro 20g</span>
+                  <span id="sp-hero-c">Carb 40g</span>
+                  <span id="sp-hero-f">Fat 44g</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cols">
+          <div class="col" style="flex:1.2">
+            <div id="sp-unexpanded-layout">
+              <div class="panel" style="margin-bottom:16px;">
+                <div class="panel-h">
+                  <b>Ingredients</b>
+                  <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
+                    <span class="on" data-target="us">US</span>
+                    <span data-target="metric">Metric</span>
+                  </div>
+                </div>
+                <div class="panel-b scroll-panel" style="padding:0 16px;">
+                  
+                  <div class="ing-wrap">
+                    <div class="ing" style="border:none; padding:0;">
+                        <div class="nm" id="sp-active-cream-name">Heavy cream<small class="unit-val" data-us="1/2 cup" data-metric="120 ml">1/2 cup</small></div>
+                        <span class="kc" id="sp-active-cream-cal">200 kcal</span>
+                        <span class="swap" id="sp-btn-cream"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span>
+                    </div>
+                    <div class="swap-dropdown" id="sp-dropdown" style="display: none;">
+                        <div style="font-size:10px; font-family:'Space Mono'; color:var(--soft); margin-bottom:8px; text-transform:uppercase;">Choose a substitute</div>
+                        <div class="inline-alt" data-val="heavy">
+                          <div class="nm"><b>Heavy cream</b> <span>(original)</span></div>
+                          <div class="amt diff-box"></div>
+                        </div>
+                        <div class="inline-alt" data-val="coco">
+                          <div class="nm"><b>Coconut cream</b> <span>vegan</span><small style="display:block; font-family:'Space Mono',monospace; font-size:9.5px; color:var(--soft); margin-top:3px;">98% TASTE MATCH</small></div>
+                          <div class="amt diff-box"></div>
+                        </div>
+                        <div class="inline-alt" data-val="cash">
+                          <div class="nm"><b>Cashew cream</b> <span>vegan</span><small style="display:block; font-family:'Space Mono',monospace; font-size:9.5px; color:var(--soft); margin-top:3px;">95% TASTE MATCH</small></div>
+                          <div class="amt diff-box"></div>
+                        </div>
+                        <div class="inline-alt" data-val="oat">
+                          <div class="nm"><b>Oat cream</b> <span>vegan</span><small style="display:block; font-family:'Space Mono',monospace; font-size:9.5px; color:var(--soft); margin-top:3px;">85% TASTE MATCH</small></div>
+                          <div class="amt diff-box"></div>
+                        </div>
+                    </div>
+                  </div>
+                  
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Aged Parmesan<small class="unit-val" data-us="1/4 cup" data-metric="25 g">1/4 cup</small></div><span class="kc">90 kcal</span></div></div>
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Fresh Spinach<small class="unit-val" data-us="2 cups" data-metric="60 g">2 cups</small></div><span class="kc">15 kcal</span></div></div>
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Garlic<small class="unit-val" data-us="2 cloves" data-metric="10 g">2 cloves</small></div><span class="kc">10 kcal</span></div></div>
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Olive Oil<small class="unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</small></div><span class="kc">120 kcal</span><span class="swap inactive">Swap</span></div></div>
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Salt<small class="unit-val" data-us="1/2 tsp" data-metric="3 g">1/2 tsp</small></div><span class="kc">0 kcal</span><span class="swap inactive">Swap</span></div></div>
+                  <div class="ing-wrap" style="border:none"><div class="ing" style="border:none; padding:0;"><div class="nm">Black Pepper<small class="unit-val" data-us="1/4 tsp" data-metric="1 g">1/4 tsp</small></div><span class="kc">0 kcal</span></div></div>
+                </div>
+              </div>
+              <a href="#!" id="sp-trigger-recipe" class="show-full-recipe">Show Full Recipe +</a>
+            </div>
+
+            <div id="sp-expanded-recipe" style="display:none;">
+                <h4 class="recipe-section-title" style="margin-top:0;">Instructions</h4>
+                <div id="sp-view-ins">
+                   <div class="step"><b>1.</b> <p>Mince the garlic and thoroughly wash the spinach.</p></div>
+                   <div class="step"><b>2.</b> <p>Heat olive oil in a skillet over medium heat. Sauté garlic for 1 minute until fragrant.</p></div>
+                   <div class="step"><b>3.</b> <p>Add spinach and cook until wilted, about 2-3 minutes.</p></div>
+                   <div class="step"><b>4.</b> <p>Lower the heat. Stir in your <b id="sp-step-cream-text">heavy cream</b> and simmer for 2 minutes to thicken slightly.</p></div>
+                   <div class="step" style="border:none"><b>5.</b> <p>Remove from heat, fold in parmesan until melted, and season with salt and pepper.</p></div>
+                </div>
+            </div>
+          </div>
+          
+          <div class="col" style="flex:0.8">
+            <div class="plan-card">
+              <h4>Add to Today's Plan</h4>
+              <p>Choose a meal slot for this recipe.</p>
+              <div class="meal-grid">
+                <div class="meal-slot" onclick="selectSlot(this, 'sp')"><b>Breakfast</b><small>~25% of daily</small></div>
+                <div class="meal-slot active" onclick="selectSlot(this, 'sp')"><b>Lunch</b><small>~35% of daily</small></div>
+                <div class="meal-slot" onclick="selectSlot(this, 'sp')"><b>Dinner</b><small>~30% of daily</small></div>
+                <div class="meal-slot" onclick="selectSlot(this, 'sp')"><b>Snack</b><small>~10% of daily</small></div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; font-family:'Space Mono'; font-size:10.5px; margin-bottom:10px;">
+                <span style="color:var(--soft);">Slot budget: ~<span id="sp-slot-budget-val">937</span> kcal</span>
+                <span id="sp-plan-total-pill" class="recipe-cal-pill safe">This recipe: <span id="sp-plan-total">640</span> kcal</span>
+              </div>
+              <button class="btnsk fill btn-plan-action" id="sp-add-plan-btn" style="width:100%; font-size:14px; padding:12px;">+ Add to Lunch</button>
+            </div>
+            
+            <div class="plan-card" style="border-color:var(--hair); padding:20px;">
+              <h4 style="margin-bottom:16px;">Today's Meal Plan</h4>
+              
+              <div class="side-meal-pill" id="sp-side-bk">
+                  <div style="display:flex; gap:12px; align-items:center;">
+                      <span style="font-size:18px; color:var(--soft2);">☕</span>
+                      <div>
+                          <div style="font-size:11px; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;">Breakfast</div>
+                          <div style="font-size:13px; color:var(--soft2);" class="side-meal-name">Not planned</div>
+                          <div style="font-size:11px; color:var(--soft2); display:none; margin-top:2px;" class="side-meal-time"></div>
+                      </div>
+                  </div>
+                  <div class="side-meal-cal" style="font-family:'Space Mono', monospace; font-size:12px; color:var(--soft2);">—</div>
+              </div>
+              
+              <div class="side-meal-pill" id="sp-side-lu">
+                  <div style="display:flex; gap:12px; align-items:center;">
+                      <span style="font-size:18px; color:var(--soft2);">☀️</span>
+                      <div>
+                          <div style="font-size:11px; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;">Lunch</div>
+                          <div style="font-size:13px; color:var(--soft2);" class="side-meal-name">Not planned</div>
+                          <div style="font-size:11px; color:var(--soft2); display:none; margin-top:2px;" class="side-meal-time"></div>
+                      </div>
+                  </div>
+                  <div class="side-meal-cal" style="font-family:'Space Mono', monospace; font-size:12px; color:var(--soft2);">—</div>
+              </div>
+              
+              <div class="side-meal-pill" id="sp-side-dn">
+                  <div style="display:flex; gap:12px; align-items:center;">
+                      <span style="font-size:18px; color:var(--soft2);">🌙</span>
+                      <div>
+                          <div style="font-size:11px; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;">Dinner</div>
+                          <div style="font-size:13px; color:var(--soft2);" class="side-meal-name">Not planned</div>
+                          <div style="font-size:11px; color:var(--soft2); display:none; margin-top:2px;" class="side-meal-time"></div>
+                      </div>
+                  </div>
+                  <div class="side-meal-cal" style="font-family:'Space Mono', monospace; font-size:12px; color:var(--soft2);">—</div>
+              </div>
+              
+              <div class="side-meal-pill" id="sp-side-sn">
+                  <div style="display:flex; gap:12px; align-items:center;">
+                      <span style="font-size:18px; color:var(--soft2);">🍎</span>
+                      <div>
+                          <div style="font-size:11px; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;">Snack</div>
+                          <div style="font-size:13px; color:var(--soft2);" class="side-meal-name">Not planned</div>
+                          <div style="font-size:11px; color:var(--soft2); display:none; margin-top:2px;" class="side-meal-time"></div>
+                      </div>
+                  </div>
+                  <div class="side-meal-cal" style="font-family:'Space Mono', monospace; font-size:12px; color:var(--soft2);">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tofu-detail" style="display:none;">
+        <div class="r-head-container">
+          <a href="#!" onclick="hideRecipeDetail(); return false;" class="r-back" id="tf-back-btn">← Back to Search</a>
+          <div class="r-head-hero" style="background-image: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 45%, rgba(0,0,0,0.1) 100%), url('Tofu power bowl.png');">
+            
+            <div style="width: 100%; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
+              <div class="hero-tags">
+                <span class="hero-tag">Vegan</span>
+              </div>
+              <h3 class="hero-title" style="margin-bottom: 12px; text-shadow: 0 2px 12px rgba(0,0,0,0.8);">Crispy Tofu Power Bowl</h3>
+              <div class="hero-stats" style="text-shadow: 0 1px 6px rgba(0,0,0,0.8); display: flex; align-items: center; gap: 20px;">
+                
+                <span id="tf-total-cal-top" style="background: var(--green); color: #fff; padding: 10px 18px; border-radius: 16px; font-family: 'Fraunces', serif; font-size: 28px; font-weight: 900; line-height: 1; text-shadow: none; box-shadow: 0 6px 16px rgba(0,0,0,0.4);">520 kcal</span>
+                
+                <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+                  <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 20 mins</span>
+                  <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> 1 serving</span>
+                  <span id="tf-hero-p">Pro 32g</span>
+                  <span id="tf-hero-c">Carb 45g</span>
+                  <span id="tf-hero-f">Fat 24g</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cols">
+          <div class="col" style="flex:1.2">
+            <div id="tf-unexpanded-layout">
+              <div class="panel" style="margin-bottom:16px;">
+                <div class="panel-h">
+                  <b>Ingredients</b>
+                  <div class="seg global-unit-toggle" style="transform: scale(0.85); transform-origin: right center; margin: 0;">
+                    <span class="on" data-target="us">US</span>
+                    <span data-target="metric">Metric</span>
+                  </div>
+                </div>
+                <div class="panel-b scroll-panel" style="padding:0 16px;">
+                  
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Firm Tofu<small class="unit-val" data-us="14 oz" data-metric="400 g">14 oz</small></div><span class="kc">350 kcal</span><span class="swap inactive">Swap</span></div></div>
+                  
+                  <div class="ing-wrap">
+                    <div class="ing" style="border:none; padding:0;">
+                        <div class="nm" id="tf-active-rice-name">Brown Rice<small class="unit-val" data-us="1/2 cup" data-metric="100 g">1/2 cup</small></div>
+                        <span class="kc" id="tf-active-rice-cal">110 kcal</span>
+                        <span class="swap" id="tf-btn-rice"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="17 2 21 6 17 10"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 22 3 18 7 14"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> Swap</span>
+                    </div>
+                    <div class="swap-dropdown" id="tf-dropdown" style="display: none;">
+                        <div style="font-size:10px; font-family:'Space Mono'; color:var(--soft); margin-bottom:8px; text-transform:uppercase;">Choose a substitute</div>
+                        
+                        <div class="inline-alt" data-val="rice">
+                          <div class="nm"><b>Brown Rice</b> <span>(original)</span></div>
+                          <div class="amt diff-box"></div>
+                        </div>
+                        
+                        <div class="inline-alt" data-val="quinoa">
+                          <div class="nm"><b>Quinoa</b> <span>high-protein</span><small style="display:block; font-family:'Space Mono',monospace; font-size:9.5px; color:var(--soft); margin-top:3px;">90% TEXTURE MATCH</small></div>
+                          <div class="amt diff-box"></div>
+                        </div>
+                        
+                        <div class="inline-alt" data-val="cauli">
+                          <div class="nm"><b>Cauliflower Rice</b> <span>low-carb</span><small style="display:block; font-family:'Space Mono',monospace; font-size:9.5px; color:var(--soft); margin-top:3px;">80% TEXTURE MATCH</small></div>
+                          <div class="amt diff-box"></div>
+                        </div>
+                    </div>
+                  </div>
+                  
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Fresh Broccoli<small class="unit-val" data-us="1 cup" data-metric="90 g">1 cup</small></div><span class="kc">30 kcal</span></div></div>
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Soy Sauce<small class="unit-val" data-us="2 tbsp" data-metric="30 ml">2 tbsp</small></div><span class="kc">30 kcal</span><span class="swap inactive">Swap</span></div></div>
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Sesame Oil<small class="unit-val" data-us="1 tbsp" data-metric="15 ml">1 tbsp</small></div><span class="kc">120 kcal</span></div></div>
+                  <div class="ing-wrap"><div class="ing" style="border:none; padding:0;"><div class="nm">Fresh Ginger<small class="unit-val" data-us="1 tsp" data-metric="5 g">1 tsp</small></div><span class="kc">0 kcal</span></div></div>
+                  <div class="ing-wrap" style="border:none"><div class="ing" style="border:none; padding:0;"><div class="nm">Fresh Garlic<small class="unit-val" data-us="1 tsp" data-metric="5 g">1 tsp</small></div><span class="kc">0 kcal</span></div></div>
+                </div>
+              </div>
+              <a href="#!" id="tf-trigger-recipe" class="show-full-recipe">Show Full Recipe +</a>
+            </div>
+
+            <div id="tf-expanded-recipe" style="display:none;">
+                <h4 class="recipe-section-title" style="margin-top:0;">Instructions</h4>
+                <div id="tf-view-ins">
+                   <div class="step"><b>1.</b> <p>Press and drain the tofu, then cut into 1-inch cubes.</p></div>
+                   <div class="step"><b>2.</b> <p>Chop broccoli into bite-sized florets and mince garlic and ginger.</p></div>
+                   <div class="step"><b>3.</b> <p>Heat sesame oil in a wok. Fry tofu for 6-8 mins until crispy on all sides. Remove from pan.</p></div>
+                   <div class="step"><b>4.</b> <p>Sauté broccoli, garlic, and ginger until tender-crisp. Whisk soy sauce and pour over.</p></div>
+                   <div class="step" style="border:none"><b>5.</b> <p>Add tofu back to the pan, toss to coat, and serve hot over your <b id="tf-step-rice-text">brown rice</b>.</p></div>
+                </div>
+            </div>
+          </div>
+          
+          <div class="col" style="flex:0.8">
+            <div class="plan-card">
+              <h4>Add to Today's Plan</h4>
+              <p>Choose a meal slot for this recipe.</p>
+              <div class="meal-grid">
+                <div class="meal-slot" onclick="selectSlot(this, 'tf')"><b>Breakfast</b><small>~25% of daily</small></div>
+                <div class="meal-slot active" onclick="selectSlot(this, 'tf')"><b>Lunch</b><small>~35% of daily</small></div>
+                <div class="meal-slot" onclick="selectSlot(this, 'tf')"><b>Dinner</b><small>~30% of daily</small></div>
+                <div class="meal-slot" onclick="selectSlot(this, 'tf')"><b>Snack</b><small>~10% of daily</small></div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; font-family:'Space Mono'; font-size:10.5px; margin-bottom:10px;">
+                <span style="color:var(--soft);">Slot budget: ~<span id="tf-slot-budget-val">937</span> kcal</span>
+                <span id="tf-plan-total-pill" class="recipe-cal-pill safe">This recipe: <span id="tf-plan-total">520</span> kcal</span>
+              </div>
+              <button class="btnsk fill btn-plan-action" id="tf-add-plan-btn" style="width:100%; font-size:14px; padding:12px;">+ Add to Lunch</button>
+            </div>
+            
+            <div class="plan-card" style="border-color:var(--hair); padding:20px;">
+              <h4 style="margin-bottom:16px;">Today's Meal Plan</h4>
+              
+              <div class="side-meal-pill" id="tf-side-bk">
+                  <div style="display:flex; gap:12px; align-items:center;">
+                      <span style="font-size:18px; color:var(--soft2);">☕</span>
+                      <div>
+                          <div style="font-size:11px; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;">Breakfast</div>
+                          <div style="font-size:13px; color:var(--soft2);" class="side-meal-name">Not planned</div>
+                          <div style="font-size:11px; color:var(--soft2); display:none; margin-top:2px;" class="side-meal-time"></div>
+                      </div>
+                  </div>
+                  <div class="side-meal-cal" style="font-family:'Space Mono', monospace; font-size:12px; color:var(--soft2);">—</div>
+              </div>
+              
+              <div class="side-meal-pill" id="tf-side-lu">
+                  <div style="display:flex; gap:12px; align-items:center;">
+                      <span style="font-size:18px; color:var(--soft2);">☀️</span>
+                      <div>
+                          <div style="font-size:11px; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;">Lunch</div>
+                          <div style="font-size:13px; color:var(--soft2);" class="side-meal-name">Not planned</div>
+                          <div style="font-size:11px; color:var(--soft2); display:none; margin-top:2px;" class="side-meal-time"></div>
+                      </div>
+                  </div>
+                  <div class="side-meal-cal" style="font-family:'Space Mono', monospace; font-size:12px; color:var(--soft2);">—</div>
+              </div>
+              
+              <div class="side-meal-pill" id="tf-side-dn">
+                  <div style="display:flex; gap:12px; align-items:center;">
+                      <span style="font-size:18px; color:var(--soft2);">🌙</span>
+                      <div>
+                          <div style="font-size:11px; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;">Dinner</div>
+                          <div style="font-size:13px; color:var(--soft2);" class="side-meal-name">Not planned</div>
+                          <div style="font-size:11px; color:var(--soft2); display:none; margin-top:2px;" class="side-meal-time"></div>
+                      </div>
+                  </div>
+                  <div class="side-meal-cal" style="font-family:'Space Mono', monospace; font-size:12px; color:var(--soft2);">—</div>
+              </div>
+              
+              <div class="side-meal-pill" id="tf-side-sn">
+                  <div style="display:flex; gap:12px; align-items:center;">
+                      <span style="font-size:18px; color:var(--soft2);">🍎</span>
+                      <div>
+                          <div style="font-size:11px; font-weight:700; color:var(--soft); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:2px;">Snack</div>
+                          <div style="font-size:13px; color:var(--soft2);" class="side-meal-name">Not planned</div>
+                          <div style="font-size:11px; color:var(--soft2); display:none; margin-top:2px;" class="side-meal-time"></div>
+                      </div>
+                  </div>
+                  <div class="side-meal-cal" style="font-family:'Space Mono', monospace; font-size:12px; color:var(--soft2);">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+  
+  <div class="frame" id="frame-5">
+    <div class="device">
+      <div class="pad">
+      <div class="nav"><a href="#frame-1" class="logo nav-btn"><span class="mark">{}</span>SnackOverflow</a><div class="tabs"><a href="#frame-2" class="t nav-btn">Daily Targets</a><a href="#frame-3" class="t nav-btn" onclick="hideRecipeDetail();">Search</a><a href="#frame-5" class="t on nav-btn">Pantry</a><a href="#frame-9" class="t nav-btn">Today's Plan</a></div>
+    <div class="nav-tracker"><span class="icon">📅</span> <span id="global-consumed-pantry1">0</span> kcal / <span class="sync-cals-nav">2,678</span></div>
+  </div>
+      
+      <div id="pantry-index">
+        <div class="r-head-container"><a href="#frame-1" class="r-back r-back-main">← Back to Homepage</a></div>
+        
+        <div style="margin-bottom: 24px;">
+            <div style="font-family:'Space Mono', monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); margin-bottom:8px; font-weight:700;">Cook from your pantry</div>
+            <h2 style="font-family:'Fraunces', serif; font-size:36px; font-weight:900; color:var(--ink); margin-bottom:8px; line-height:1.1;">What's in your <em style="color:var(--green); font-style:italic;">fridge</em>?</h2>
+            <p style="color:var(--soft); font-size:14px; margin-bottom:20px; max-width:90%; line-height:1.5;">Tell us what's in your pantry and we'll generate/find rank recipes by how well they match.</p>
+            <div class="searchbar" style="border: 2px solid var(--ink); border-radius: 12px; padding: 14px 20px;">
+                <span class="mono" style="font-size:14px; color:var(--soft);">🔍</span>
+                <input type="text" id="pantry-search-input" placeholder="Search your kitchen e.g. tofu..." style="font-size:14px; color:var(--ink); width: 100%; border: none; outline: none; background: transparent; font-family: 'Hanken Grotesk', sans-serif;">
+            </div>
+        </div>
+
+        <div class="cols">
+          <div class="col" style="flex:1.3">
+            
+            <h4 id="suggested-title" style="font-family:'Space Mono', monospace; font-size:10.5px; color:var(--ink); margin-bottom:12px; font-weight:700; text-transform:uppercase;">Suggested items</h4>
+            
+            <div class="shelf">
+              <h4 class="pantry-shelf-title" onclick="this.parentElement.classList.toggle('collapsed')">Produce <span>▼</span></h4>
+              <div class="items" style="margin-bottom:20px;">
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Spinach <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Tomato <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Broccoli <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Bell pepper <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Avocado <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Mushroom <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Onion <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Garlic <span class="p">+</span></span>
+              </div>
+            </div>
+            
+            <div class="shelf" style="margin:0">
+              <h4 class="pantry-shelf-title" onclick="this.parentElement.classList.toggle('collapsed')">Proteins <span>▼</span></h4>
+              <div class="items" style="margin-bottom:20px;">
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Tofu <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Eggs <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Salmon <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Chicken <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Chickpeas <span class="p">+</span></span>
+              </div>
+            </div>
+            
+            <div class="shelf" style="margin:0">
+              <h4 class="pantry-shelf-title" onclick="this.parentElement.classList.toggle('collapsed')">Dairy & Alt <span>▼</span></h4>
+              <div class="items" style="margin-bottom:20px;">
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Greek yogurt <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Parmesan <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Oat milk <span class="p">+</span></span>
+              </div>
+            </div>
+            
+            <div class="shelf" style="margin:0">
+              <h4 class="pantry-shelf-title" onclick="this.parentElement.classList.toggle('collapsed')">Grains <span>▼</span></h4>
+              <div class="items" style="margin-bottom:20px;">
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Rice <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Pasta <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Quinoa <span class="p">+</span></span>
+                <span class="pantry-item-chip" onclick="togglePantryItem(this)">Bread <span class="p">+</span></span>
+              </div>
+            </div>
+            
+          </div>
+          <div class="col" style="flex:0.9">
+            <div class="basket-box" style="border: 2px dashed var(--ink); border-radius: 16px; padding: 24px; background: var(--paper); min-height: 250px; display: flex; flex-direction: column; position: relative;">
+              <div class="bh" style="display:flex; justify-content:space-between; align-items:flex-end; font-family:'Fraunces', serif; font-weight:800; font-size:20px; margin-bottom: 16px;">
+                  <div>Your basket</div>
+                  <div style="text-align:right;">
+                      <a href="#!" onclick="clearPantryBasket(); return false;" style="font-family:'Space Mono', monospace; font-size:10px; color:var(--soft); text-decoration:underline; font-weight:400; cursor:pointer;">Clear all</a>
+                  </div>
+              </div>
+              <div id="pantry-basket-items" style="flex-grow:1; display:flex; flex-wrap:wrap; gap:8px; align-content:flex-start; margin-bottom:20px;">
+                 <div class="basket-empty-msg" style="width:100%; text-align:center; color:var(--soft2); font-family:'Space Mono', monospace; font-size:12px; padding: 40px 0;">Add items from left to generate recipes.</div>
+              </div>
+              <button id="pantry-generate-btn" class="btnsk fill" style="width:100%; padding:14px; font-size:15px; margin:0; background:var(--fill2) !important; border-color:var(--fill2) !important; color:var(--soft2) !important; cursor:not-allowed;" disabled>Generate recipes</button>
+              <div id="pantry-basket-note" style="text-align:center; font-family:'Space Mono'; font-size:11px; color:var(--soft2); margin-top:12px; font-weight:500;">Add at least 1 item to continue</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pantry-loading" style="display:none; text-align:center; padding: 120px 20px; flex-grow: 1;">
+         <div class="spinner-anim" style="font-size: 48px; margin-bottom: 24px;">🍳</div>
+         <h3 style="font-family:'Fraunces',serif; font-size: 28px; margin-bottom: 8px;">Cooking up some ideas...</h3>
+         <p style="color:var(--soft); font-size: 15px;">Matching your pantry items to our recipe database.</p>
+      </div>
+<div id="pantry-results" style="display:none; padding-bottom: 40px;">
+         <div class="r-head-container">
+           <a href="#!" onclick="showPantryIndex(); return false;" class="r-back">← Back to Pantry</a>
+         </div>
+         
+         <h2 style="font-family:'Fraunces', serif; font-size:32px; margin-bottom: 24px; color:var(--ink);">We found 3 matches</h2>
+
+         <!-- PRIMARY MATCH: High Visual Hierarchy -->
+         <div class="match" style="margin-bottom: 24px; border-color:var(--green); background:var(--green-light); padding: 24px; align-items: stretch; box-shadow: 0 8px 24px rgba(47, 124, 49, 0.12);">
+            <!-- Image loaded with exact filename provided -->
+            <div class="mi" style="background-image:url('Tofu power bowl.png'); background-size:cover; background-position:center; border-radius:16px; border: 2px solid var(--ink); width:180px; height:180px;"></div>
+            
+            <div style="flex:1; padding-left: 20px; position:relative; display:flex; flex-direction:column;">
+               
+               <!-- 95% MATCH ABSOLUTE POSITIONED TO TOP RIGHT -->
+               <div style="position:absolute; top:0; right:0; text-align:right;">
+                   <div style="font-size:38px; font-weight:900; color:var(--green); line-height: 1;">95%</div>
+                   <div style="font-size:11px; font-family:'Space Mono'; color:var(--green); font-weight:700; letter-spacing: 0.05em; margin-top: 4px;">MATCH</div>
+               </div>
+
+               <!-- TITLE & BEST MATCH -->
+               <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                  <span style="background:var(--green); color:#fff; padding:6px 14px; border-radius:24px; font-size:15px; font-weight:800;">Best Match</span>
+                  <div class="h" style="font-size: 28px; letter-spacing: -0.5px; padding-right:80px;">Crispy Tofu Power Bowl</div>
+               </div>
+
+               <!-- MACRO PILLS -->
+               <div style="display:flex; gap:8px; margin-bottom:16px;">
+                 <span style="background:var(--green); color:#fff; padding:4px 14px; border-radius:20px; font-weight:700; font-family:'Space Mono'; font-size:13px;">520 kcal</span>
+                 <span style="border:1.5px solid var(--ink); color:var(--ink); padding:4px 14px; border-radius:20px; font-weight:700; font-family:'Space Mono'; font-size:13px; background:#fff;">⏱ 20 min</span>
+                 <span style="border:1.5px solid var(--ink); color:var(--ink); padding:4px 14px; border-radius:20px; font-weight:700; font-family:'Space Mono'; font-size:13px; background:#fff;">vegan</span>
+                 <span style="border:1.5px solid var(--ink); color:var(--ink); padding:4px 14px; border-radius:20px; font-weight:700; font-family:'Space Mono'; font-size:13px; background:#fff;">gluten-free</span>
+               </div>
+
+               <!-- PROGRESS BAR -->
+               <div style="margin-bottom: 16px; padding-right: 15%;">
+                  <div style="font-family:'Space Mono'; font-size:12px; color:var(--ink); margin-bottom:8px;">You already have <b>83%</b> of the ingredients</div>
+                  <div style="height:8px; background:var(--fill2); border-radius:4px; overflow:hidden; width:100%;">
+                      <div style="width:83%; height:100%; background:var(--ink);"></div>
+                  </div>
+               </div>
+
+               <!-- FOOTER: TAGS AND BUTTON -->
+               <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:auto;">
+                   <div id="pantry-match-you-have" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                       <!-- JS dynamically injects matched/missing items here -->
+                   </div>
+                   <button class="btnsk fill" style="padding: 14px 24px; font-size: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(47, 124, 49, 0.2); margin:0;" onclick="showTofuFromPantry()">Jump to Recipe →</button>
+               </div>
+            </div>
+         </div>
+
+         <!-- SECONDARY MATCHES: Grouped Grid -->
+         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; margin-top: 32px;">
+             <h3 style="font-family:'Hanken Grotesk', sans-serif; font-size:18px; font-weight:800; color:var(--ink); margin:0;">Other good options</h3>
+             <div style="flex: 1; height: 1.5px; background: var(--hair);"></div>
+         </div>
+
+         <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+           
+           <!-- Alternative 1 -->
+           <div class="match" style="padding:16px; align-items:center; border-color:var(--hair); background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.03); cursor:pointer; transition:all 0.2s ease;" onmouseover="this.style.borderColor='var(--ink)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--hair)'; this.style.transform='translateY(0)';">
+              <div class="mi" style="background-image:url('broccoli-garlic-sauce-8-1.jpg'); background-size:cover; background-position:center; border-radius:12px; border: 1.5px solid var(--ink); width:90px; height:90px;"></div>
+              <div style="flex:1;">
+                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div style="padding-right: 8px;">
+                       <div class="h" style="font-size: 17px; line-height:1.2; margin-bottom:6px;">Garlic Broccoli Stir-fry</div>
+                       <div style="font-family:'Space Mono'; font-size:11px; color:var(--soft); font-weight:600;">15 mins • 280 kcal</div>
+                    </div>
+                    <div style="text-align:right; flex: none;">
+                       <div style="font-size:20px; font-weight:900; color:var(--soft); line-height: 1;">60%</div>
+                       <div style="font-size:9px; font-family:'Space Mono'; color:var(--soft); font-weight:700; margin-top:2px;">MATCH</div>
+                    </div>
+                 </div>
+                 <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+                    <span class="have y" style="font-size: 10px; padding: 4px 8px; margin:0; border-color:var(--green); color:var(--green);">✓ Broccoli</span> 
+                    <span class="have n" style="font-size: 10px; padding: 4px 8px; margin:0; border-color:var(--soft2); color:var(--soft);">+ buy Soy Sauce</span>
+                 </div>
+              </div>
+           </div>
+
+           <!-- Alternative 2 -->
+           <div class="match" style="padding:16px; align-items:center; border-color:var(--hair); background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.03); cursor:pointer; transition:all 0.2s ease;" onmouseover="this.style.borderColor='var(--ink)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--hair)'; this.style.transform='translateY(0)';">
+              <div class="mi" style="background-image:url('easy-vegan-tofu-scramble-recipe-1.jpg'); background-size:cover; background-position:center; border-radius:12px; border: 1.5px solid var(--ink); width:90px; height:90px;"></div>
+              <div style="flex:1;">
+                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div style="padding-right: 8px;">
+                       <div class="h" style="font-size: 17px; line-height:1.2; margin-bottom:6px;">Simple Tofu Scramble</div>
+                       <div style="font-family:'Space Mono'; font-size:11px; color:var(--soft); font-weight:600;">10 mins • 310 kcal</div>
+                    </div>
+                    <div style="text-align:right; flex: none;">
+                       <div style="font-size:20px; font-weight:900; color:var(--soft); line-height: 1;">45%</div>
+                       <div style="font-size:9px; font-family:'Space Mono'; color:var(--soft); font-weight:700; margin-top:2px;">MATCH</div>
+                    </div>
+                 </div>
+                 <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+                    <span class="have y" style="font-size: 10px; padding: 4px 8px; margin:0; border-color:var(--green); color:var(--green);">✓ Tofu</span> 
+                    <span class="have n" style="font-size: 10px; padding: 4px 8px; margin:0; border-color:var(--soft2); color:var(--soft);">+ buy Turmeric</span>
+                 </div>
+              </div>
+           </div>
+
+         </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+  
+  <div class="frame" id="frame-9">
+    <div class="device">
+      <div class="pad">
+        <div class="nav">
+          <a href="#frame-1" class="logo nav-btn"><span class="mark">{}</span>SnackOverflow</a>
+          <div class="tabs"><a href="#frame-2" class="t nav-btn">Daily Targets</a><a href="#frame-3" class="t nav-btn" onclick="hideRecipeDetail();">Search</a><a href="#frame-5" class="t nav-btn">Pantry</a><a href="#frame-9" class="t on nav-btn">Today's Plan</a></div>
+          <div class="nav-tracker"><span class="icon">📅</span> <span id="global-consumed-plan">0</span> kcal / <span class="sync-cals-nav">2,678</span></div>
+        </div>
+        <div class="r-head-container"><a href="#frame-1" class="r-back r-back-main">← Back to Homepage</a></div>
+        
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:24px;">
+            <div>
+                <h2 class="f9-header">Today's Plan</h2>
+                <div class="f9-date" id="date-subtitle" style="margin-bottom:0;">Tuesday, July 21</div>
+            </div>
+            <button class="btnsk" style="margin:0; font-size:12px; display:flex; align-items:center; gap:6px; color:var(--soft); background:#fff; border-color:var(--hair);" onclick="clearAllPlan()"><span style="font-size:14px;">🗑️</span> Clear all</button>
+        </div>
+        
+        <div class="f9-empty-banner" id="tp-empty-banner">
+            <div>
+                <b style="font-size:16px;">No meals planned yet</b>
+                <p>Browse recipes and add them to your day.</p>
+            </div>
+            <a href="#frame-3" class="btnsk fill nav-link-target" style="margin:0; padding:12px 20px; font-size:14px; text-decoration:none;" onclick="hideRecipeDetail();">Browse Recipes →</a>
+        </div>
+        
+        <div class="f9-filled-banner" id="tp-filled-banner">
+            <div style="flex:1;">
+                <div style="font-family:'Space Mono'; font-size:10px; letter-spacing:0.1em; opacity:0.8; margin-bottom:4px;">CALORIES CONSUMED</div>
+                <div style="font-family:'Fraunces'; font-weight:900; font-size:42px; line-height:1;"><span id="tp-banner-consumed">0</span> <span style="font-size:16px; font-weight:500; opacity:0.8; font-family:'Hanken Grotesk';">/ <span class="sync-cals-nav">2,678</span> kcal</span></div>
+            </div>
+            
+            <div style="margin-left:32px; background:rgba(0,0,0,0.15); padding:18px 24px; border-radius:12px; width:260px; display:flex; flex-direction:column; justify-content:center;">
+                <div style="font-family:'Space Mono'; font-size:12px; font-weight:700; letter-spacing:0.1em; opacity:0.9; margin-bottom:14px;">MACROS TODAY</div>
+                <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px;"><span>Protein</span><b id="tp-macro-p">0g</b></div>
+                <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:8px;"><span>Carbs</span><b id="tp-macro-c">0g</b></div>
+                <div style="display:flex; justify-content:space-between; font-size:14px;"><span>Fat</span><b id="tp-macro-f">0g</b></div>
+            </div>
+        </div>
+
+        <div class="f9-grid">
+            <div class="f9-slot" id="slot-bk">
+                <div class="f9-slot-head" style="justify-content:flex-start; gap:8px;">
+                    <b style="color:var(--ink); font-size:15px; display:flex; align-items:center; gap:6px;"><span style="font-size:18px; font-weight:normal; color:var(--soft2);">☕</span> Breakfast</b>
+                    <small style="color:var(--soft);">~25% of daily</small>
+                </div>
+                <div class="f9-add-btn nav-link-target" onclick="document.querySelector('a[href=\'#frame-3\']').click(); hideRecipeDetail();">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add a recipe
+                </div>
+            </div>
+            
+            <div class="f9-slot" id="slot-lu">
+                <div class="f9-slot-head" style="justify-content:flex-start; gap:8px;">
+                    <b style="color:var(--ink); font-size:15px; display:flex; align-items:center; gap:6px;"><span style="font-size:18px; font-weight:normal; color:var(--soft2);">☀️</span> Lunch</b>
+                    <small style="color:var(--soft);">~35% of daily</small>
+                </div>
+                <div class="f9-add-btn nav-link-target" onclick="document.querySelector('a[href=\'#frame-3\']').click(); hideRecipeDetail();">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add a recipe
+                </div>
+            </div>
+            
+            <div class="f9-slot" id="slot-dn">
+                <div class="f9-slot-head" style="justify-content:flex-start; gap:8px;">
+                    <b style="color:var(--ink); font-size:15px; display:flex; align-items:center; gap:6px;"><span style="font-size:18px; font-weight:normal; color:var(--soft2);">🌙</span> Dinner</b>
+                    <small style="color:var(--soft);">~30% of daily</small>
+                </div>
+                <div class="f9-add-btn nav-link-target" onclick="document.querySelector('a[href=\'#frame-3\']').click(); hideRecipeDetail();">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add a recipe
+                </div>
+            </div>
+            
+            <div class="f9-slot" id="slot-sn">
+                <div class="f9-slot-head" style="justify-content:flex-start; gap:8px;">
+                    <b style="color:var(--ink); font-size:15px; display:flex; align-items:center; gap:6px;"><span style="font-size:18px; font-weight:normal; color:var(--soft2);">🍎</span> Snack</b>
+                    <small style="color:var(--soft);">~10% of daily</small>
+                </div>
+                <div class="f9-add-btn nav-link-target" onclick="document.querySelector('a[href=\'#frame-3\']').click(); hideRecipeDetail();">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add a recipe
+                </div>
+            </div>
+        </div>
+        
+        <div id="tp-breakdown-container" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:12px;">
+                <b style="font-size:18px;">Full Day Breakdown</b>
+                <a href="#frame-3" class="nav-link-target" style="color:var(--green); font-size:13px; font-weight:700; text-decoration:none;" onclick="hideRecipeDetail();">Add more recipes →</a>
+            </div>
+            <table class="table">
+                <thead><tr><th>MEAL</th><th>RECIPE</th><th>CALORIES</th><th>PROTEIN</th><th>CARBS</th><th>FAT</th></tr></thead>
+                <tbody>
+                    <tr><td>☕ Breakfast</td><td id="tbl-breakfast-name">Not planned</td><td id="tbl-breakfast-cal">—</td><td id="tbl-breakfast-p">—</td><td id="tbl-breakfast-c">—</td><td id="tbl-breakfast-f">—</td></tr>
+                    <tr><td>☀️ Lunch</td><td id="tbl-lunch-name">Not planned</td><td id="tbl-lunch-cal">—</td><td id="tbl-lunch-p">—</td><td id="tbl-lunch-c">—</td><td id="tbl-lunch-f">—</td></tr>
+                    <tr><td>🌙 Dinner</td><td id="tbl-dinner-name">Not planned</td><td id="tbl-dinner-cal">—</td><td id="tbl-dinner-p">—</td><td id="tbl-dinner-c">—</td><td id="tbl-dinner-f">—</td></tr>
+                    <tr><td>🍎 Snack</td><td id="tbl-snack-name">Not planned</td><td id="tbl-snack-cal">—</td><td id="tbl-snack-p">—</td><td id="tbl-snack-c">—</td><td id="tbl-snack-f">—</td></tr>
+                    <tr style="border-top:2.5px solid var(--ink); font-weight:700; color:var(--ink);">
+                        <td style="padding-top:16px; vertical-align:top;">Total<br><small style="font-weight:400; font-size:11px; color:var(--soft);">Daily target</small></td>
+                        <td style="padding-top:16px;"></td>
+                        <td style="padding-top:16px; vertical-align:top;"><span id="tbl-tot-cal">0</span><br><small style="font-weight:600; font-size:11px; color:var(--green);" class="sync-cals-nav">2,678</small></td>
+                        <td style="padding-top:16px; vertical-align:top;"><span id="tbl-tot-p">0g</span><br><small style="font-weight:600; font-size:11px; color:var(--green);" class="sync-p-val">138 g</small></td>
+                        <td style="padding-top:16px; vertical-align:top;"><span id="tbl-tot-c">0g</span><br><small style="font-weight:600; font-size:11px; color:var(--green);" class="sync-c-val">249 g</small></td>
+                        <td style="padding-top:16px; vertical-align:top;"><span id="tbl-tot-f">0g</span><br><small style="font-weight:600; font-size:11px; color:var(--green);" class="sync-f-val">74 g</small></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // ==========================================
+    // --- SPA ROUTER & SESSION LOGIC ---
+    // ==========================================
+    
+    if (!sessionStorage.getItem('snackOverflowActive')) {
+        window.location.hash = '#frame-1';
+        sessionStorage.setItem('snackOverflowActive', 'true');
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        if (input.hasAttribute('value')) {
+            input.value = input.getAttribute('value');
+        } else {
+            input.value = '';
+        }
+    });
+
+    const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+    const dateEl = document.getElementById('date-subtitle');
+    if (dateEl) dateEl.innerText = new Date().toLocaleDateString('en-US', dateOptions);
+
+    window.currentNavSource = 'home';
+
+    window.updateBackButtons = function() {
+        const backs = document.querySelectorAll('.r-back-main');
+        backs.forEach(b => {
+            b.innerText = '← Back to Homepage';
+            b.setAttribute('href', '#frame-1');
+        });
+    }
+
+    function handleRouting() {
+        let hash = window.location.hash;
+        if (!hash || hash === '') hash = '#frame-1'; 
+
+        document.querySelectorAll('.frame').forEach(f => f.classList.remove('active'));
+
+        const targetFrame = document.querySelector(hash);
+        if (targetFrame) {
+            targetFrame.classList.add('active');
+        } else {
+            document.getElementById('frame-1').classList.add('active');
+            hash = '#frame-1';
+        }
+
+        if(hash === '#frame-2') window.currentNavSource = 'targets';
+        else if(hash === '#frame-9') window.currentNavSource = 'plan';
+        else if(hash === '#frame-5') window.currentNavSource = 'pantry';
+        else if(hash === '#frame-3') window.currentNavSource = 'search';
+        else window.currentNavSource = 'home';
+        
+        updateBackButtons();
+
+        document.querySelectorAll('.nav .t').forEach(t => t.classList.remove('on'));
+        document.querySelectorAll('.nav').forEach(nav => {
+            const activeTab = nav.querySelector(`a[href="${hash}"]`);
+            if(activeTab) activeTab.classList.add('on');
+        });
+
+        window.scrollTo(0,0);
+    }
+
+    handleRouting();
+    window.addEventListener('hashchange', handleRouting);
+
+
+    // ==========================================
+    // --- 1. Global Scale Toggles (US/Metric for Recipes) ---
+    // ==========================================
+    const recipeToggles = document.querySelectorAll('.global-unit-toggle span');
+    recipeToggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        const selectedSystem = e.target.getAttribute('data-target');
+        
+        document.querySelectorAll('.global-unit-toggle span').forEach(t => {
+          if (t.getAttribute('data-target') === selectedSystem) t.classList.add('on');
+          else t.classList.remove('on');
+        });
+        
+        document.querySelectorAll('.unit-val').forEach(val => {
+            val.innerText = val.getAttribute('data-' + selectedSystem);
+        });
+      });
+    });
+
+    const sysToggles = document.querySelectorAll('.system-toggle-btn span');
+    sysToggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        const sys = e.target.getAttribute('data-sys');
+        sysToggles.forEach(t => t.classList.remove('on'));
+        e.target.classList.add('on');
+        
+        if (sys === 'us') {
+          document.body.classList.add('mode-us');
+          let kg = parseFloat(document.getElementById('val-kg').value) || 0;
+          if (kg > 635) kg = 635; 
+          let lbs = (kg === 635) ? 1400 : Math.round((kg * 2.20462) * 10) / 10;
+          document.getElementById('val-lbs').value = lbs.toFixed(1);
+          document.getElementById('sld-lbs').value = lbs.toFixed(1);
+          let cm = parseFloat(document.getElementById('val-cm').value) || 0;
+          if (cm > 304.8) cm = 304.8;
+          let totalInches = (cm === 304.8) ? 120 : cm / 2.54;
+          document.getElementById('val-ft').value = Math.floor(totalInches / 12);
+          document.getElementById('val-in').value = (Math.round((totalInches % 12) * 2) / 2).toFixed(1);
+        } else {
+          document.body.classList.remove('mode-us');
+          let lbs = parseFloat(document.getElementById('val-lbs').value) || 0;
+          if (lbs > 1400) lbs = 1400; 
+          let kg = (lbs === 1400) ? 635 : Math.round((lbs / 2.20462) * 10) / 10;
+          document.getElementById('val-kg').value = kg.toFixed(1);
+          document.getElementById('sld-kg').value = kg.toFixed(1);
+          let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+          let inc = parseFloat(document.getElementById('val-in').value) || 0;
+          let totalInches = (ft * 12) + inc;
+          if (totalInches > 120) totalInches = 120;
+          let cm = (totalInches === 120) ? 304.8 : totalInches * 2.54;
+          document.getElementById('val-cm').value = cm.toFixed(1);
+          document.getElementById('sld-cm').value = cm.toFixed(1);
+        }
+        
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            if (input.closest('.slider-row') && input.closest('.slider-row').offsetParent !== null) validateInput(input);
+        });
+        calculateMacros();
+      });
+    });
+
+    document.querySelectorAll('.logic-group span').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        let parent = e.target.closest('.logic-group');
+        parent.querySelectorAll('span').forEach(s => s.classList.remove('on'));
+        e.target.classList.add('on');
+        calculateMacros();
+      });
+    });
+
+    function validateInput(input, isCrossCheck = false) {
+      if (!input) return true;
+      const container = input.closest('.stepper');
+      const field = input.closest('.field');
+      if (!container || !field) return true;
+      
+      let errEl = null;
+      if (input.id.includes('kg') || input.id.includes('cm')) errEl = field.querySelector('.err-msg.sys-metric');
+      else if (input.id.includes('lbs') || input.id.includes('ft') || input.id.includes('in')) errEl = field.querySelector('.err-msg.sys-us');
+      else errEl = field.querySelector('.err-msg:not(.sys-metric):not(.sys-us)'); 
+
+      let errMsg = '';
+      let rawVal = input.value;
+      let val = parseFloat(rawVal);
+      let min = parseFloat(input.getAttribute('min'));
+      let max = parseFloat(input.getAttribute('max'));
+
+      if (input.id === 'val-in') {
+          let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+          if (ft >= 10) max = 0; else max = 11.5;
+          if (ft === 0) min = 4;
+      }
+
+      if (rawVal !== '') {
+          if (val < min) {
+            if (input.id === 'val-cm') errMsg = `Minimum is 10.2 cm.`;
+            else if (input.id === 'val-age') errMsg = `Minimum is 1 year.`;
+            else if (input.id === 'val-ft') errMsg = `Minimum height is 0 ft.`;
+            else if (input.id === 'val-in') errMsg = `Minimum height is 4 in.`;
+            else if (input.id === 'val-cal') errMsg = `Minimum is 50 kcal.`;
+            else errMsg = `Minimum is ${min}.`;
+          } else if (val > max) {
+            if (input.id === 'val-in' && parseFloat(document.getElementById('val-ft').value) >= 10) errMsg = "Maximum height is 10 ft.";
+            else if (input.id === 'val-ft') errMsg = "Maximum height is 10 ft.";
+            else if (input.id === 'val-kg') errMsg = "Maximum is 635 kg.";
+            else if (input.id === 'val-lbs') errMsg = "Maximum is 1400 lbs.";
+            else if (input.id === 'val-cm') errMsg = "Maximum is 304.8 cm.";
+            else if (input.id === 'val-in') errMsg = "Maximum is 11.5 in.";
+            else if (input.id === 'val-cal') errMsg = "Maximum is 1000 kcal.";
+            else errMsg = `Maximum is ${max}.`;
+          } else if (input.id === 'val-ft' && val >= 10 && parseFloat(document.getElementById('val-in').value) > 0) {
+            errMsg = "Maximum height is 10 ft.";
+          }
+      }
+
+      if (errMsg) {
+        container.classList.add('has-error');
+        if(errEl) { errEl.innerText = errMsg; errEl.style.display = 'block'; }
+        return false;
+      } else {
+        container.classList.remove('has-error');
+        if (input.id === 'val-ft') {
+            const inContainer = document.getElementById('val-in').closest('.stepper');
+            if (!inContainer.classList.contains('has-error') && errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
+        } else if (input.id === 'val-in') {
+            const ftContainer = document.getElementById('val-ft').closest('.stepper');
+            if (!ftContainer.classList.contains('has-error') && errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
+        } else {
+            if(errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
+        }
+        return rawVal !== ''; 
+      }
+    }
+
+    document.querySelectorAll('.stepper').forEach(stepper => {
+      const minus = stepper.querySelector('.minus');
+      const plus = stepper.querySelector('.plus');
+      const input = stepper.querySelector('input');
+      const step = parseFloat(input.getAttribute('step'));
+      const min = parseFloat(input.getAttribute('min'));
+      let max = parseFloat(input.getAttribute('max'));
+      
+      const updateVal = (direction) => {
+        let val = parseFloat(input.value);
+        let currentMin = min;
+        let currentMax = max;
+        
+        if (input.id === 'val-in') {
+            let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+            if (ft >= 10) currentMax = 0;
+            if (ft === 0) currentMin = 4;
+        }
+
+        if(isNaN(val)) val = (direction > 0) ? currentMin : currentMax;
+        else val += (direction * step);
+        
+        if (val < currentMin) val = currentMin;
+        if (val > currentMax) val = currentMax;
+
+        if (input.id === 'val-ft' && val >= 10) {
+            document.getElementById('val-in').value = "0.0";
+            validateInput(document.getElementById('val-in'));
+        }
+        
+        if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') input.value = Math.round(val);
+        else if (input.id === 'val-in') input.value = (Math.round(val * 2) / 2).toFixed(1);
+        else input.value = val.toFixed(1);
+        
+        validateInput(input);
+        if (input.id === 'val-in') validateInput(document.getElementById('val-ft'), true);
+        if (input.id === 'val-ft') validateInput(document.getElementById('val-in'), true);
+
+        if (document.querySelectorAll('.has-error').length === 0) {
+           if(input.dataset.sync) document.getElementById(input.dataset.sync).value = input.value;
+           calculateMacros();
+           if(input.id === 'val-cal' && typeof renderRecipes === 'function') renderRecipes();
+        } else {
+           if(input.id !== 'val-cal') displayHardStop();
+        }
+      };
+      
+      minus.addEventListener('click', () => updateVal(-1));
+      plus.addEventListener('click', () => updateVal(1));
+      
+      input.addEventListener('input', () => {
+        let cleanVal = input.value;
+        if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') cleanVal = cleanVal.replace(/[^0-9]/g, '');
+        else {
+            cleanVal = cleanVal.replace(/[^0-9.]/g, '');
+            let parts = cleanVal.split('.');
+            if (parts.length > 2) cleanVal = parts[0] + '.' + parts.slice(1).join('');
+        }
+        if (input.value !== cleanVal) input.value = cleanVal;
+
+        validateInput(input);
+        if (input.id === 'val-in') validateInput(document.getElementById('val-ft'), true);
+        if (input.id === 'val-ft') validateInput(document.getElementById('val-in'), true);
+
+        let anyEmpty = false;
+        document.querySelectorAll('input[type="text"]').forEach(inp => {
+            if (inp.offsetParent !== null && inp.value === '') anyEmpty = true;
+        });
+
+        if (document.querySelectorAll('.has-error').length === 0 && !anyEmpty) {
+          if (input.dataset.sync) document.getElementById(input.dataset.sync).value = parseFloat(input.value) || 0;
+          if (input.id !== 'val-cal') calculateMacros();
+          if (input.id === 'val-cal' && typeof renderRecipes === 'function') renderRecipes();
+        } else {
+          if (input.id !== 'val-cal') displayHardStop();
+        }
+      });
+      
+      input.addEventListener('blur', () => {
+        let rawVal = input.value;
+        let currentMin = min;
+        
+        if (input.id === 'val-in') {
+            let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+            if (ft === 0) currentMin = 4;
+        }
+
+        let defaultVal = currentMin;
+        if (input.id === 'val-in') {
+            let ft = parseFloat(document.getElementById('val-ft').value) || 0;
+            defaultVal = (ft === 0) ? 4.0 : 0.0;
+        }
+
+        if (rawVal === '' || isNaN(parseFloat(rawVal))) {
+            if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') input.value = Math.round(defaultVal);
+            else input.value = defaultVal.toFixed(1);
+        } else {
+            let val = parseFloat(rawVal);
+            if (input.id === 'val-age' || input.id === 'val-ft' || input.id === 'val-cal') input.value = Math.round(val);
+            else if (input.id === 'val-in') input.value = (Math.round(val * 2) / 2).toFixed(1);
+            else input.value = val.toFixed(1);
+        }
+        
+        validateInput(input);
+        if (input.id === 'val-in') validateInput(document.getElementById('val-ft'), true);
+        if (input.id === 'val-ft') validateInput(document.getElementById('val-in'), true);
+
+        if (document.querySelectorAll('.has-error').length === 0) {
+            if (input.dataset.sync) document.getElementById(input.dataset.sync).value = input.value;
+            if (input.id !== 'val-cal') calculateMacros();
+            if (input.id === 'val-cal' && typeof renderRecipes === 'function') renderRecipes();
+        }
+      });
+    });
+
+    document.querySelectorAll('.interactive-slider').forEach(slider => {
+      slider.addEventListener('input', (e) => {
+        const matchingInput = document.querySelector(`input[data-sync="${e.target.id}"]`);
+        if(matchingInput) {
+            matchingInput.value = e.target.value;
+            validateInput(matchingInput);
+        }
+        if (e.target.id !== 'sld-cal') calculateMacros();
+        if (e.target.id === 'sld-cal' && typeof renderRecipes === 'function') renderRecipes();
+      });
+    });
+
+    function displayHardStop() {
+      document.querySelectorAll('.sync-cals, .sync-cals-str, .sync-cals-nav').forEach(el => el.innerHTML = `---`);
+      document.querySelectorAll('.sync-p-val').forEach(el => el.innerHTML = `--- g`);
+      document.querySelectorAll('.sync-c-val').forEach(el => el.innerHTML = `--- g`);
+      document.querySelectorAll('.sync-f-val').forEach(el => el.innerHTML = `--- g`);
+      document.querySelectorAll('.sync-lunch, .sync-bk, .sync-dn, .sync-sn').forEach(el => el.innerHTML = `---`);
+    }
+
+    let globalDailyTarget = 2678;
+
+    window.updateBudgetWarning = function(prefix) {
+        if(!prefix) return;
+        const activeSlot = prefix === 'sp' ? window.activeSpSlot : window.activeTfSlot;
+        const targetMap = { 'breakfast': 0.25, 'lunch': 0.35, 'dinner': 0.30, 'snack': 0.10 };
+        const budget = Math.round(globalDailyTarget * targetMap[activeSlot]);
+        
+        let recipeCal = 0;
+        if(prefix === 'sp') recipeCal = spData[spConfirmedState].total;
+        if(prefix === 'tf') recipeCal = tfData[tfConfirmedState].total;
+        
+        const pill = document.getElementById(prefix + '-plan-total-pill');
+        if(pill) {
+            if (recipeCal > budget) {
+                pill.classList.remove('safe');
+                pill.classList.add('over-budget');
+            } else {
+                pill.classList.remove('over-budget');
+                pill.classList.add('safe');
+            }
+        }
+    };
+
+    function calculateMacros() {
+      if(document.querySelectorAll('#frame-2 .has-error').length > 0) return;
+
+      const isMetric = !document.body.classList.contains('mode-us');
+      let isFemale = document.querySelector('#frame-2 .logic-group[data-target="sex"] .on').dataset.val === 'f';
+      let age = parseFloat(document.getElementById('val-age').value) || 28;
+      
+      let weightKg = isMetric ? parseFloat(document.getElementById('val-kg').value) : parseFloat(document.getElementById('val-lbs').value) / 2.20462;
+      let heightCm = isMetric ? parseFloat(document.getElementById('val-cm').value) : ((parseFloat(document.getElementById('val-ft').value) * 12) + parseFloat(document.getElementById('val-in').value)) * 2.54;
+
+      if(isNaN(weightKg) || isNaN(heightCm) || isNaN(age)) { displayHardStop(); return; }
+
+      let bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + (isFemale ? -161 : 5);
+      let actMult = parseFloat(document.querySelector('#frame-2 .logic-group[data-target="activity"] .on').dataset.val);
+      let tdee = bmr * actMult;
+      
+      let goalMod = parseFloat(document.querySelector('#frame-2 .logic-group[data-target="goal"] .on').dataset.val);
+      let targetCals = Math.round(tdee + goalMod);
+      if(targetCals < 0) targetCals = 0;
+      globalDailyTarget = targetCals;
+      
+      let proteinGrams = Math.round((targetCals * 0.25) / 4);
+      let carbsGrams = Math.round((targetCals * 0.45) / 4);
+      let fatGrams = Math.round((targetCals * 0.30) / 9);
+      
+      let bkBudget = Math.round(targetCals * 0.25);
+      let luBudget = Math.round(targetCals * 0.35);
+      let dnBudget = Math.round(targetCals * 0.30);
+      let snBudget = Math.round(targetCals * 0.10);
+
+      document.querySelectorAll('.sync-cals').forEach(el => {
+          if(el.tagName === 'SPAN') el.innerHTML = targetCals.toLocaleString('en-US');
+          else el.innerHTML = `${targetCals.toLocaleString('en-US')}<sup>kcal</sup>`;
+      });
+      document.querySelectorAll('.sync-cals-str').forEach(el => el.innerHTML = `${targetCals.toLocaleString('en-US')} kcal`);
+      document.querySelectorAll('.sync-cals-nav').forEach(el => el.innerHTML = `${targetCals.toLocaleString('en-US')}`);
+      
+      document.querySelectorAll('.sync-p-val').forEach(el => el.innerHTML = `${proteinGrams} g`);
+      document.querySelectorAll('.sync-c-val').forEach(el => el.innerHTML = `${carbsGrams} g`);
+      document.querySelectorAll('.sync-f-val').forEach(el => el.innerHTML = `${fatGrams} g`);
+      
+      document.querySelectorAll('.sync-bk').forEach(el => el.innerHTML = `${bkBudget}`);
+      document.querySelectorAll('.sync-lunch').forEach(el => el.innerHTML = `${luBudget}`);
+      document.querySelectorAll('.sync-dn').forEach(el => el.innerHTML = `${dnBudget}`);
+      document.querySelectorAll('.sync-sn').forEach(el => el.innerHTML = `${snBudget}`);
+      
+      const targetMap = { 'breakfast': 0.25, 'lunch': 0.35, 'dinner': 0.30, 'snack': 0.10 };
+      if(document.getElementById('sp-slot-budget-val')) document.getElementById('sp-slot-budget-val').innerText = Math.round(globalDailyTarget * targetMap[window.activeSpSlot || 'lunch']);
+      if(document.getElementById('tf-slot-budget-val')) document.getElementById('tf-slot-budget-val').innerText = Math.round(globalDailyTarget * targetMap[window.activeTfSlot || 'lunch']);
+
+      if(window.currentOpenRecipeId) updateBudgetWarning(window.currentOpenRecipeId);
+      if(typeof window.updateTodayPlanUI === 'function') window.updateTodayPlanUI();
+    }
+
+    calculateMacros();
+
+    // ---------------------------------------------------------
+    // --- RECIPE FILTERING & LIVE SEARCH ENGINE ---
+    // ---------------------------------------------------------
+    const recipes = [
+      { name: "Creamy Spinach Parmesan", cal: 640, time: "Under 15m", diet: ["Vegetarian"], cuisine: ["Italian"], style: ["One-pot"], link: "#!", action: "showSpinachRecipe()", img: "CreamedSpinach-19.jpg" },
+      { name: "Mushroom Risotto", cal: 520, time: "Under 30m", diet: ["Vegan", "Vegetarian"], cuisine: ["Italian"], style: ["One-pot"], link: "", img: "Risotto-Mushroom-2-352.jpg" },
+      { name: "Protein Oat Pancakes", cal: 430, time: "Under 15m", diet: ["Vegetarian", "High-protein"], cuisine: ["American"], style: ["Meal Prep"], link: "", img: "cottage-cheese-pancakes-recipe.jpg" },
+      { name: "Spicy Lentil Pasta", cal: 550, time: "Under 30m", diet: ["Vegan", "Vegetarian", "High-protein"], cuisine: ["Italian"], style: ["Meal Prep"], link: "", img: "ab40436c-8117-442e-8286-86d99c838a0a-scaled.jpg" },
+      { name: "Avocado Egg Toast", cal: 350, time: "Under 15m", diet: ["Vegetarian"], cuisine: ["American"], style: ["No-cook"], link: "", img: "Avocado & Egg Toast.png" },
+      { name: "Grilled Salmon Asparagus", cal: 600, time: "Under 60m", diet: ["High-protein"], cuisine: ["Mediterranean"], style: ["Air Fryer"], link: "", img: "Grilled Salmon with Asparagus.png" },
+      { name: "Chickpea Salad Sandwich", cal: 480, time: "Under 15m", diet: ["Vegan", "Vegetarian"], cuisine: ["Mediterranean"], style: ["No-cook"], link: "", img: "Chickpea Salad Sandwich.png" },
+      { name: "Quinoa Veggie Bowl", cal: 520, time: "Under 30m", diet: ["Vegan", "Vegetarian"], cuisine: ["Mediterranean"], style: ["Meal Prep"], link: "", img: "Quinoa Veggie Bowl.png" },
+      { name: "Greek Yogurt Parfait", cal: 300, time: "Under 15m", diet: ["Vegetarian"], cuisine: ["American"], style: ["No-cook"], link: "", img: "Greek Yogurt Parfait.png" }
+    ];
+
+    const filterChips = document.querySelectorAll('#frame-3 .filter-group .chip');
+    const searchInput = document.getElementById('recipe-search-input');
+    const maxCalInput = document.getElementById('val-cal');
+    const recipeGrid = document.getElementById('dynamic-recipe-grid');
+    const activeTagsContainer = document.getElementById('active-filter-tags');
+    const searchTitle = document.getElementById('search-results-title');
+    const sortDropdown = document.getElementById('recipe-sort');
+
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.target.classList.toggle('on');
+        if (e.target.classList.contains('on')) { if (!e.target.innerText.includes('×')) e.target.innerText += ' ×'; } 
+        else { e.target.innerText = e.target.innerText.replace(' ×', ''); }
+        renderRecipes();
+      });
+    });
+
+    searchInput.addEventListener('input', renderRecipes);
+    sortDropdown.addEventListener('change', renderRecipes);
+
+    function renderRecipes() {
+      const activeDiets = Array.from(document.querySelectorAll('.filter-group[data-filter="diet"] .chip.on')).map(c => c.getAttribute('data-val'));
+      const activeCuisines = Array.from(document.querySelectorAll('.filter-group[data-filter="cuisine"] .chip.on')).map(c => c.getAttribute('data-val'));
+      const activeStyles = Array.from(document.querySelectorAll('.filter-group[data-filter="style"] .chip.on')).map(c => c.getAttribute('data-val'));
+      const activeTimes = Array.from(document.querySelectorAll('.filter-group[data-filter="time"] .chip.on')).map(c => c.getAttribute('data-val'));
+      const maxCal = parseFloat(maxCalInput.value) || 1000;
+      const searchText = searchInput.value.toLowerCase().trim();
+      const sortMode = sortDropdown.value;
+
+      let tagsHTML = '';
+      [...activeDiets, ...activeCuisines, ...activeStyles, ...activeTimes].forEach(tag => {
+          tagsHTML += `<span class="chip on active-filter-chip" data-val="${tag}" style="font-size:10px;padding:3px 8px; margin-right:4px;">${tag} &times;</span>`;
+      });
+      activeTagsContainer.innerHTML = tagsHTML;
+
+      document.querySelectorAll('.active-filter-chip').forEach(activeChip => {
+          activeChip.addEventListener('click', (e) => {
+              const val = e.target.getAttribute('data-val');
+              const sideChip = Array.from(document.querySelectorAll('.filter-group .chip')).find(c => c.getAttribute('data-val') === val);
+              if(sideChip) sideChip.click();
+          });
+      });
+
+      const hasFilters = activeDiets.length > 0 || activeCuisines.length > 0 || activeStyles.length > 0 || activeTimes.length > 0 || searchText !== '';
+
+      let filtered = recipes.filter(r => {
+        if (r.cal > maxCal) return false;
+        if (searchText && !r.name.toLowerCase().includes(searchText)) return false;
+        if (activeDiets.length > 0) {
+            const hasDiet = activeDiets.some(diet => r.diet.includes(diet));
+            if (!hasDiet) return false;
+        }
+        if (activeCuisines.length > 0) {
+            const hasCuisine = activeCuisines.some(cui => r.cuisine && r.cuisine.includes(cui));
+            if (!hasCuisine) return false;
+        }
+        if (activeStyles.length > 0) {
+            const hasStyle = activeStyles.some(sty => r.style && r.style.includes(sty));
+            if (!hasStyle) return false;
+        }
+        if (activeTimes.length > 0) { if (!activeTimes.includes(r.time)) return false; }
+        return true; 
+      });
+      
+      if(sortMode === 'cal-asc') filtered.sort((a,b) => a.cal - b.cal);
+      else if(sortMode === 'cal-desc') filtered.sort((a,b) => b.cal - a.cal);
+      else if(sortMode === 'time-asc') {
+          filtered.sort((a,b) => parseInt(a.time.replace(/\D/g,'')) - parseInt(b.time.replace(/\D/g,'')));
+      }
+
+      if (!hasFilters && sortMode === 'default') {
+          searchTitle.innerText = "Suggested recipes";
+          filtered = filtered.slice(0, 3);
+      } else {
+          searchTitle.innerText = `${filtered.length} Recipe/s Found`;
+      }
+
+      if (filtered.length === 0) {
+          recipeGrid.innerHTML = `<div style="grid-column: 1 / -1; padding: 20px; text-align: center; color: var(--soft2); font-family: 'Space Mono', monospace; font-size: 11px;">0 recipes found. Try loosening your filters.</div>`;
+      } else {
+          recipeGrid.innerHTML = filtered.map(r => `
+            <a href="${r.link || '#!'}" class="card" ${r.action ? `onclick="${r.action}; return false;"` : 'onclick="event.preventDefault()" অসুস্থ'}>
+              <div class="im ${r.img ? '' : 'imgph'}" style="border-radius:0;border:none;border-bottom:2px solid var(--ink); ${r.img ? `background-image:url('${r.img}'); background-size:cover; background-position:center;` : ''}">
+                <span>${r.time}</span>
+              </div>
+              <div class="cc">
+                <div class="name">${r.name}</div>
+                <div class="k">${r.cal} kcal</div>
+              </div>
+            </a>
+          `).join('');
+      }
+    }
+    renderRecipes();
+
+    // ---------------------------------------------------------
+    // --- PANTRY SYSTEM LOGIC ---
+    // ---------------------------------------------------------
+    let pantryBasket = [];
+    
+    const pantrySearchInput = document.getElementById('pantry-search-input');
+    const suggestedTitle = document.getElementById('suggested-title');
+    const allShelves = document.querySelectorAll('#frame-5 .shelf');
+
+    if(pantrySearchInput) {
+        pantrySearchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+
+            if (query !== '') {
+                suggestedTitle.style.display = 'none'; 
+
+                allShelves.forEach(shelf => {
+                    shelf.classList.remove('collapsed');
+                    let hasVisible = false;
+                    
+                    shelf.querySelectorAll('.pantry-item-chip').forEach(chip => {
+                        const itemName = chip.childNodes[0].nodeValue.trim().toLowerCase();
+                        if (itemName.includes(query)) {
+                            chip.style.display = 'inline-flex';
+                            hasVisible = true;
+                        } else {
+                            chip.style.display = 'none';
+                        }
+                    });
+                    
+                    shelf.style.display = hasVisible ? 'block' : 'none';
+                });
+
+            } else {
+                suggestedTitle.style.display = 'block';
+
+                allShelves.forEach(shelf => {
+                    shelf.style.display = 'block';
+                    shelf.querySelectorAll('.pantry-item-chip').forEach(chip => {
+                        chip.style.display = 'inline-flex';
+                    });
+                });
+            }
+        });
+    }
+
+    window.togglePantryItem = function(el) {
+        const itemName = el.childNodes[0].nodeValue.trim();
+        
+        if(pantryBasket.includes(itemName)) {
+            pantryBasket = pantryBasket.filter(i => i !== itemName);
+            
+            document.querySelectorAll('#frame-5 .pantry-item-chip').forEach(chip => {
+                if (chip.childNodes[0].nodeValue.trim() === itemName) {
+                    chip.classList.remove('on');
+                    if(chip.querySelector('.p')) chip.querySelector('.p').innerText = '+';
+                }
+            });
+        } else {
+            pantryBasket.push(itemName);
+            
+            document.querySelectorAll('#frame-5 .pantry-item-chip').forEach(chip => {
+                if (chip.childNodes[0].nodeValue.trim() === itemName) {
+                    chip.classList.add('on');
+                    if(chip.querySelector('.p')) chip.querySelector('.p').innerText = '✓';
+                }
+            });
+        }
+        
+        updatePantryBasket();
+    };
+    
+    window.removePantryItem = function(itemName) {
+        pantryBasket = pantryBasket.filter(i => i !== itemName);
+        
+        document.querySelectorAll('.pantry-item-chip').forEach(el => {
+            if (el.childNodes[0].nodeValue.trim() === itemName) {
+                el.classList.remove('on');
+                if(el.querySelector('.p')) el.querySelector('.p').innerText = '+';
+            }
+        });
+        
+        updatePantryBasket();
+    };
+
+    window.clearPantryBasket = function() {
+        pantryBasket = [];
+        document.querySelectorAll('.pantry-item-chip').forEach(el => {
+            el.classList.remove('on');
+            if(el.querySelector('.p')) el.querySelector('.p').innerText = '+';
+        });
+        updatePantryBasket();
+    };
+    
+    window.updatePantryBasket = function() {
+        const container = document.getElementById('pantry-basket-items');
+        const count = document.querySelector('#frame-5 #pantry-basket-count');
+        const btn = document.querySelector('#frame-5 #pantry-generate-btn');
+        const note = document.querySelector('#frame-5 #pantry-basket-note');
+        
+        
+        if(pantryBasket.length === 0) {
+            container.innerHTML = `<div class="basket-empty-msg" style="width:100%; text-align:center; color:var(--soft2); font-family:'Space Mono', monospace; font-size:12px; padding: 40px 0;">Add items from left to generate recipes.</div>`;
+            
+            btn.disabled = true;
+            btn.style.background = 'var(--fill2)';
+            btn.style.borderColor = 'var(--fill2)';
+            btn.style.color = 'var(--soft2)';
+            btn.style.cursor = 'not-allowed';
+            btn.style.pointerEvents = 'none';
+            
+            note.innerText = 'Add at least 1 item to continue';
+            note.style.color = 'var(--soft2)';
+            note.style.fontWeight = '500';
+        } else {
+            container.innerHTML = pantryBasket.map(item => `<span class="basket-chip" onclick="removePantryItem('${item}')">${item} <span style="font-weight:400; color:var(--soft2); margin-left:4px;">&times;</span></span>`).join('');
+            
+            btn.disabled = false;
+            btn.style.background = 'var(--green)';
+            btn.style.borderColor = 'var(--green)';
+            btn.style.color = '#fff';
+            btn.style.cursor = 'pointer';
+            btn.style.pointerEvents = 'auto';
+            
+            note.innerText = '' + pantryBasket.length + (pantryBasket.length === 1 ? ' ingredient' : ' ingredients') + ' in your basket.';
+            note.style.color = 'var(--green)';
+            note.style.fontWeight = '700';
+        }
+    };
+
+    document.getElementById('pantry-generate-btn').addEventListener('click', () => {
+        document.getElementById('pantry-index').style.display = 'none';
+        document.getElementById('pantry-loading').style.display = 'block';
+
+        setTimeout(() => {
+            document.getElementById('pantry-loading').style.display = 'none';
+            document.getElementById('pantry-results').style.display = 'block';
+            
+            window.currentNavSource = 'pantry-results';
+
+            const youHaveContainer = document.getElementById('pantry-match-you-have');
+            let tagsHTML = '';
+            
+            const matchStyle = `border: 1.5px solid var(--green); color: var(--green); padding: 4px 10px; border-radius: 8px; font-family:'Space Mono'; font-size:12px; font-weight:700; background:#fff;`;
+            const missingStyle = `border: 1.5px solid var(--soft2); color: var(--soft); padding: 4px 10px; border-radius: 8px; font-family:'Space Mono'; font-size:12px; font-weight:700; background:#fff;`;
+
+            if (pantryBasket.includes('Tofu')) {
+                tagsHTML += `<span style="${matchStyle}">✓ Tofu</span> `;
+            } else {
+                tagsHTML += `<span style="${missingStyle}">+ buy Tofu</span> `;
+            }
+            
+            if (pantryBasket.includes('Broccoli')) {
+                tagsHTML += `<span style="${matchStyle}">✓ Broccoli</span> `;
+            } else {
+                tagsHTML += `<span style="${missingStyle}">+ buy Broccoli</span> `;
+            }
+
+            if (pantryBasket.includes('Rice')) {
+                tagsHTML += `<span style="${matchStyle}">✓ Rice</span> `;
+            } else {
+                tagsHTML += `<span style="${missingStyle}">+ buy Rice</span> `;
+            }
+
+            youHaveContainer.innerHTML = tagsHTML;
+        }, 2500);
+    });
+
+    window.showPantryIndex = function() {
+        document.getElementById('pantry-results').style.display = 'none';
+        document.getElementById('pantry-loading').style.display = 'none';
+        document.getElementById('pantry-index').style.display = 'block';
+        window.currentNavSource = 'pantry';
+    };
+
+    // ---------------------------------------------------------
+    // --- SINGLE-PAGE SWAP LOGIC (SPINACH & TOFU) ---
+    // ---------------------------------------------------------
+    
+    window.currentOpenRecipeId = null;
+
+    function moveRecipeToFrame(recipeId, targetFrameId) {
+        const recipeNode = document.getElementById(recipeId);
+        const targetPad = document.querySelector(targetFrameId + ' .pad');
+        if (recipeNode && targetPad) {
+            targetPad.appendChild(recipeNode);
+        }
+    }
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const target = btn.getAttribute('href');
+            
+            if (target === '#frame-3') {
+                document.getElementById('search-index').style.display = '';
+                if(document.getElementById('spinach-detail')) document.getElementById('spinach-detail').style.display = 'none';
+                if(document.getElementById('tofu-detail')) document.getElementById('tofu-detail').style.display = 'none';
+                if(document.getElementById('pantry-results')) document.getElementById('pantry-results').style.display = 'none';
+                window.currentOpenRecipeId = null;
+            }
+            
+            if (target === '#frame-5') {
+                if(document.getElementById('spinach-detail')) document.getElementById('spinach-detail').style.display = 'none';
+                if(document.getElementById('tofu-detail')) document.getElementById('tofu-detail').style.display = 'none';
+                document.getElementById('pantry-index').style.display = 'block';
+                if(document.getElementById('pantry-results')) document.getElementById('pantry-results').style.display = 'none';
+                window.currentOpenRecipeId = null;
+            }
+        });
+    });
+
+    window.showSpinachRecipe = function() {
+        moveRecipeToFrame('spinach-detail', '#frame-3'); 
+        document.getElementById('search-index').style.display = 'none';
+        document.getElementById('tofu-detail').style.display = 'none';
+        document.getElementById('spinach-detail').style.display = 'block';
+        window.currentOpenRecipeId = 'sp';
+        updatePlanButtonState('sp');
+        updateBudgetWarning('sp');
+        
+        window.scrollTo({ top: document.getElementById('frame-3').offsetTop, behavior: 'smooth' });
+    };
+
+    window.showTofuRecipe = function() {
+        moveRecipeToFrame('tofu-detail', '#frame-3'); 
+        document.getElementById('search-index').style.display = 'none';
+        document.getElementById('spinach-detail').style.display = 'none';
+        document.getElementById('tofu-detail').style.display = 'block';
+        document.getElementById('tf-back-btn').innerText = '← Back to Search';
+        window.currentNavSource = 'search';
+        window.currentOpenRecipeId = 'tf';
+        updatePlanButtonState('tf');
+        updateBudgetWarning('tf');
+        
+        window.scrollTo({ top: document.getElementById('frame-3').offsetTop, behavior: 'smooth' });
+    };
+
+    window.showTofuFromPantry = function() {
+        moveRecipeToFrame('tofu-detail', '#frame-5'); 
+        document.getElementById('pantry-results').style.display = 'none';
+        document.getElementById('pantry-index').style.display = 'none';
+        document.getElementById('search-index').style.display = 'none';
+        document.getElementById('spinach-detail').style.display = 'none';
+        document.getElementById('tofu-detail').style.display = 'block';
+        
+        document.getElementById('tf-back-btn').innerText = '← Back to Results';
+        window.currentNavSource = 'pantry-results';
+
+        window.currentOpenRecipeId = 'tf';
+        updatePlanButtonState('tf');
+        updateBudgetWarning('tf');
+        
+        window.location.hash = '#frame-5';
+        window.scrollTo({ top: document.getElementById('frame-5').offsetTop, behavior: 'smooth' });
+    };
+
+    window.hideRecipeDetail = function() {
+        document.getElementById('spinach-detail').style.display = 'none';
+        document.getElementById('tofu-detail').style.display = 'none';
+        
+        if (window.currentNavSource === 'pantry-results') {
+            document.getElementById('pantry-results').style.display = 'block';
+            window.location.hash = '#frame-5';
+            window.scrollTo({ top: document.getElementById('frame-5').offsetTop, behavior: 'smooth' });
+        } else {
+            document.getElementById('search-index').style.display = '';
+            window.currentNavSource = 'search';
+            window.location.hash = '#frame-3';
+            window.scrollTo({ top: document.getElementById('frame-3').offsetTop, behavior: 'smooth' });
+        }
+        
+        document.getElementById('sp-expanded-recipe').style.display = 'none';
+        document.getElementById('sp-trigger-recipe').style.display = 'block';
+        
+        document.getElementById('tf-expanded-recipe').style.display = 'none';
+        document.getElementById('tf-trigger-recipe').style.display = 'block';
+        
+        window.currentOpenRecipeId = null;
+    };
+
+    const spBtnCream = document.getElementById('sp-btn-cream');
+    const spDropdown = document.getElementById('sp-dropdown');
+    
+    let spConfirmedState = 'heavy';
+    const spData = {
+      heavy: { name: 'Heavy cream', cal: 200, unitUs: '1/2 cup', unitMet: '120 ml', total: 640, p:20, c:40, f:44, time: '15 mins' },
+      coco: { name: 'Coconut cream', cal: 140, unitUs: '1/2 cup', unitMet: '120 ml', total: 580, p:18, c:38, f:36, time: '15 mins' },
+      cash: { name: 'Cashew cream', cal: 120, unitUs: '1/2 cup', unitMet: '120 ml', total: 560, p:22, c:44, f:32, time: '15 mins' },
+      oat: { name: 'Oat cream', cal: 90, unitUs: '1/2 cup', unitMet: '120 ml', total: 530, p:19, c:48, f:28, time: '15 mins' }
+    };
+
+    if(spBtnCream) {
+        spBtnCream.addEventListener('click', () => {
+            if(spDropdown.style.display !== 'block') {
+                spBtnCream.classList.add('selected-active');
+                spDropdown.style.display = 'block';
+                document.querySelectorAll('#sp-dropdown .inline-alt').forEach(el => {
+                    const diffCal = spData[el.dataset.val].cal - spData[spConfirmedState].cal;
+                    const diffBox = el.querySelector('.diff-box');
+                    if(el.dataset.val === spConfirmedState) { 
+                        el.style.display = 'none';
+                    } else {
+                        el.style.display = 'flex';
+                        if (diffCal < 0) { diffBox.innerHTML = `<b style="color:var(--ink); font-size:13px;">- ${Math.abs(diffCal)} kcal</b><br><small style="font-size:9.5px; color:var(--soft);">Recipe Total ${spData[el.dataset.val].total} kcal</small>`; } 
+                        else if (diffCal > 0) { diffBox.innerHTML = `<b style="color:var(--ink); font-size:13px;">+ ${Math.abs(diffCal)} kcal</b><br><small style="font-size:9.5px; color:var(--soft);">Recipe Total ${spData[el.dataset.val].total} kcal</small>`; }
+                        else { diffBox.innerHTML = `<b style="color:var(--ink); font-size:13px;">-- kcal</b><br><small style="font-size:9.5px; color:var(--soft);">Recipe Total ${spData[el.dataset.val].total} kcal</small>`; }
+                    }
+                });
+            } else {
+                spBtnCream.classList.remove('selected-active');
+                spDropdown.style.display = 'none';
+            }
+        });
+
+        document.querySelectorAll('#sp-dropdown .inline-alt').forEach(opt => {
+            opt.addEventListener('click', () => {
+                spConfirmedState = opt.dataset.val;
+                const data = spData[spConfirmedState];
+                document.getElementById('sp-plan-total').innerText = data.total;
+                
+                document.getElementById('sp-total-cal-top').innerHTML = `${data.total} kcal`;
+                document.getElementById('sp-hero-p').innerHTML = `Pro ${data.p}g`;
+                document.getElementById('sp-hero-c').innerHTML = `Carb ${data.c}g`;
+                document.getElementById('sp-hero-f').innerHTML = `Fat ${data.f}g`;
+                
+                if(window.activeSpSlot) {
+                    updatePlanButtonState('sp');
+                    updateBudgetWarning('sp');
+                }
+
+                const isUs = document.body.classList.contains('mode-us');
+                document.getElementById('sp-active-cream-name').innerHTML = `${data.name}<small class="unit-val" data-us="${data.unitUs}" data-metric="${data.unitMet}">${isUs ? data.unitUs : data.unitMet}</small>`;
+                document.getElementById('sp-active-cream-cal').innerHTML = `${data.cal} kcal`;
+                spBtnCream.classList.remove('selected-active');
+                spDropdown.style.display = 'none';
+                
+                document.getElementById('sp-step-cream-text').innerText = data.name.toLowerCase();
+            });
+        });
+    }
+
+    const tfBtnRice = document.getElementById('tf-btn-rice');
+    const tfDropdown = document.getElementById('tf-dropdown');
+    
+    let tfConfirmedState = 'rice';
+    const tfData = {
+      rice: { name: 'Brown Rice', cal: 110, unitUs: '1/2 cup', unitMet: '100 g', total: 520, p:32, c:45, f:24, time: '20 mins' },
+      quinoa: { name: 'Quinoa', cal: 120, unitUs: '1/2 cup', unitMet: '90 g', total: 530, p:34, c:40, f:25, time: '20 mins' },
+      cauli: { name: 'Cauliflower Rice', cal: 25, unitUs: '1 cup', unitMet: '110 g', total: 435, p:28, c:15, f:23, time: '20 mins' }
+    };
+
+    if(tfBtnRice) {
+        tfBtnRice.addEventListener('click', () => {
+            if(tfDropdown.style.display !== 'block') {
+                tfBtnRice.classList.add('selected-active');
+                tfDropdown.style.display = 'block';
+                document.querySelectorAll('#tf-dropdown .inline-alt').forEach(el => {
+                    const diffCal = tfData[el.dataset.val].cal - tfData[tfConfirmedState].cal;
+                    const diffBox = el.querySelector('.diff-box');
+                    if(el.dataset.val === tfConfirmedState) { 
+                        el.style.display = 'none';
+                    } else {
+                        el.style.display = 'flex';
+                        if (diffCal < 0) { diffBox.innerHTML = `<b style="color:var(--ink); font-size:13px;">- ${Math.abs(diffCal)} kcal</b><br><small style="font-size:9.5px; color:var(--soft);">Recipe Total ${tfData[el.dataset.val].total} kcal</small>`; } 
+                        else if (diffCal > 0) { diffBox.innerHTML = `<b style="color:var(--ink); font-size:13px;">+ ${Math.abs(diffCal)} kcal</b><br><small style="font-size:9.5px; color:var(--soft);">Recipe Total ${tfData[el.dataset.val].total} kcal</small>`; }
+                        else { diffBox.innerHTML = `<b style="color:var(--ink); font-size:13px;">-- kcal</b><br><small style="font-size:9.5px; color:var(--soft);">Recipe Total ${tfData[el.dataset.val].total} kcal</small>`; }
+                    }
+                });
+            } else {
+                tfBtnRice.classList.remove('selected-active');
+                tfDropdown.style.display = 'none';
+            }
+        });
+
+        document.querySelectorAll('#tf-dropdown .inline-alt').forEach(opt => {
+            opt.addEventListener('click', () => {
+                tfConfirmedState = opt.dataset.val;
+                const data = tfData[tfConfirmedState];
+                document.getElementById('tf-plan-total').innerText = data.total;
+                
+                document.getElementById('tf-total-cal-top').innerHTML = `${data.total} kcal`;
+                document.getElementById('tf-hero-p').innerHTML = `Pro ${data.p}g`;
+                document.getElementById('tf-hero-c').innerHTML = `Carb ${data.c}g`;
+                document.getElementById('tf-hero-f').innerHTML = `Fat ${data.f}g`;
+                
+                if(window.activeTfSlot) {
+                    updatePlanButtonState('tf');
+                    updateBudgetWarning('tf');
+                }
+
+                const isUs = document.body.classList.contains('mode-us');
+                document.getElementById('tf-active-rice-name').innerHTML = `${data.name}<small class="unit-val" data-us="${data.unitUs}" data-metric="${data.unitMet}">${isUs ? data.unitUs : data.unitMet}</small>`;
+                document.getElementById('tf-active-rice-cal').innerHTML = `${data.cal} kcal`;
+                tfBtnRice.classList.remove('selected-active');
+                tfDropdown.style.display = 'none';
+                
+                document.getElementById('tf-step-rice-text').innerText = data.name.toLowerCase();
+            });
+        });
+    }
+
+    const spTrigger = document.getElementById('sp-trigger-recipe');
+    if(spTrigger) {
+        spTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('sp-expanded-recipe').style.display = 'block';
+            spTrigger.style.display = 'none'; 
+        });
+    }
+
+    const tfTrigger = document.getElementById('tf-trigger-recipe');
+    if(tfTrigger) {
+        tfTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('tf-expanded-recipe').style.display = 'block';
+            tfTrigger.style.display = 'none';
+        });
+    }
+
+    // ---------------------------------------------------------
+    // --- TODAY'S PLAN LOGIC ---
+    // ---------------------------------------------------------
+    
+    let plannedMeals = { breakfast: null, lunch: null, dinner: null, snack: null };
+    window.activeSpSlot = 'lunch';
+    window.activeTfSlot = 'lunch';
+    
+    window.selectSlot = function(el, recipeId) {
+        const grid = el.parentElement;
+        grid.querySelectorAll('.meal-slot').forEach(s => s.classList.remove('active'));
+        el.classList.add('active');
+        const slotName = el.querySelector('b').innerText.toLowerCase();
+        
+        const targetMap = { 'breakfast': 0.25, 'lunch': 0.35, 'dinner': 0.30, 'snack': 0.10 };
+        const budget = Math.round(globalDailyTarget * targetMap[slotName]);
+
+        if(recipeId === 'sp') {
+            window.activeSpSlot = slotName;
+            document.getElementById('sp-slot-budget-val').innerText = budget;
+        } else {
+            window.activeTfSlot = slotName;
+            document.getElementById('tf-slot-budget-val').innerText = budget;
+        }
+        updatePlanButtonState(recipeId);
+        updateBudgetWarning(recipeId);
+    };
+
+    function updatePlanButtonState(prefix) {
+        let activeSlot = prefix === 'sp' ? window.activeSpSlot : window.activeTfSlot;
+        let btn = document.getElementById(`${prefix}-add-plan-btn`);
+        let existingMeal = plannedMeals[activeSlot];
+        let currentState = prefix === 'sp' ? spConfirmedState : tfConfirmedState;
+        
+        btn.className = 'btnsk fill btn-plan-action';
+        btn.style.color = '#fff';
+
+        if (!existingMeal) {
+            btn.innerText = `+ Add to ${activeSlot.charAt(0).toUpperCase() + activeSlot.slice(1)}`;
+            btn.disabled = false;
+        } else if (existingMeal.id === prefix) {
+            if (existingMeal.variant === currentState) {
+                if (existingMeal.switched) {
+                    btn.innerText = `${activeSlot.charAt(0).toUpperCase() + activeSlot.slice(1)} Switched`;
+                } else {
+                    btn.innerText = `Added to ${activeSlot.charAt(0).toUpperCase() + activeSlot.slice(1)}`;
+                }
+                btn.disabled = true;
+            } else {
+                btn.innerText = `Add Modified Recipe`;
+                btn.disabled = false;
+            }
+        } else {
+            btn.innerText = `Switch ${activeSlot.charAt(0).toUpperCase() + activeSlot.slice(1)}`;
+            btn.disabled = false;
+        }
+    }
+    
+    document.getElementById('sp-add-plan-btn').addEventListener('click', () => {
+        const rData = spData[spConfirmedState];
+        const existing = plannedMeals[window.activeSpSlot];
+        const isSwitch = !!existing && existing.id !== 'sp';
+
+        plannedMeals[window.activeSpSlot] = { id: 'sp', name: "Creamy Spinach Parmesan", cal: rData.total, p: rData.p, c: rData.c, f: rData.f, switched: isSwitch, variant: spConfirmedState, time: rData.time, img: "CreamedSpinach-19.jpg" };
+        updateTodayPlanUI();
+        updatePlanButtonState('sp');
+    });
+    
+    document.getElementById('tf-add-plan-btn').addEventListener('click', () => {
+        const rData = tfData[tfConfirmedState];
+        const existing = plannedMeals[window.activeTfSlot];
+        const isSwitch = !!existing && existing.id !== 'tf';
+
+        plannedMeals[window.activeTfSlot] = { id: 'tf', name: "Crispy Tofu Power Bowl", cal: rData.total, p: rData.p, c: rData.c, f: rData.f, switched: isSwitch, variant: tfConfirmedState, time: rData.time, img: "Tofu power bowl.png" };
+        updateTodayPlanUI();
+        updatePlanButtonState('tf');
+    });
+
+    window.clearSlot = function(slot) {
+        plannedMeals[slot] = null;
+        updateTodayPlanUI();
+        if(window.currentOpenRecipeId) updatePlanButtonState(window.currentOpenRecipeId);
+    };
+
+    window.clearAllPlan = function() {
+        plannedMeals = { breakfast: null, lunch: null, dinner: null, snack: null };
+        updateTodayPlanUI();
+        if(window.currentOpenRecipeId) updatePlanButtonState(window.currentOpenRecipeId);
+    };
+    
+    window.updateTodayPlanUI = function() {
+        let totalCal = 0; let totalP = 0; let totalC = 0; let totalF = 0;
+        let isAnyPlanned = false;
+        
+        const slots = ['breakfast', 'lunch', 'dinner', 'snack'];
+        const pfxs = ['bk', 'lu', 'dn', 'sn'];
+        const emojis = ['☕ Breakfast', '☀️ Lunch', '🌙 Dinner', '🍎 Snack'];
+        const singleEmojis = ['☕', '☀️', '🌙', '🍎'];
+        const targetMap = { 'breakfast': 0.25, 'lunch': 0.35, 'dinner': 0.30, 'snack': 0.10 };
+        
+        for(let i=0; i<4; i++) {
+            const m = plannedMeals[slots[i]];
+            const pfx = pfxs[i];
+            const slotEl = document.getElementById(`slot-${pfx}`);
+            const spPill = document.getElementById(`sp-side-${pfx}`);
+            const tfPill = document.getElementById(`tf-side-${pfx}`);
+            const slotBudget = Math.round(globalDailyTarget * targetMap[slots[i]]);
+
+            if(m) {
+                isAnyPlanned = true;
+                totalCal += m.cal; totalP += m.p; totalC += m.c; totalF += m.f;
+                
+                slotEl.classList.add('filled');
+                slotEl.innerHTML = `
+                    <div class="f9-slot-head" style="justify-content:space-between; margin:0; padding:16px 20px; width:100%; border-bottom: 1px dashed var(--hair); background:transparent;">
+                        <b style="color:var(--ink); font-size:15px; display:flex; align-items:center; gap:6px;"><span style="font-size:18px; font-weight:normal; color:var(--soft2);">${singleEmojis[i]}</span> ${emojis[i].slice(2)}</b>
+                        <div style="display:flex; gap:12px; align-items:center;">
+                            <span style="color:var(--ink); font-weight:700;">${m.cal} / ${slotBudget} kcal</span> 
+                            <span class="f9-trash-btn" onclick="clearSlot('${slots[i]}')">🗑️</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:16px; align-items:center; padding: 18px 20px;">
+                        <div style="width:60px; height:60px; border-radius:8px; border:1.5px solid var(--ink); background-color:var(--fill); ${m.img ? `background-image:url('${m.img}'); background-size:cover; background-position:center;` : ''}"></div>
+                        <div style="flex:1;">
+                            <div style="font-weight:800; font-size:15px; margin-bottom:2px; color:var(--ink);">${m.name}</div>
+                            <div style="font-family:'Space Mono'; font-size:11px; color:var(--soft); margin-bottom:6px;">🕒 ${m.time}</div>
+                            <div style="font-family:'Space Mono'; font-size:11px; color:var(--soft);">Pro ${m.p}g &nbsp; Carb ${m.c}g &nbsp; Fat ${m.f}g</div>
+                        </div>
+                    </div>
+                `;
+                
+                [spPill, tfPill].forEach(pill => {
+                    if(pill) {
+                        pill.querySelector('.side-meal-name').innerText = m.name;
+                        pill.querySelector('.side-meal-name').style.color = 'var(--ink)';
+                        pill.querySelector('.side-meal-time').innerText = `🕒 ${m.time}`;
+                        pill.querySelector('.side-meal-time').style.display = 'block';
+                        pill.querySelector('.side-meal-cal').innerText = `${m.cal} kcal`;
+                        pill.querySelector('.side-meal-cal').style.color = 'var(--ink)';
+                    }
+                });
+                
+                document.getElementById(`tbl-${slots[i]}-name`).innerHTML = `<b style="color:var(--ink);">${m.name}</b>`;
+                document.getElementById(`tbl-${slots[i]}-cal`).innerHTML = `<b style="color:var(--ink);">${m.cal}</b>`;
+                document.getElementById(`tbl-${slots[i]}-p`).innerHTML = `<b style="color:var(--ink);">${m.p}g</b>`;
+                document.getElementById(`tbl-${slots[i]}-c`).innerHTML = `<b style="color:var(--ink);">${m.c}g</b>`;
+                document.getElementById(`tbl-${slots[i]}-f`).innerHTML = `<b style="color:var(--ink);">${m.f}g</b>`;
+            } else {
+                slotEl.classList.remove('filled');
+                slotEl.innerHTML = `
+                    <div class="f9-slot-head" style="justify-content:flex-start; gap:8px; margin:0; padding:12px 16px; width:100%; border-bottom: 2px dashed var(--soft2); background:transparent;">
+                        <b style="color:var(--ink); font-size:15px; display:flex; align-items:center; gap:6px;"><span style="font-size:18px; font-weight:normal; color:var(--soft); opacity:0.7;">${singleEmojis[i]}</span> ${emojis[i].slice(2)}</b>
+                        <small style="color:var(--soft); font-family:'Hanken Grotesk',sans-serif; font-size:13px; font-weight:500;">~${i===0?25:i===1?35:i===2?30:10}% of daily</small>
+                    </div>
+                    <div class="f9-add-btn nav-link-target" onclick="document.querySelector('a[href=\\'#frame-3\\']').click(); hideRecipeDetail();" style="flex:1; display:flex; align-items:center; justify-content:center; padding:20px; color:var(--soft); font-size:14px; font-weight:600; cursor:pointer;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add a recipe
+                    </div>
+                `;
+                
+                [spPill, tfPill].forEach(pill => {
+                    if(pill) {
+                        pill.querySelector('.side-meal-name').innerText = 'Not planned';
+                        pill.querySelector('.side-meal-name').style.color = 'var(--soft2)';
+                        pill.querySelector('.side-meal-time').style.display = 'none';
+                        pill.querySelector('.side-meal-cal').innerText = `—`;
+                        pill.querySelector('.side-meal-cal').style.color = 'var(--soft2)';
+                    }
+                });
+                
+                document.getElementById(`tbl-${slots[i]}-name`).innerText = `Not planned`;
+                document.getElementById(`tbl-${slots[i]}-cal`).innerText = `—`;
+                document.getElementById(`tbl-${slots[i]}-p`).innerText = `—`;
+                document.getElementById(`tbl-${slots[i]}-c`).innerText = `—`;
+                document.getElementById(`tbl-${slots[i]}-f`).innerText = `—`;
+            }
+        }
+        
+        document.getElementById('global-consumed-top').innerText = totalCal;
+        document.getElementById('global-consumed-targets').innerText = totalCal;
+        document.getElementById('global-consumed-search').innerText = totalCal;
+        document.getElementById('global-consumed-pantry1').innerText = totalCal;
+        document.getElementById('global-consumed-plan').innerText = totalCal;
+        
+        let rem = globalDailyTarget - totalCal; if(rem<0) rem=0;
+        let pct = (totalCal / globalDailyTarget) * 100; if(pct>100) pct=100;
+        
+        if(isAnyPlanned) {
+            document.getElementById('tp-empty-banner').style.display = 'none';
+            document.getElementById('tp-filled-banner').style.display = 'flex';
+            document.getElementById('tp-breakdown-container').style.display = 'block';
+            
+            document.getElementById('tp-banner-consumed').innerText = totalCal;
+            
+            document.getElementById('tp-macro-p').innerText = totalP + 'g';
+            document.getElementById('tp-macro-c').innerText = totalC + 'g';
+            document.getElementById('tp-macro-f').innerText = totalF + 'g';
+        } else {
+            document.getElementById('tp-empty-banner').style.display = 'flex';
+            document.getElementById('tp-filled-banner').style.display = 'none';
+            document.getElementById('tp-breakdown-container').style.display = 'none';
+        }
+        
+        document.getElementById('tbl-tot-cal').innerHTML = `<b>${totalCal}</b>`;
+        document.getElementById('tbl-tot-p').innerHTML = `<b>${totalP}g</b>`;
+        document.getElementById('tbl-tot-c').innerHTML = `<b>${totalC}g</b>`;
+        document.getElementById('tbl-tot-f').innerHTML = `<b>${totalF}g</b>`;
+        
+        const bkBudget = Math.round(globalDailyTarget * 0.25);
+        const luBudget = Math.round(globalDailyTarget * 0.35);
+        const dnBudget = Math.round(globalDailyTarget * 0.30);
+        const snBudget = Math.round(globalDailyTarget * 0.10);
+        
+        document.querySelectorAll('.sync-bk').forEach(el => {if(el.tagName==='SPAN' || el.tagName==='B') el.innerHTML = bkBudget;});
+        document.querySelectorAll('.sync-lunch').forEach(el => {if(el.tagName==='SPAN' || el.tagName==='B') el.innerHTML = luBudget;});
+        document.querySelectorAll('.sync-dn').forEach(el => {if(el.tagName==='SPAN' || el.tagName==='B') el.innerHTML = dnBudget;});
+        document.querySelectorAll('.sync-sn').forEach(el => {if(el.tagName==='SPAN' || el.tagName==='B') el.innerHTML = snBudget;});
+    };
+
+  });
+</script>
+</body>
+</html>
